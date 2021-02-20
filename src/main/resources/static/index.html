@@ -1,74 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:background="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Erik Espuñes Juberó</title>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: PixelOperatorMonoHB8;
-            src: url('Fonts/PixelOperatorMonoHB8.ttf');
+        * {
+            margin: 0;
+            padding: 0;
         }
 
-        @font-face {
-            font-family: PixelOperatorMonoHB;
-            src: url('Fonts/PixelOperatorMonoHB.ttf');
+        .imgbox {
+            display: grid;
+            height: 100%;
         }
 
-        h1 {
-            font-family: PixelOperatorMonoHB8
+        .center-fit {
+            max-width: 100%;
+            max-height: 100vh;
+            margin: auto;
         }
 
-        .ml1 .letter {
-            display: inline-block;
-            line-height: 1em;
+        .imgbox {
+            display: grid;
+            height: 100%;
         }
 
-        h2 {
-            font-family: PixelOperatorMonoHB
+        body {
+            background-image: url('782955.jpg');
         }
 
-        .ml1 {
-            font-weight: 900;
-            font-size: 3.5em;
-        }
-
-        .ml1 .letter {
-            display: inline-block;
-            line-height: 1em;
-        }
-
-        .ml1 .text-wrapper {
-            position: relative;
-            display: inline-block;
-            padding-top: 0.1em;
-            padding-right: 0.05em;
-            padding-bottom: 0.15em;
-        }
-
-        .ml1 .line {
-            opacity: 0;
-            position: absolute;
-            left: 0;
-            height: 3px;
+        #overlay {
+            position: fixed;
             width: 100%;
-            background-color: #fff;
-            transform-origin: 0 0;
-        }
-
-        .ml1 .line1 {
+            height: 100%;
             top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            cursor: pointer;
         }
 
-        .ml1 .line2 {
-            bottom: 0;
+        .screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: black;
+            height: 56vh;
+            max-height: 56vw;
+            width: 74vw;
+            max-width: 74vh;
+            transform: translate(-49.5775%, -38.5%);
+        }
+        @-webkit-keyframes typed {
+            /* string 1, char 1 */
+            0%, 0.1845976244% {
+                content: "W";
+            }
+            /* string 1, char 2 */
+            0.1855976244%, 0.3701952487% {
+                content: "Wo";
+            }
+            /* string 1, char 3 */
+            0.3711952487%, 0.5557928731% {
+                content: "Wor";
+            }
+            /* string 1, char 4 */
+            0.5567928731%, 0.7413904974% {
+                content: "Work";
+            }
+            /* string 1, char 5 */
+            0.7423904974%, 0.9269881218% {
+                content: "Work ";
+            }
+            /* string 1, char 6 */
+            0.9279881218%, 1.1125857461% {
+                content: "Work i";
+            }
+            /* string 1, char 7 */
+            1.1135857461%, 1.2981833705% {
+                content: "Work in";
+            }
+            /* string 1, char 8 */
+            1.2991833705%, 1.4837809948% {
+                content: "Work in ";
+            }
+            /* string 1, char 9 */
+            1.4847809948%, 1.6693786192% {
+                content: "Work in P";
+            }
+            /* string 1, char 10 */
+            1.6703786192%, 1.8549762435% {
+                content: "Work in Pr";
+            }
+            /* string 1, char 11 */
+            1.8559762435%, 2.0405738679% {
+                content: "Work in Pro";
+            }
+            /* string 1, char 12 */
+            2.0415738679%, 2.2261714922% {
+                content: "Work in Prog";
+            }
+            /* string 1, char 13 */
+            2.2271714922%, 2.4117691166% {
+                content: "Work in Progr";
+            }
+            /* string 1, char 14 */
+            2.4127691166%, 2.5973667409% {
+                content: "Work in Progre";
+            }
+            /* string 1, char 15 */
+            2.5983667409%, 2.7829643653% {
+                content: "Work in Progres";
+            }
+            /* string 1, char 16 */
+            2.7839643653%, 95.9158522643% {
+                content: "Work in Progress";
+            }
+            /* string 1, char 17 */
+            95.9168522643%, 96.0643303638% {
+                content: "Work in Progres";
+            }
+            /* string 1, char 18 */
+            96.0653303638%, 96.2128084633% {
+                content: "Work in Progre";
+            }
+            /* string 1, char 19 */
+            96.2138084633%, 96.3612865627% {
+                content: "Work in Progr";
+            }
+            /* string 1, char 20 */
+            96.3622865627%, 96.5097646622% {
+                content: "Work in Prog";
+            }
+            /* string 1, char 21 */
+            96.5107646622%, 96.6582427617% {
+                content: "Work in Pro";
+            }
+            /* string 1, char 22 */
+            96.6592427617%, 96.8067208612% {
+                content: "Work in Pr";
+            }
+            /* string 1, char 23 */
+            96.8077208612%, 96.9551989607% {
+                content: "Work in P";
+            }
+            /* string 1, char 24 */
+            96.9561989607%, 97.1036770601% {
+                content: "Work in ";
+            }
+            /* string 1, char 25 */
+            97.1046770601%, 97.2521551596% {
+                content: "Work in";
+            }
+            /* string 1, char 26 */
+            97.2531551596%, 97.4006332591% {
+                content: "Work i";
+            }
+            /* string 1, char 27 */
+            97.4016332591%, 97.5491113586% {
+                content: "Work ";
+            }
+            /* string 1, char 28 */
+            97.5501113586%, 97.6975894581% {
+                content: "Work";
+            }
+            /* string 1, char 29 */
+            97.6985894581%, 97.8460675575% {
+                content: "Wor";
+            }
+            /* string 1, char 30 */
+            97.8470675575%, 97.994545657% {
+                content: "Wo";
+            }
+            /* string 1, char 31 */
+            97.995545657%, 98.1430237565% {
+                content: "W";
+            }
+            /* string 1, char 32 */
+            98.1440237565%, 100% {
+                content: "​";
+            }
+        }
+        @keyframes typed {
+            /* string 1, char 1 */
+            0%, 0.1845976244% {
+                content: "W";
+            }
+            /* string 1, char 2 */
+            0.1855976244%, 0.3701952487% {
+                content: "Wo";
+            }
+            /* string 1, char 3 */
+            0.3711952487%, 0.5557928731% {
+                content: "Wor";
+            }
+            /* string 1, char 4 */
+            0.5567928731%, 0.7413904974% {
+                content: "Work";
+            }
+            /* string 1, char 5 */
+            0.7423904974%, 0.9269881218% {
+                content: "Work ";
+            }
+            /* string 1, char 6 */
+            0.9279881218%, 1.1125857461% {
+                content: "Work i";
+            }
+            /* string 1, char 7 */
+            1.1135857461%, 1.2981833705% {
+                content: "Work in";
+            }
+            /* string 1, char 8 */
+            1.2991833705%, 1.4837809948% {
+                content: "Work in ";
+            }
+            /* string 1, char 9 */
+            1.4847809948%, 1.6693786192% {
+                content: "Work in P";
+            }
+            /* string 1, char 10 */
+            1.6703786192%, 1.8549762435% {
+                content: "Work in Pr";
+            }
+            /* string 1, char 11 */
+            1.8559762435%, 2.0405738679% {
+                content: "Work in Pro";
+            }
+            /* string 1, char 12 */
+            2.0415738679%, 2.2261714922% {
+                content: "Work in Prog";
+            }
+            /* string 1, char 13 */
+            2.2271714922%, 2.4117691166% {
+                content: "Work in Progr";
+            }
+            /* string 1, char 14 */
+            2.4127691166%, 2.5973667409% {
+                content: "Work in Progre";
+            }
+            /* string 1, char 15 */
+            2.5983667409%, 2.7829643653% {
+                content: "Work in Progres";
+            }
+            /* string 1, char 16 */
+            2.7839643653%, 95.9158522643% {
+                content: "Work in Progress";
+            }
+            /* string 1, char 17 */
+            95.9168522643%, 96.0643303638% {
+                content: "Work in Progres";
+            }
+            /* string 1, char 18 */
+            96.0653303638%, 96.2128084633% {
+                content: "Work in Progre";
+            }
+            /* string 1, char 19 */
+            96.2138084633%, 96.3612865627% {
+                content: "Work in Progr";
+            }
+            /* string 1, char 20 */
+            96.3622865627%, 96.5097646622% {
+                content: "Work in Prog";
+            }
+            /* string 1, char 21 */
+            96.5107646622%, 96.6582427617% {
+                content: "Work in Pro";
+            }
+            /* string 1, char 22 */
+            96.6592427617%, 96.8067208612% {
+                content: "Work in Pr";
+            }
+            /* string 1, char 23 */
+            96.8077208612%, 96.9551989607% {
+                content: "Work in P";
+            }
+            /* string 1, char 24 */
+            96.9561989607%, 97.1036770601% {
+                content: "Work in ";
+            }
+            /* string 1, char 25 */
+            97.1046770601%, 97.2521551596% {
+                content: "Work in";
+            }
+            /* string 1, char 26 */
+            97.2531551596%, 97.4006332591% {
+                content: "Work i";
+            }
+            /* string 1, char 27 */
+            97.4016332591%, 97.5491113586% {
+                content: "Work ";
+            }
+            /* string 1, char 28 */
+            97.5501113586%, 97.6975894581% {
+                content: "Work";
+            }
+            /* string 1, char 29 */
+            97.6985894581%, 97.8460675575% {
+                content: "Wor";
+            }
+            /* string 1, char 30 */
+            97.8470675575%, 97.994545657% {
+                content: "Wo";
+            }
+            /* string 1, char 31 */
+            97.995545657%, 98.1430237565% {
+                content: "W";
+            }
+            /* string 1, char 32 */
+            98.1440237565%, 100% {
+                content: "​";
+            }
+        }
+        @-webkit-keyframes beam-blink {
+            75% {
+                border-color: transparent;
+            }
+        }
+        @keyframes beam-blink {
+            75% {
+                border-color: transparent;
+            }
+        }
+        * {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-repeat: repeat-y;
+            background-position: center center;
+            background-size: cover, 100% 3px;
+            font-size: calc(10px + 2vw);
+            font-family: "VT323", monospace, sans-serif;
+            color: #3f3;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body::after {
+            content: "​";
+            position: relative;
+            top: 0;
+            display: inline-block;
+            padding-right: 3px;
+            padding-right: calc(3px + 0.1vw);
+            border-right: 10px solid rgba(51, 255, 51, 0.75);
+            border-right: calc(1.1vw + 4px) solid rgba(51, 255, 51, 0.75);
+            text-shadow: 0 0 5px rgba(51, 255, 51, 0.75);
+            white-space: nowrap;
+            -webkit-animation: typed 53.88s linear 1s infinite, beam-blink 1s infinite;
+            animation: typed 53.88s linear 1s infinite, beam-blink 1s infinite;
         }
     </style>
 </head>
 <body>
-<h1 align="center">Erik Espuñes Juberó</h1>
-<h2 align="center">Game Developer</h2>
-<h1 align="center">WORK IN PROGRESS</h1>
+<div id="overlay">
+    <div class="imgbox">
+        <img class="center-fit" src='ARCADE.svg'>
+    </div>
+</div>
+<div class="screen">
+
 </div>
 </body>
 </html>
