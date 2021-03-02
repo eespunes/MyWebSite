@@ -1,376 +1,950 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:background="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Erik Espuñes Juberó</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+    <meta name="description" content="Erik Espuñes Juberó - CV"/>
+    <meta name="keywords"
+          content="blog, business card, creative, creative portfolio, cv theme, online resume, personal, portfolio, professional cv, responsive portfolio, resume, resume theme, vcard"/>
+    <meta name="author" content="eespunes"/>
+    <meta name="theme-color" content="#000">
 
-        .imgbox {
-            display: grid;
-            height: 100%;
-        }
+    <!-- Vendor Css-->
+    <link rel="stylesheet" href="assets/css/vendor.css"/>
+    <link rel="stylesheet" href="assets/css/LineIcons.min.css"/>
+    <link rel="stylesheet" href="assets/css/jquery.pagepiling.css"/>
 
-        .center-fit {
-            max-width: 100%;
-            max-height: 100vh;
-            margin: auto;
-        }
+    <!-- Liam - Template style Css -->
+    <link href="assets/css/liam.css" rel="stylesheet">
 
-        .imgbox {
-            display: grid;
-            height: 100%;
-        }
-
-        body {
-            background-image: url('782955.jpg');
-        }
-
-        #overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 2;
-            cursor: pointer;
-        }
-
-        .screen {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            background: black;
-            height: 56vh;
-            max-height: 56vw;
-            width: 74vw;
-            max-width: 74vh;
-            transform: translate(-49.5775%, -38.5%);
-        }
-        @-webkit-keyframes typed {
-            /* string 1, char 1 */
-            0%, 0.1845976244% {
-                content: "W";
-            }
-            /* string 1, char 2 */
-            0.1855976244%, 0.3701952487% {
-                content: "Wo";
-            }
-            /* string 1, char 3 */
-            0.3711952487%, 0.5557928731% {
-                content: "Wor";
-            }
-            /* string 1, char 4 */
-            0.5567928731%, 0.7413904974% {
-                content: "Work";
-            }
-            /* string 1, char 5 */
-            0.7423904974%, 0.9269881218% {
-                content: "Work ";
-            }
-            /* string 1, char 6 */
-            0.9279881218%, 1.1125857461% {
-                content: "Work i";
-            }
-            /* string 1, char 7 */
-            1.1135857461%, 1.2981833705% {
-                content: "Work in";
-            }
-            /* string 1, char 8 */
-            1.2991833705%, 1.4837809948% {
-                content: "Work in ";
-            }
-            /* string 1, char 9 */
-            1.4847809948%, 1.6693786192% {
-                content: "Work in P";
-            }
-            /* string 1, char 10 */
-            1.6703786192%, 1.8549762435% {
-                content: "Work in Pr";
-            }
-            /* string 1, char 11 */
-            1.8559762435%, 2.0405738679% {
-                content: "Work in Pro";
-            }
-            /* string 1, char 12 */
-            2.0415738679%, 2.2261714922% {
-                content: "Work in Prog";
-            }
-            /* string 1, char 13 */
-            2.2271714922%, 2.4117691166% {
-                content: "Work in Progr";
-            }
-            /* string 1, char 14 */
-            2.4127691166%, 2.5973667409% {
-                content: "Work in Progre";
-            }
-            /* string 1, char 15 */
-            2.5983667409%, 2.7829643653% {
-                content: "Work in Progres";
-            }
-            /* string 1, char 16 */
-            2.7839643653%, 95.9158522643% {
-                content: "Work in Progress";
-            }
-            /* string 1, char 17 */
-            95.9168522643%, 96.0643303638% {
-                content: "Work in Progres";
-            }
-            /* string 1, char 18 */
-            96.0653303638%, 96.2128084633% {
-                content: "Work in Progre";
-            }
-            /* string 1, char 19 */
-            96.2138084633%, 96.3612865627% {
-                content: "Work in Progr";
-            }
-            /* string 1, char 20 */
-            96.3622865627%, 96.5097646622% {
-                content: "Work in Prog";
-            }
-            /* string 1, char 21 */
-            96.5107646622%, 96.6582427617% {
-                content: "Work in Pro";
-            }
-            /* string 1, char 22 */
-            96.6592427617%, 96.8067208612% {
-                content: "Work in Pr";
-            }
-            /* string 1, char 23 */
-            96.8077208612%, 96.9551989607% {
-                content: "Work in P";
-            }
-            /* string 1, char 24 */
-            96.9561989607%, 97.1036770601% {
-                content: "Work in ";
-            }
-            /* string 1, char 25 */
-            97.1046770601%, 97.2521551596% {
-                content: "Work in";
-            }
-            /* string 1, char 26 */
-            97.2531551596%, 97.4006332591% {
-                content: "Work i";
-            }
-            /* string 1, char 27 */
-            97.4016332591%, 97.5491113586% {
-                content: "Work ";
-            }
-            /* string 1, char 28 */
-            97.5501113586%, 97.6975894581% {
-                content: "Work";
-            }
-            /* string 1, char 29 */
-            97.6985894581%, 97.8460675575% {
-                content: "Wor";
-            }
-            /* string 1, char 30 */
-            97.8470675575%, 97.994545657% {
-                content: "Wo";
-            }
-            /* string 1, char 31 */
-            97.995545657%, 98.1430237565% {
-                content: "W";
-            }
-            /* string 1, char 32 */
-            98.1440237565%, 100% {
-                content: "​";
-            }
-        }
-        @keyframes typed {
-            /* string 1, char 1 */
-            0%, 0.1845976244% {
-                content: "W";
-            }
-            /* string 1, char 2 */
-            0.1855976244%, 0.3701952487% {
-                content: "Wo";
-            }
-            /* string 1, char 3 */
-            0.3711952487%, 0.5557928731% {
-                content: "Wor";
-            }
-            /* string 1, char 4 */
-            0.5567928731%, 0.7413904974% {
-                content: "Work";
-            }
-            /* string 1, char 5 */
-            0.7423904974%, 0.9269881218% {
-                content: "Work ";
-            }
-            /* string 1, char 6 */
-            0.9279881218%, 1.1125857461% {
-                content: "Work i";
-            }
-            /* string 1, char 7 */
-            1.1135857461%, 1.2981833705% {
-                content: "Work in";
-            }
-            /* string 1, char 8 */
-            1.2991833705%, 1.4837809948% {
-                content: "Work in ";
-            }
-            /* string 1, char 9 */
-            1.4847809948%, 1.6693786192% {
-                content: "Work in P";
-            }
-            /* string 1, char 10 */
-            1.6703786192%, 1.8549762435% {
-                content: "Work in Pr";
-            }
-            /* string 1, char 11 */
-            1.8559762435%, 2.0405738679% {
-                content: "Work in Pro";
-            }
-            /* string 1, char 12 */
-            2.0415738679%, 2.2261714922% {
-                content: "Work in Prog";
-            }
-            /* string 1, char 13 */
-            2.2271714922%, 2.4117691166% {
-                content: "Work in Progr";
-            }
-            /* string 1, char 14 */
-            2.4127691166%, 2.5973667409% {
-                content: "Work in Progre";
-            }
-            /* string 1, char 15 */
-            2.5983667409%, 2.7829643653% {
-                content: "Work in Progres";
-            }
-            /* string 1, char 16 */
-            2.7839643653%, 95.9158522643% {
-                content: "Work in Progress";
-            }
-            /* string 1, char 17 */
-            95.9168522643%, 96.0643303638% {
-                content: "Work in Progres";
-            }
-            /* string 1, char 18 */
-            96.0653303638%, 96.2128084633% {
-                content: "Work in Progre";
-            }
-            /* string 1, char 19 */
-            96.2138084633%, 96.3612865627% {
-                content: "Work in Progr";
-            }
-            /* string 1, char 20 */
-            96.3622865627%, 96.5097646622% {
-                content: "Work in Prog";
-            }
-            /* string 1, char 21 */
-            96.5107646622%, 96.6582427617% {
-                content: "Work in Pro";
-            }
-            /* string 1, char 22 */
-            96.6592427617%, 96.8067208612% {
-                content: "Work in Pr";
-            }
-            /* string 1, char 23 */
-            96.8077208612%, 96.9551989607% {
-                content: "Work in P";
-            }
-            /* string 1, char 24 */
-            96.9561989607%, 97.1036770601% {
-                content: "Work in ";
-            }
-            /* string 1, char 25 */
-            97.1046770601%, 97.2521551596% {
-                content: "Work in";
-            }
-            /* string 1, char 26 */
-            97.2531551596%, 97.4006332591% {
-                content: "Work i";
-            }
-            /* string 1, char 27 */
-            97.4016332591%, 97.5491113586% {
-                content: "Work ";
-            }
-            /* string 1, char 28 */
-            97.5501113586%, 97.6975894581% {
-                content: "Work";
-            }
-            /* string 1, char 29 */
-            97.6985894581%, 97.8460675575% {
-                content: "Wor";
-            }
-            /* string 1, char 30 */
-            97.8470675575%, 97.994545657% {
-                content: "Wo";
-            }
-            /* string 1, char 31 */
-            97.995545657%, 98.1430237565% {
-                content: "W";
-            }
-            /* string 1, char 32 */
-            98.1440237565%, 100% {
-                content: "​";
-            }
-        }
-        @-webkit-keyframes beam-blink {
-            75% {
-                border-color: transparent;
-            }
-        }
-        @keyframes beam-blink {
-            75% {
-                border-color: transparent;
-            }
-        }
-        * {
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-repeat: repeat-y;
-            background-position: center center;
-            background-size: cover, 100% 3px;
-            font-size: calc(10px + 2vw);
-            font-family: "VT323", monospace, sans-serif;
-            color: #3f3;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        body::after {
-            content: "​";
-            position: relative;
-            top: 0;
-            display: inline-block;
-            padding-right: 3px;
-            padding-right: calc(3px + 0.1vw);
-            border-right: 10px solid rgba(51, 255, 51, 0.75);
-            border-right: calc(1.1vw + 4px) solid rgba(51, 255, 51, 0.75);
-            text-shadow: 0 0 5px rgba(51, 255, 51, 0.75);
-            white-space: nowrap;
-            -webkit-animation: typed 53.88s linear 1s infinite, beam-blink 1s infinite;
-            animation: typed 53.88s linear 1s infinite, beam-blink 1s infinite;
-        }
-    </style>
+    <!-- Custom style Css -->
+    <link href="assets/css/custom.css" rel="stylesheet">
 </head>
-<body>
-<div id="overlay">
-    <div class="imgbox">
-        <img class="center-fit" src='ARCADE.svg'>
+
+<body data-spy="scroll" data-target=".navbar">
+
+<!-- START: Preloader -->
+<div id="preloader" class="preloader">
+    <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div class="screen">
+<!-- END: Preloader -->
 
+<!--	<header>-->
+<!--		<div class="container">-->
+<!--			<div class="d-flex justify-content-between align-items-center">-->
+<!--				<a href="#HOME" class="header-logo">Liam</a>-->
+
+<!--				<div class="menu d-flex justify-content-center align-items-center">-->
+
+<!--					<a href="#CONTACT" class="head-contact btn btn-small btn-gradient mr-4">Contact</a>-->
+
+<!--					<button class="btn btn-small collapsed navbar-toggler" data-toggle="collapse" data-target="#" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">Menu -->
+<!--						<svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="40"><path class="line top" d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40"></path><path class="line middle" d="m 30,50 h 40"></path><path class="line bottom" d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40"></path></svg>-->
+<!--					</button>-->
+
+<!--					<div class="navbar-collapse collapse" id="">-->
+<!--						<div class="container">-->
+<!--							<div class="navbar-content">-->
+<!--								<div class="navbar-links h-100vh d-flex align-items-center">-->
+<!--									<ul>-->
+<!--										<li>-->
+<!--											<span>01</span>-->
+<!--											<a href="#HOME">Home</a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<span>02</span>-->
+<!--											<a href="#ABOUT">About</a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<span>03</span>-->
+<!--											<a href="#SERVICES">Services</a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<span>04</span>-->
+<!--											<a href="#RESUME">Resume</a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<span>05</span>-->
+<!--											<a href="#PORTFOLIO">Portfolio</a>-->
+<!--										</li>-->
+<!--										<li>-->
+<!--											<span>06</span>-->
+<!--											<a href="#CONTACT">Contact</a>-->
+<!--										</li>-->
+<!--									</ul>-->
+<!--								</div>-->
+<!--								-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>	-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</header>-->
+
+<div id="pagepiling">
+
+    <!-- START: Home -->
+    <div class="section section-home" id="HOME">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1>I’m <span>Erik Espuñes Juberó</span></h1>
+
+                <div id="autoplay" class="my-4">
+                    <span>Work in Progress</span>
+                    <span>Work in Progress</span>
+                    <!--					   <span>A Game Programmer</span>-->
+                    <!--					   <span>A Game Developer</span>-->
+                    <!--					   <span>A Backend Developer</span>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Home -->
+
+    <!--    	&lt;!&ndash; START: ABOUT &ndash;&gt;-->
+    <!--		<div class="section" id="ABOUT">-->
+    <!--			<div class="container">-->
+    <!--				<div class="row justify-content-center align-items-center">-->
+    <!--					<div class="col-md-5">-->
+    <!--						<img class="about-img img-fluid wow fadeInUp" data-wow-duration="1s" src="assets/images/avatar.jpg" alt="About Picture">-->
+    <!--					</div>-->
+    <!--					<div class="col-md-7">-->
+
+    <!--						<div class="about-desc wow fadeInUp" data-wow-duration="1s"  data-wow-delay="500ms" >-->
+    <!--							<div class="about-desc-content"  style="background-color: #121212">-->
+    <!--								<h1 class="font-weight-light mb-5">I'm Erik Espuñes Juberó</h1>-->
+    <!--								<p class="font-weight-light my-3">Since I was very little, I played videogames. I do not have any memory in which I was not holding a controller or a game device.<br>My real interest in making videogames, started the summer I finished secondary school (ESO in Spain) and I was about to start the baccalaureate, around 2014. I remember playing GTA V, and thinking, how they did it. I also would not be interested in videogames if was not for Assassin’s Creed, my favourite game saga. Since then, I started learning how to code videogames and decided to study computer science. However, I discovered a double university degree in computer science and videogames.<br>I do consider myself a good and hardworking programmer, always motivated to learn more programming and find the best solutions for the challenges I find along the way.-->
+    <!--								</p>-->
+    <!--							</div>-->
+
+    <!--							<div class="about-desc-more text-left mt-5">-->
+    <!--								<div class="row">-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-calendar"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<span>19/01/1998</span>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-pin"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<span>Barcelona, Spain</span>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-graduation"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<span>Master</span>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-github"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<a target="_blank" rel="noopener noreferrer" href="https://github.com/eespunes">eespunes</a>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-phone"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<a href="tel:034625014895">+34 625014895</a>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-md-6">-->
+    <!--										<div class="about-desc-info">-->
+    <!--											<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--												<div class="about-desc-icon">-->
+    <!--													<i class="lni lni-envelope"></i>-->
+    <!--												</div>-->
+    <!--												<div class="about-desc-info-desc">-->
+    <!--													<a href="mailto:erik.espunyes7@outlook.com">erik.espunyes7@outlook.com</a>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: ABOUT &ndash;&gt;-->
+
+    <!--		&lt;!&ndash; START: SERVICES &ndash;&gt;-->
+    <!--		<div class="section" id="SERVICES">-->
+    <!--			<div class="container">-->
+    <!--				<div class="section-head text-center">-->
+    <!--					<span>WHAT I DO</span>-->
+    <!--					<h2>My Services</h2>-->
+    <!--				</div>-->
+
+    <!--				<div class="row mt-4">-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-color-pallet"></i>-->
+    <!--									<span>01</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Graphic Design</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".2s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-laptop-phone"></i>-->
+    <!--									<span>02</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Web Development</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".3s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-video"></i>-->
+    <!--									<span>03</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Media Marketing</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".4s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-network"></i>-->
+    <!--									<span>04</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Advetising</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".5s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-game"></i>-->
+    <!--									<span>05</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Game Development</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--					<div class="col-sm-6 col-lg-4">-->
+    <!--						<div class="services-list mt-4 wow fadeInUp" data-wow-duration="1.5s" data-wow-delay=".6s">-->
+    <!--							<div class="services-list&#45;&#45;content d-flex align-items-center b-box hover-state p-4">-->
+    <!--								<div class="services-list-icon">-->
+    <!--									<i class="lni-bar-chart"></i>-->
+    <!--									<span>06</span>-->
+    <!--								</div>-->
+    <!--								<div class="services-list-desc">-->
+    <!--									<h5 class="mb-0">Analytics</h5>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: SERVICES &ndash;&gt;-->
+
+    <!--&lt;!&ndash;		&lt;!&ndash; START: PRICE &ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;		<div class="section" id="PRICE">&ndash;&gt;-->
+    <!--&lt;!&ndash;			<div class="container">&ndash;&gt;-->
+    <!--&lt;!&ndash;				<div class="section-head text-center">&ndash;&gt;-->
+    <!--&lt;!&ndash;					<span>WHAT I DO</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;					<h2>My Pricing</h2>&ndash;&gt;-->
+    <!--&lt;!&ndash;				</div>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;				<div class="row mt-5 pt-5">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <div class="col-md-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        <div class="price-box b-box">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        	<div class="price-box&#45;&#45;content">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                        	<div class="price-box-head p-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <h6 class="badge">Basic</h6>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <div class="bold price-price">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <sup>$</sup>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <span>29</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <ul class="price-features">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>Community Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>200+ Pages</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>10 Header variations</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>24/7 Free Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li><i class="fas fa-times"></i></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li><i class="fas fa-times"></i></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <div class="text-center p-3">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            	<button class="btn btn-small shadow-none">Start</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <div class="col-md-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        <div class="price-box b-box featured">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        	<div class="price-box&#45;&#45;content">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <div class="price-box-head p-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <h6 class="badge">Enterprice</h6>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <div class="bold price-price">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <sup>$</sup>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <span>399</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <ul class="price-features">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>Community Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>200+ Pages</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>10 Header variations</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>24/7 Free Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>Priority Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>20+ home page options</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <div class="text-center p-3">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            	<button class="btn btn-small shadow-none btn-gradient">Start</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <div class="col-md-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        <div class="price-box b-box">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        	<div class="price-box&#45;&#45;content">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <div class="price-box-head p-4">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <h6 class="badge">Company</h6>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            <div class="bold price-price">&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <sup>$</sup>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                                <span>299</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;		                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <ul class="price-features">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>Community Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>200+ Pages</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>10 Header variations</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li>24/7 Free Support</li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li><i class="fas fa-times"></i></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                                <li><i class="fas fa-times"></i></li>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <hr>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            <div class="text-center p-3">&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            	<button class="btn btn-small shadow-none">Start</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;	                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;		</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;		&lt;!&ndash; END: PRICE &ndash;&gt;&ndash;&gt;-->
+
+    <!--		&lt;!&ndash; START: RESUME &ndash;&gt;-->
+    <!--		<div class="section" id="RESUME">-->
+    <!--			<div class="container">-->
+    <!--				<div class="row justify-content-center align-items-center">-->
+    <!--					<div class="col-md-3">-->
+
+    <!--						<div class="section-head">-->
+    <!--							<span>MY RESUME</span>-->
+    <!--							<h2>MY EXPERTISES</h2>-->
+    <!--						</div>-->
+
+    <!--						<ul class="nav nav-tabs">-->
+    <!--							<li class="nav-item">-->
+    <!--								<a class="nav-link active" data-toggle="tab" href="#tab1">My Experience</a>-->
+    <!--							</li>-->
+    <!--							<li class="nav-item">-->
+    <!--								<a class="nav-link" data-toggle="tab" href="#tab2">My Education</a>-->
+    <!--							</li>-->
+    <!--							<li class="nav-item">-->
+    <!--								<a class="nav-link" data-toggle="tab" href="#tab3">MY SKILLS</a>-->
+    <!--							</li>-->
+    <!--						</ul>-->
+
+    <!--					</div>-->
+
+    <!--					<div class="col-md-9">-->
+    <!--						<div class="tab-content">-->
+    <!--							<div class="tab-pane active" id="tab1">-->
+    <!--								<div class="ExperienceList pb-3">-->
+    <!--									<div class="resume-list b-box p-4">-->
+    <!--										<div class="row align-items-center">-->
+    <!--											<div class="col-3 col-md-3 pb-3 pb-md-0">-->
+    <!--												Google Inc.-->
+    <!--											</div>-->
+    <!--											<div class="col-md-5 pb-2 pb-md-0">-->
+    <!--												<h5 class="mb-3">Senior Architect</h5>-->
+    <!--												<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--											</div>-->
+    <!--											<div class="col-md-4 text-md-right"><h6 class="badge badge-light">2015 - Present</h6></div>-->
+
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="resume-list b-box p-4">-->
+    <!--										<div class="row align-items-center">-->
+    <!--											<div class="col-3 col-md-3 pb-3 pb-md-0">-->
+    <!--												Facebook.-->
+    <!--											</div>-->
+    <!--											<div class="col-md-5 pb-2 pb-md-0">-->
+    <!--												<h5 class="mb-3">Front-end Developer</h5>-->
+    <!--												<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--											</div>-->
+    <!--											<div class="col-md-4 text-md-right"><h6 class="badge badge-light">2013 - 2015</h6></div>-->
+
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="resume-list b-box p-4">-->
+    <!--										<div class="row align-items-center">-->
+    <!--											<div class="col-3 col-md-3 pb-3 pb-md-0">-->
+    <!--												Envato.-->
+    <!--											</div>-->
+    <!--											<div class="col-md-5 pb-2 pb-md-0">-->
+    <!--												<h5 class="mb-3">UI Developer</h5>-->
+    <!--												<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--											</div>-->
+    <!--											<div class="col-md-4 text-md-right"><h6 class="badge badge-light">2011 - 2013</h6></div>-->
+
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--							<div class="tab-pane" id="tab2">-->
+    <!--								<div class="EducationList">-->
+    <!--									<div class="row">-->
+    <!--										<div class="col-md-6">-->
+    <!--											<div class="resume-list b-box p-4 mb-4">-->
+    <!--												<div>-->
+    <!--													<h5>Master in Arts</h5>-->
+    <!--													<h6 class="badge badge-light d-inline-block my-3">2006-2008</h6>-->
+    <!--													<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--										<div class="col-md-6">-->
+    <!--											<div class="resume-list b-box p-4 mb-4">-->
+    <!--												<div>-->
+    <!--													<h5>Master in Arts</h5>-->
+    <!--													<h6 class="badge badge-light d-inline-block my-3">2006-2008</h6>-->
+    <!--													<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--										<div class="col-md-6">-->
+    <!--											<div class="resume-list b-box p-4 mb-4">-->
+    <!--												<div>-->
+    <!--													<h5>Master in Arts</h5>-->
+    <!--													<h6 class="badge badge-light d-inline-block my-3">2006-2008</h6>-->
+    <!--													<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--										<div class="col-md-6">-->
+    <!--											<div class="resume-list b-box p-4 mb-4">-->
+    <!--												<div>-->
+    <!--													<h5>Art University</h5>-->
+    <!--													<h6 class="badge badge-light d-inline-block my-3">2006-2008</h6>-->
+    <!--													<p>Collaborate with creative and development teams on the execution of ideas.</p>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--							<div class="tab-pane" id="tab3">-->
+    <!--								<div class="section-skills-wrap">-->
+    <!--									<div class="row ">-->
+    <!--										<div class="col-md-6">-->
+    <!--											<h4 class="mb-5">Coding Skills</h4>-->
+
+    <!--											<div class="resume-panel">-->
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s">-->
+    <!--													<h6>Graphic Design </h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".2s">-->
+    <!--													<h6>Logo Design</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".3s">-->
+    <!--													<h6>Logo Design</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-0 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".4s">-->
+    <!--													<h6>Photoshop & Figma</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+
+    <!--										<div class="col-md-6">-->
+    <!--											<div class="resume-panel">-->
+    <!--												<h4 class="mb-5">Design Skills</h4>-->
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s">-->
+    <!--													<h6>Graphic Design </h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".2s">-->
+    <!--													<h6>Logo Design</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-4 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".3s">-->
+    <!--													<h6>Logo Design</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+
+    <!--												<div class="mb-0 wow fadeInUp"  data-wow-duration="1.5s" data-wow-delay=".4s">-->
+    <!--													<h6>Photoshop & Figma</h6>-->
+    <!--													<div class="progress mt-2">-->
+    <!--														<div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--													</div>-->
+    <!--												</div>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: RESUME &ndash;&gt;-->
+
+    <!--		&lt;!&ndash; START: PORTFOLIO &ndash;&gt;-->
+    <!--		<div class="section" id="PORTFOLIO">-->
+    <!--			<div class="container">-->
+    <!--				<div class="section-head text-center">-->
+    <!--					<span>TAKE A LOOK AT</span>-->
+    <!--					<h2>Portfolio</h2>-->
+    <!--				</div>-->
+
+    <!--				<div class="container swiper-container swiper-portfolio wow fadeInUp" data-wow-duration="1.5s">-->
+    <!--					<div class=" swiper-wrapper">-->
+    <!--						<div class="portfolio-item swiper-slide " data-groups="all slideshow">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p1-1.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p1-1.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide image" data-groups="all image">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p2-2.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p2-2.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide slideshow" data-groups="all slideshow">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p3-3.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p3-3.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide video" data-groups="all video">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p4-4.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p4-4.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide  slideshow" data-groups="all slideshow">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p5-5.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p5-5.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide image" data-groups="all image">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p6-6.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p6-6.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide video" data-groups="all video">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p7-7.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p7-7.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide  slideshow" data-groups="all slideshow">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p8-8.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p8-8.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--						<div class="portfolio-item swiper-slide image" data-groups="all image">-->
+    <!--							<a href="../../../../../../Escritorio/assets/images/p9-9.jpg" class="portfolio-item&#45;&#45;content simple-ajax-popup">-->
+    <!--								<div class="portfolio-item&#45;&#45;img b-box">-->
+    <!--									<img src="../../../../../../Escritorio/assets/images/p9-9.jpg" class="img-fluid mx-auto" alt="work-img">-->
+    <!--								</div>-->
+    <!--								<div class="portfolio-item&#45;&#45;desc d-flex justify-content-center align-items-center">-->
+    <!--									<div class="portfolio-item&#45;&#45;desc-in">-->
+    <!--										<h3 class="mb-2 text-white">The wall</h3>-->
+    <!--										<p class="text-white">Slideshow</p>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</a>-->
+    <!--						</div>-->
+
+    <!--					</div>-->
+    <!--					<div class="portfolio-pagination">-->
+
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: PORTFOLIO &ndash;&gt;-->
+
+    <!--		&lt;!&ndash; START: TESTIMONY &ndash;&gt;-->
+    <!--		<div class="section" id="TESTIMONY">-->
+    <!--			<div class="container">-->
+    <!--				<div class="section-head text-center">-->
+    <!--					<span>Kind Words</span>-->
+    <!--					<h2>testimonial</h2>-->
+    <!--				</div>-->
+    <!--				<div class="row">-->
+    <!--					<div class="col-lg-12">-->
+    <!--						<div class="swiper-container swiper-testimony wow fadeInUp"  data-wow-duration="1.5s">-->
+    <!--							<div class="swiper-wrapper">-->
+    <!--								<div class="swiper-slide single-testimonials ">-->
+    <!--									<div class="single-testimonials-in mx-auto text-center">-->
+    <!--										<div class="single-testimonials-head p-4 p-md-5 b-box">-->
+    <!--											<p>"Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse."</p>-->
+    <!--										</div>-->
+    <!--										<div class="single-testimonials-foot mx-auto mt-4">-->
+    <!--											<img src="../../../../../../Escritorio/assets/images/avatar1.jpg" alt="" class="mx-auto b-box">-->
+    <!--											<h4 class="mt-3 font-weight-bold">Anj Joseph</h4>-->
+    <!--											<span class="mt-1 d-block">Web Developer</span>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+
+    <!--								<div class="swiper-slide single-testimonials ">-->
+    <!--									<div class="single-testimonials-in mx-auto text-center">-->
+    <!--										<div class="single-testimonials-head p-4 p-md-5 b-box">-->
+    <!--											<p>"Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse."</p>-->
+    <!--										</div>-->
+    <!--										<div class="single-testimonials-foot mx-auto mt-4">-->
+    <!--											<img src="../../../../../../Escritorio/assets/images/avatar1.jpg" alt="" class="mx-auto b-box">-->
+    <!--											<h4 class="mt-3 font-weight-bold">Anj Joseph</h4>-->
+    <!--											<span class="mt-1 d-block">Web Developer</span>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+
+    <!--								<div class="swiper-slide single-testimonials ">-->
+    <!--									<div class="single-testimonials-in mx-auto text-center">-->
+    <!--										<div class="single-testimonials-head p-4 p-md-5 b-box">-->
+    <!--											<p>"Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse."</p>-->
+    <!--										</div>-->
+    <!--										<div class="single-testimonials-foot mx-auto mt-4">-->
+    <!--											<img src="../../../../../../Escritorio/assets/images/avatar1.jpg" alt="" class="mx-auto b-box">-->
+    <!--											<h4 class="mt-3 font-weight-bold">Anj Joseph</h4>-->
+    <!--											<span class="mt-1 d-block">Web Developer</span>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+
+    <!--								<div class="swiper-slide single-testimonials ">-->
+    <!--									<div class="single-testimonials-in mx-auto text-center">-->
+    <!--										<div class="single-testimonials-head p-4 p-md-5 b-box">-->
+    <!--											<p>"Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse."</p>-->
+    <!--										</div>-->
+    <!--										<div class="single-testimonials-foot mx-auto mt-4">-->
+    <!--											<img src="../../../../../../Escritorio/assets/images/avatar1.jpg" alt="" class="mx-auto b-box">-->
+    <!--											<h4 class="mt-3 font-weight-bold">Anj Joseph</h4>-->
+    <!--											<span class="mt-1 d-block">Web Developer</span>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+
+    <!--								<div class="swiper-slide single-testimonials ">-->
+    <!--									<div class="single-testimonials-in mx-auto text-center">-->
+    <!--										<div class="single-testimonials-head p-4 p-md-5 b-box">-->
+    <!--											<p>"Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse."</p>-->
+    <!--										</div>-->
+    <!--										<div class="single-testimonials-foot mx-auto mt-4">-->
+    <!--											<img src="../../../../../../Escritorio/assets/images/avatar1.jpg" alt="" class="mx-auto b-box">-->
+    <!--											<h4 class="mt-3 font-weight-bold">Anj Joseph</h4>-->
+    <!--											<span class="mt-1 d-block">Web Developer</span>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+
+    <!--							</div>-->
+    <!--							<div class="swiper-pagination"></div>-->
+    <!--						</div>-->
+
+    <!--						<div class="testimony-nav">-->
+    <!--							<a href="#" class="swiper-button-next"></a>-->
+    <!--							<a href="#" class="swiper-button-prev"></a>-->
+    <!--						</div>-->
+
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: TESTIMONY &ndash;&gt;-->
+
+    <!--		&lt;!&ndash; START: CONTACT &ndash;&gt;-->
+    <!--		<div class="section" id="CONTACT">-->
+    <!--			<div class="container">-->
+    <!--				<div class="row justify-content-center align-items-center">-->
+    <!--					<div class="col-md-4">-->
+    <!--						<div class="section-head">-->
+    <!--							<span>say Hello</span>-->
+    <!--							<h2>Contact </h2>-->
+    <!--						</div>-->
+    <!--					</div>-->
+
+    <!--					<div class="col-md-8">-->
+    <!--						<div class="contact-details">-->
+    <!--							<h5 class="section-subHead mb-4"> Get in Touch</h5>-->
+    <!--							<div class="row">-->
+    <!--								<div class="col-lg-6">-->
+
+    <!--									<div class="about-desc-info">-->
+    <!--										<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--											<div class="about-desc-icon">-->
+    <!--												<i class="lni-mobile"></i>-->
+    <!--											</div>-->
+    <!--											<div class="about-desc-info-desc">-->
+    <!--												<a href="tel:9876543210" class="">+987 654 3210</a>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--								<div class="col-lg-6">-->
+
+    <!--									<div class="about-desc-info">-->
+    <!--										<div class="about-desc-info-content d-flex align-items-center hover-state b-box">-->
+    <!--											<div class="about-desc-icon">-->
+    <!--												<i class="lni-envelope"></i>-->
+    <!--											</div>-->
+    <!--											<div class="about-desc-info-desc">-->
+    <!--												<a href="mailto:gtomdesign@gmail.com">gtomdesign@gmail.com</a>-->
+    <!--											</div>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</div>-->
+    <!--						</div>-->
+    <!--						<div class="contact-form mt-4">-->
+    <!--							<form method="post" action="../../../../../../Escritorio/php/contact.php" name="contact-form" id="contactForm">-->
+    <!--								<h5 class="section-subHead mb-4"> Contact Form</h5>-->
+    <!--								<div id="formMessage" style="display: none;"><h3>Email Sending</h3></div>-->
+    <!--								<div class="row">-->
+    <!--									<div class="col-lg-6">-->
+    <!--										<div class="form-group mb-3">-->
+    <!--											<input name="name" id="name" type="text" class="form-control b-box" placeholder="Your Name *" required>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--									<div class="col-lg-6">-->
+    <!--										<div class="form-group mb-3">-->
+    <!--											<input name="email" id="email" type="email" class="form-control b-box" placeholder="Your Email *" required>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--								<div class="row">-->
+    <!--									<div class="col-lg-12">-->
+    <!--										<div class="form-group mb-3">-->
+    <!--											<input type="text" class="form-control b-box" id="subject" placeholder="Your Subject.." required>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--								<div class="row">-->
+    <!--									<div class="col-lg-12">-->
+    <!--										<div class="form-group mb-3">-->
+    <!--											<textarea name="comments" id="comments" rows="4" class="form-control b-box" placeholder="Your message..."></textarea>-->
+    <!--										</div>-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--								<div class="row">-->
+    <!--									<div class="col-lg-12 mt-4 mb-5">-->
+    <!--										<input type="submit" id="submit" name="send" class="submitBnt btn btn-outline text-uppercase" value="Submit">-->
+    <!--									</div>-->
+    <!--								</div>-->
+    <!--							</form>-->
+    <!--						</div>-->
+    <!--					</div>-->
+    <!--				</div>-->
+    <!--			</div>-->
+    <!--		</div>-->
+    <!--		&lt;!&ndash; END: CONTACT &ndash;&gt;-->
+    <!--	</div>-->
 </div>
+<canvas id="c"></canvas>
+<!--	<div class="waves"></div>-->
+
+
+<div class="mobileView">
+    <div class="mobileView-wrap">
+        <div class="mobileView-content">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <defs>
+                    <linearGradient id="grad1" x1="100%" y1="100%" x2="0%" y2="60%">
+                        <stop offset="40%" style="stop-color:#ff1ba6;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#ed2a4a;stop-opacity:1"></stop>
+                    </linearGradient>
+                </defs>
+                <text fill="url(#grad1)" font-size="60" x="0" y="100" style="
+			    font-weight: 700;
+			">Too small!
+                </text>
+            </svg>
+            <h4 class="mb-3">MAKE YOUR BROWSER WINDOW WIDER</h4>
+            <p> Please resize the browser window wider, you are not in mobile device. Switch to mobile device to see the
+                mobile view.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPTS -->
+
+<script src="assets/js/vendor.js"></script>
+<script src="assets/js/jquery.pagepiling.min.js"></script>
+<script src="assets/js/dots-wave.js"></script>
+
+<script src="assets/js/imagesloaded.pkgd.js"></script>
+<script src="assets/js/textition.min.js"></script>
+<script src="assets/js/matrixRain.js"></script>
+
+<!-- Contact Js -->
+<script src="assets/js/contact.js"></script>
+
+<!-- Custom Js -->
+<script src="assets/js/custom.js"></script>
 </body>
 </html>
