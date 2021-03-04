@@ -160,13 +160,11 @@
             verticalCentered: true,
             sectionsColor: [],
             anchors: [
-                'HOME', 
-                'ABOUT', 
-                'SERVICES', 
-                'PRICE', 
-                'RESUME', 
-                'PORTFOLIO', 
-                'TESTIMONY', 
+                'HOME',
+                'ABOUT',
+                'RESUME',
+                'SERVICES',
+                'PORTFOLIO',
                 'CONTACT'
             ],
             scrollingSpeed: 500,
@@ -179,14 +177,12 @@
                 'bulletsColor': '#fff',
                 'position': 'right',
                 'tooltips': [
-                    'HOME', 
-                    'ABOUT', 
-                    'SERVICES', 
-                    'PRICE', 
-                    'Resume', 
-                    'Portfolio', 
-                    'Testimony', 
-                    'Contact'
+                    'HOME',
+                    'ABOUT',
+                    'RESUME',
+                    'SERVICES',
+                    'PORTFOLIO',
+                    'CONTACT'
                 ]
             },
             normalScrollElements: null,
