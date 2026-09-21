@@ -25,11 +25,17 @@ site disagreeing.
 
 ## Version stamp
 
-`version.json` is generated from git by `scripts/version.js` and shown in both
-footers as `Build v1.<commits> · <sha>`. A pre-commit hook keeps it current:
+`version.json` carries `v1.<commit-count>`, shown in both footers as
+`Build v1.<n>`. The GitHub Action in `.github/workflows/version.yml` rewrites it
+after anything lands on `master`, counting its own stamping commit so the file
+matches the history it ships in. Pushes that only touch `version.json` are
+ignored, so the bot cannot retrigger itself.
 
-    npm run hooks:install     # once per checkout
-    npm run version:write     # or refresh it by hand
+Nothing needs installing locally. To refresh it by hand:
 
-The hook is local to your clone (git does not ship hooks), so install it after
-cloning. Without `version.json` the stamp simply does not render.
+    npm run version:write
+
+A pre-commit hook is available (`npm run hooks:install`) for anyone who wants
+the number to move without pushing — but with CI stamping too, each push would
+then bump it twice, so leave it off unless you have a reason. Without
+`version.json` the stamp simply does not render.

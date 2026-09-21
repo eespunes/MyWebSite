@@ -9,7 +9,13 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const ROOT = path.join(__dirname, "..");
-const pending = process.argv.includes("--pending");
+/* --pending: a local pre-commit run, where the commit being written does not
+   exist yet.
+   --next:    a CI run that will itself commit version.json, so the count has
+              to include that commit for the file to match the history it
+              lands in. */
+const pending = process.argv.includes("--pending") || process.argv.includes("--next");
+const inCi = process.argv.includes("--next");
 
 function git(command, fallback = "") {
   try {
@@ -28,8 +34,8 @@ const date = git("log -1 --format=%cs", "");
 const version = {
   version: `v1.${counted}`,
   commits: counted,
-  /* At pre-commit time the pending commit has no sha yet. */
-  sha: pending ? "" : sha,
+  /* The commit being written has no sha yet; record the one it follows. */
+  sha: pending ? (inCi ? sha : "") : sha,
   date: pending ? new Date().toISOString().slice(0, 10) : date,
 };
 
