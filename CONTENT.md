@@ -1,11 +1,11 @@
-<!-- Build v1.68 · 2026-09-21 -->
-# Site Content, Erik Espuñes Jubero
+<!-- Build v1.70 · 2026-09-21 -->
+# Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
 at load and renders every section from it. Nothing is hard-coded in the HTML, so
 if something is not written here, the page does not render it.
 
-Keep the structure below, the parser relies on it:
+Keep the structure below; the parser relies on it:
 
 - `## Section` starts a section; the order here is the order on the page.
 - `- Key: value` lines are fields. `* ` lines are bullets.
@@ -31,7 +31,7 @@ Keep the structure below, the parser relies on it:
 - Eyebrow: Senior Software Engineer
 - Name: ERIK / ESPUÑES JUBERO
 - Portrait: assets/images/avatar.jpg
-- Lead: Scalable, secure backend platforms on AWS, Java, Spring Boot and .NET, owned end to end, from architecture through production operation.
+- Lead: Scalable, secure backend platforms in Java, Spring Boot and .NET on AWS, owned end to end from architecture through production operation.
 - Primary button: View experience → #s-experience
 - Secondary button: Play the games → #s-games
 - Scroll hint: Scroll
@@ -51,9 +51,9 @@ Rotating specialisations:
 - Title: About / Me
 - Theme: light
 
-Lead: I build the backend systems businesses depend on, *scalable, secure and proven under production load*, in Java, Spring Boot and .NET on AWS.
+Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in Java, Spring Boot and .NET on AWS.
 
-Body: I take end-to-end ownership, technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
+Body: I take end-to-end ownership of technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
 
 ### Numbers
 
@@ -108,7 +108,7 @@ Body: I take end-to-end ownership, technical design, delivery and production ope
 
 ### Software Engineer · Container xChange
 
-- Period: 2022 /, / 2025
+- Period: 2022 / - / 2025
 - Meta: Hamburg, DE · Mar 2022 – Apr 2025 · In-house product
 - Tags: Java · Spring Boot
 - Collapsible: yes
