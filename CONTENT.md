@@ -16,7 +16,7 @@ Keep the structure below — the parser relies on it:
 ## Meta
 
 - Title: Erik Espuñes Jubero
-- Description: Erik Espuñes Jubero — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS.
+- Description: Erik Espuñes Jubero — Senior Software Engineer. High-volume, event-driven backend platforms in Java and Spring Boot on AWS, owned from architecture through production.
 - Author: eespunes
 - Theme color: #121212
 - Favicon: assets/images/favicon.png
@@ -31,7 +31,7 @@ Keep the structure below — the parser relies on it:
 - Eyebrow: Senior Software Engineer
 - Name: ERIK / ESPUÑES JUBERO
 - Portrait: assets/images/avatar.jpg
-- Lead: Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
+- Lead: Scalable, secure backend platforms in Java and Spring Boot on AWS — owned end to end, from architecture through production operation.
 - Primary button: View experience → #s-experience
 - Secondary button: Play the games → #s-games
 - Scroll hint: Scroll
@@ -49,18 +49,18 @@ Terminal lines:
 - Title: About / Me
 - Theme: light
 
-Lead: I build backend systems that hold up — *scalable, secure and boring in the way production should be* — in Java and Spring Boot on AWS.
+Lead: I build the backend systems businesses depend on — *scalable, secure and proven under production load* — in Java and Spring Boot on AWS.
 
-Body: I like owning a solution end to end, from technical design through to production, and shaping the architecture and engineering standards a team works to along the way. I'm naturally curious and work things out for myself — part of why I enjoy tackling the problems most people would rather hand off.
+Body: I take end-to-end ownership — technical design, delivery and production operation — and shape the architecture and engineering standards a team works to. The problems most people would rather hand off are where I do my best work.
 
 ### Numbers
 
 | Figure | Label |
 | --- | --- |
-| 6 mo | Legacy → cloud-native migration originally scoped in years |
-| $1M | Monthly revenue on the product whose squad I led |
-| 10 | Engineers on the tracking platform I led development of |
-| ~50 | Engineers using the AI tooling I shipped department-wide |
+| 6 mo | To deliver a legacy-to-cloud-native migration originally scoped in years |
+| $1M | Monthly revenue of the product owned by the squad I led |
+| 10 | Engineers on the tracking platform whose development I led |
+| ~50 | Engineers who adopted the AI tooling I shipped department-wide |
 
 ### Education
 
@@ -90,7 +90,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 - Period: 2025 / — / now
 - Meta: Hilversum, NL · Hybrid · Jun 2025 – Present
-- Summary: Placed with client engineering organisations to lead backend architecture and modernisation work, and to raise the engineering standard of the teams I join.
+- Summary: Brought into client engineering organisations to lead backend architecture and modernisation programmes — setting technical direction and raising the engineering standard of every team I join.
 - Collapsible: expanded
 - Engagements label: Client engagements
 
@@ -98,9 +98,9 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 - Meta: Eindhoven, NL · Remote · Jul 2025 – May 2026
 
-* Led transformation of global brokerage systems — migrated a giant legacy codebase to cloud-native architecture in **6 months with 7 engineers**, work initially scoped at multiple years.
-* Architected customs data services handling cross-border declarations across three countries, meeting EU and US customs requirements in a regulated enterprise.
-* Built an MCP integration connecting GitHub Copilot to customs-data sources; rolled it out department-wide, adopted by **~50 of 100+ engineers**.
+* Led the transformation of global brokerage systems, migrating a large-scale legacy codebase to cloud-native architecture in **6 months with 7 engineers** — a programme originally scoped at multiple years.
+* Architected the customs data services processing cross-border declarations across three countries, meeting EU and US regulatory requirements in a compliance-driven enterprise environment.
+* Built an MCP integration connecting GitHub Copilot to customs data sources and led its department-wide rollout — adopted by **~50 of 100+ engineers**.
 
 ### Software Engineer · Container xChange
 
@@ -109,23 +109,23 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Collapsible: yes
 - Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter.pdf
 
-* Led development of a global logistics tracking platform with a team of **10 engineers** — distributed microservices, REST APIs and end-to-end features on AWS with Java, Spring Boot and Angular.
-* Directly led a 3-engineer squad on a product generating **$1M monthly revenue**.
-* Automated the container-tracking pipeline into an event-driven system, scaling from **~20 to hundreds of thousands** of containers scraped per day.
+* Led development of a global logistics tracking platform with a team of **10 engineers** — distributed microservices and REST APIs delivered end to end on AWS with Java, Spring Boot and Angular.
+* Directly led a three-engineer squad accountable for a product generating **$1M in monthly revenue**.
+* Re-architected the container-tracking pipeline into a high-volume, event-driven system, scaling daily throughput from **~20 to hundreds of thousands** of containers.
 
 ## Competencies
 
 - Nav label: Competencies
 - Title: Compe- / tencies
-- Side note: High-volume, event-driven distributed systems on AWS — and increasingly, AI-assisted engineering that makes whole teams faster.
+- Side note: High-volume, event-driven distributed systems on AWS — and the AI-assisted engineering practices that make whole teams faster.
 
 ### Cards
 
 | # | Title | Description | Tags |
 | --- | --- | --- | --- |
-| 01 | Backend & APIs | Distributed, event-driven services designed to survive production — modelled with DDD, tested before they ship. | Java · Spring Boot · .NET · OpenAPI · REST · Microservices |
-| 02 | Cloud & Platform | Owning the path from laptop to production: infrastructure as code, pipelines and automated quality gates. | AWS · IaC · CI/CD · Automated testing · Observability |
-| 03 | AI-Assisted Engineering | Building the tooling that makes an entire department faster, not just the engineer using it. | Claude · Codex · Copilot · MCP · Agentic workflows |
+| 01 | Backend & APIs | Distributed, event-driven services engineered for production reality — domain-modelled, contract-first and tested before they ship. | Java · Spring Boot · .NET · OpenAPI · REST · Microservices |
+| 02 | Cloud & Platform | Ownership of the full path to production: infrastructure as code, CI/CD pipelines and automated quality gates. | AWS · IaC · CI/CD · Automated testing · Observability |
+| 03 | AI-Assisted Engineering | Engineering the tooling that raises an entire department's output, not just one engineer's. | Claude · Codex · Copilot · MCP · Agentic workflows |
 
 ### Tag rows
 
@@ -139,7 +139,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 - Nav label: Projects
 - Title: Personal / Projects
-- Side note: Things I build on my own time — usually to scratch an itch, always to learn something that carries back into the day job.
+- Side note: Self-directed products, built and shipped end to end — each chosen to master something that carries straight back into professional work.
 - Link label: View on GitHub
 
 | # | Project | Status | Description | Stack | Link |
@@ -152,7 +152,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 - Nav label: Games
 - Title: My Games
-- Side note: Where it started — the game design half of the double degree, plus a few jams.
+- Side note: Where the engineering began — the game-development half of a double degree, sharpened in game jams.
 - Link: All on itch.io → https://eespunes.itch.io
 - Hint: ← Scroll sideways · {count} titles
 - Featured label: Featured
@@ -190,9 +190,9 @@ sections above — only what the web page has no place for lives here.
 - Back label: ← Back to site
 - Save label: Save as PDF
 - Also label: Also
-- Also: Game developer — Unity and C#. Games shipped on itch.io, from jam prototypes to a networked multiplayer racer.
+- Also: Game developer — Unity and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
-- Summary: Backend engineer with deep expertise in Java and Spring Boot, building high-volume, event-driven distributed systems on AWS. Comfortable across modern platform engineering — cloud-native architecture, Infrastructure-as-Code, CI/CD and automated testing — and increasingly focused on AI-assisted engineering: MCP integrations and agentic coding workflows that make whole teams faster.
+- Summary: Senior backend engineer with deep expertise in Java and Spring Boot, designing high-volume, event-driven distributed systems on AWS. Fluent across modern platform engineering — cloud-native architecture, infrastructure as code, CI/CD and automated testing — and a hands-on practitioner of AI-assisted engineering, building the MCP integrations and agentic workflows that make whole teams faster.
 - Footer right: Erik Espuñes Jubero
 - Version label: Build
 
@@ -210,7 +210,7 @@ sections above — only what the web page has no place for lives here.
 - Nav label: Contact
 - Theme: light
 - Heading: Let's build / something solid.
-- Body: Senior Software Engineer. Open to conversations about backend architecture, platform engineering and agentic developer tooling.
+- Body: Senior Software Engineer. Open to conversations on backend architecture, platform engineering and AI-assisted developer tooling.
 - Button: Download CV → cv.html
 - Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
