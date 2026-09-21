@@ -1,5 +1,5 @@
 /* Full-page paging, scroll-spy dots, expandable entries and the hero typing line. */
-(function () {
+window.initSite = function () {
   "use strict";
 
   var root = document.getElementById("cv-scroll");
@@ -190,12 +190,8 @@
   (function type() {
     var el = document.getElementById("cv-type");
     if (!el) return;
-    var lines = [
-      "java --spring-boot --aws --event-driven",
-      "migrate legacy/ --to cloud-native --in 6mo",
-      "scale pipeline 20 -> 300000 events/day",
-      "mcp connect copilot://customs-data",
-    ];
+    var lines = window.CV_TERMINAL_LINES || [];
+    if (!lines.length) return;
     if (reduced) {
       el.textContent = lines[0];
       return;
@@ -220,4 +216,4 @@
       setTimeout(tick, wait);
     })();
   })();
-})();
+};

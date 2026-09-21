@@ -1353,3 +1353,26 @@ a:hover {
     scroll-behavior: auto !important;
   }
 }
+
+/* Shown when CONTENT.md cannot be fetched (e.g. opened over file://). */
+
+.load-error {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 25vh 28px 0;
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+.load-error h1 {
+  font-size: 21px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 14px;
+}
+
+.load-error p {
+  line-height: 1.7;
+  font-size: 14px;
+}
