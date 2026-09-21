@@ -1,4 +1,4 @@
-<!-- Build v1.42 · 2026-09-21 -->
+<!-- Build v1.43 · 2026-09-21 -->
 # Site Content — Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -192,7 +192,7 @@ sections above — only what the web page has no place for lives here.
 - Also: Game developer — Unity and C#. Games shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
 - Summary: Backend engineer with deep expertise in Java and Spring Boot, building high-volume, event-driven distributed systems on AWS. Comfortable across modern platform engineering — cloud-native architecture, Infrastructure-as-Code, CI/CD and automated testing — and increasingly focused on AI-assisted engineering: MCP integrations and agentic coding workflows that make whole teams faster.
-- Footer right: © 2026 Erik Espuñes Jubero
+- Footer right: Erik Espuñes Jubero
 - Version label: Build
 
 ### Skill groups

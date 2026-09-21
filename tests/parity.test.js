@@ -1,4 +1,4 @@
-// Build v1.42 · 2026-09-21
+// Build v1.43 · 2026-09-21
 /* The site and the CV are two views of one file. These compare them against
    each other, so a category that drifts on one surface fails here even if
    both still parse. */
@@ -87,13 +87,13 @@ browserTest("every contact value on the CV also appears on the site", () => {
   }
 });
 
-browserTest("the address is on the site but deliberately not in the CV", () => {
+browserTest("the address appears on both surfaces", () => {
   const index = site.contactKeys.findIndex((k) => k.toLowerCase() === "address");
   if (index === -1) return;
   const address = site.contactValues[index];
   assert.ok(address, "site shows an address");
   assert.ok(
-    !cv.contactLines.some((line) => line.includes(address)),
-    "the CV must not print the street address"
+    cv.contactLines.some((line) => line === address),
+    "the CV should show the same address as the site"
   );
 });

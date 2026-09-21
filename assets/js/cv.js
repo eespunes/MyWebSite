@@ -1,4 +1,4 @@
-// Build v1.42 · 2026-09-21
+// Build v1.43 · 2026-09-21
 /* Builds the printable CV from CONTENT.md — the same file the site renders
    from — then offers it to the browser's PDF printer. */
 (function () {
@@ -126,9 +126,7 @@
     nameBlock.appendChild(el("div", "cv-role", inline(role)));
     railTop.appendChild(nameBlock);
 
-    var contactRows = (contact.tables[0] || []).filter(function (row) {
-      return (row.key || "").toLowerCase() !== "address";
-    });
+    var contactRows = contact.tables[0] || [];
     var contactList = el("div", "cv-contact");
     contactRows.forEach(function (row) {
       contactList.appendChild(el("div", null, inline(contactText(row))));
@@ -340,6 +338,10 @@
         "span",
         null,
         contactRows
+          .filter(function (row) {
+            /* The address needs three lines; the footer has one. */
+            return (row.key || "").toLowerCase() !== "address";
+          })
           .slice(0, 3)
           .map(function (row) {
             return inline(contactText(row));

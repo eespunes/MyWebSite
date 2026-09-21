@@ -1,4 +1,4 @@
-// Build v1.42 · 2026-09-21
+// Build v1.43 · 2026-09-21
 /* Renders cv.html and asserts the printable CV carries the same data as the
    site, in the same categories — both being views of CONTENT.md. */
 const test = require("node:test");
@@ -75,21 +75,19 @@ browserTest("identity comes from Nav, Home and CV", () => {
   assert.ok(cv.title.startsWith(plain(sections.nav.fields.brand)));
 });
 
-browserTest("contact repeats the site's rows, minus the address", () => {
-  const expected = sections.contact.tables[0]
-    .filter((r) => r.key.toLowerCase() !== "address")
-    .map((r) =>
-      /^https?:/.test(r.link)
-        ? r.link.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "")
-        : plain(r.value)
-    );
+browserTest("contact repeats the site's rows, address included", () => {
+  const expected = sections.contact.tables[0].map((r) =>
+    /^https?:/.test(r.link)
+      ? r.link.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "")
+      : plain(r.value)
+  );
   assert.deepEqual(cv.contact, expected);
 
   const address = sections.contact.tables[0].find((r) => r.key.toLowerCase() === "address");
   if (address) {
     assert.ok(
-      !cv.contact.join(" ").includes(plain(address.value)),
-      "the CV must not print the street address"
+      cv.contact.includes(plain(address.value)),
+      "the CV should print the address the site shows"
     );
   }
 });
