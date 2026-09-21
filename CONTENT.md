@@ -40,9 +40,9 @@ Rotating specialisations:
 
 * Java & Spring Boot
 * .NET
-* Event-Driven Systems on AWS
+* AI-Assisted Engineering Architect
 * Cloud-Native Architecture
-* AI-Assisted Engineering
+* Mobile Development
 * Game Development
 
 ## About
