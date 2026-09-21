@@ -1,14 +1,15 @@
-# Site Content — Erik Espuñes Juberó
+# Site Content — Erik Espuñes Jubero
 
-Editable source of truth for the data shown in `index.html`.
-Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
+Source of truth for everything the page renders. Edit here, then mirror the
+change into the matching `<!-- START: ... -->` block in `index.html`.
+If something is not written here, the page does not render it.
 
 ## Meta
 
 | Field | Value |
 | --- | --- |
-| Page title | Erik Espuñes Juberó |
-| Description | Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS. |
+| Page title | Erik Espuñes Jubero |
+| Description | Erik Espuñes Jubero — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS. |
 | Author | eespunes |
 | Theme color | #121212 |
 | Favicon | assets/images/favicon.png |
@@ -30,7 +31,7 @@ One gesture moves exactly one section: wheel, arrow/page keys and swipes are loc
 ## Home
 
 - **Eyebrow:** Senior Software Engineer
-- **Name:** ERIK / ESPUÑES / JUBERÓ *(last line in accent green)*
+- **Name:** ERIK / ESPUÑES Jubero *(last line in accent green)*
 - **Portrait:** assets/images/avatar.jpg (900×900 square, centre-cropped; rendered grayscale by CSS, max 280px)
 - **Lead:** Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - **Buttons:** View experience → #s-experience · Play the games → #s-games
@@ -164,4 +165,4 @@ Cards 12 and 13 show no year — itch.io does not publish their release dates. A
 | LinkedIn | eespunes | https://www.linkedin.com/in/eespunes/ |
 | GitHub | eespunes | https://github.com/eespunes |
 
-- **Footer:** © 2026 Erik Espuñes Juberó · Feanwâlden, NL
+- **Footer:** © 2026 Erik Espuñes Jubero · Feanwâlden, NL
