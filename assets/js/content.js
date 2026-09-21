@@ -1,4 +1,4 @@
-// Build v1.70 · 2026-09-21
+// Build v1.71 · 2026-09-21
 /* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
    every string on screen comes from the Markdown. */
 (function () {

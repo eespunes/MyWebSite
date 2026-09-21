@@ -1,4 +1,4 @@
-// Build v1.70 · 2026-09-21
+// Build v1.71 · 2026-09-21
 /* Renders cv.html and asserts the printable CV carries the same data as the
    site, in the same categories — both being views of CONTENT.md. */
 const test = require("node:test");
