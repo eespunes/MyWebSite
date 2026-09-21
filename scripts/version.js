@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.60 · 2026-09-21
+// Build v1.62 · 2026-09-21
 /* Single source of the build number.
 
    Writes version.json and stamps the version into every source file, so the
