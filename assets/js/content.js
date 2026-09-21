@@ -3,116 +3,8 @@
 (function () {
   "use strict";
 
-  /* ------------------------------------------------------------- markdown */
-
-  /* Splits the document into `## Section` blocks, each with its own
-     `### Sub` blocks, field lines (`- Key: value`), bullets (`* `),
-     tables and loose paragraphs. */
-  function parse(md) {
-    var lines = md.replace(/\r\n/g, "\n").split("\n");
-    var doc = { sections: [] };
-    var section = null;
-    var sub = null;
-
-    function target() {
-      return sub || section;
-    }
-
-    function blank(node) {
-      return {
-        title: node,
-        fields: {},
-        bullets: [],
-        paragraphs: [],
-        tables: [],
-        subs: [],
-      };
-    }
-
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
-      var trimmed = line.trim();
-
-      if (/^##\s+/.test(trimmed) && !/^###/.test(trimmed)) {
-        section = blank(trimmed.replace(/^##\s+/, ""));
-        doc.sections.push(section);
-        sub = null;
-        continue;
-      }
-      if (!section) continue;
-
-      if (/^####\s+/.test(trimmed)) {
-        sub = blank(trimmed.replace(/^####\s+/, ""));
-        sub.depth = 4;
-        (section.subs[section.subs.length - 1] || section).subs.push(sub);
-        continue;
-      }
-      if (/^###\s+/.test(trimmed)) {
-        sub = blank(trimmed.replace(/^###\s+/, ""));
-        sub.depth = 3;
-        section.subs.push(sub);
-        continue;
-      }
-
-      if (/^\|/.test(trimmed)) {
-        var rows = [];
-        while (i < lines.length && /^\s*\|/.test(lines[i])) {
-          rows.push(lines[i].trim());
-          i++;
-        }
-        i--;
-        target().tables.push(readTable(rows));
-        continue;
-      }
-
-      var field = trimmed.match(/^-\s+([^:]+):\s*(.*)$/);
-      if (field) {
-        target().fields[field[1].trim().toLowerCase()] = field[2].trim();
-        continue;
-      }
-
-      if (/^\*\s+/.test(trimmed)) {
-        target().bullets.push(trimmed.replace(/^\*\s+/, ""));
-        continue;
-      }
-
-      if (trimmed) {
-        var labelled = trimmed.match(/^([A-Z][A-Za-z ]{2,20}):\s+(.*)$/);
-        if (labelled) {
-          target().fields[labelled[1].trim().toLowerCase()] = labelled[2].trim();
-        } else {
-          target().paragraphs.push(trimmed);
-        }
-      }
-    }
-    return doc;
-  }
-
-  function cells(row) {
-    return row
-      .replace(/^\|/, "")
-      .replace(/\|$/, "")
-      .split("|")
-      .map(function (c) {
-        return c.trim();
-      });
-  }
-
-  function readTable(rows) {
-    var head = cells(rows[0]).map(function (h) {
-      return h.toLowerCase();
-    });
-    var out = [];
-    for (var i = 2; i < rows.length; i++) {
-      var values = cells(rows[i]);
-      var record = {};
-      head.forEach(function (key, n) {
-        record[key] = values[n] === undefined ? "" : values[n];
-      });
-      out.push(record);
-    }
-    return out;
-  }
+  /* Structure comes from the shared reader in parse.js. */
+  var parse = CVParse.parse;
 
   /* Inline markdown → HTML, with everything else escaped. */
   function inline(text) {
@@ -368,12 +260,7 @@
   }
 
   function subByTitle(section, title) {
-    for (var i = 0; i < section.subs.length; i++) {
-      if (section.subs[i].title.toLowerCase() === title.toLowerCase()) {
-        return section.subs[i];
-      }
-    }
-    return null;
+    return CVParse.byTitle(section ? section.subs : [], title);
   }
 
   function bulletList(items) {
@@ -693,6 +580,11 @@
 
     var footer = el("div", "footer");
     footer.appendChild(el("span", "mono", inline(section.fields["footer left"])));
+    var version = el("span", "mono footer-version");
+    footer.appendChild(version);
+    CVParse.loadVersion().then(function (info) {
+      version.textContent = CVParse.versionText(info, section.fields["version label"]);
+    });
     footer.appendChild(el("span", "mono", inline(section.fields["footer right"])));
     node.appendChild(footer);
     return node;

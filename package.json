@@ -1,0 +1,11 @@
+{
+  "name": "erik-espunes-jubero-site",
+  "private": true,
+  "description": "Portfolio site rendered from CONTENT.md",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "serve": "python3 -m http.server 8000",
+    "version:write": "node scripts/version.js",
+    "hooks:install": "node scripts/install-hooks.js"
+  }
+}

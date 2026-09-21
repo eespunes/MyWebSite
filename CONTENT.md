@@ -143,9 +143,9 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 | # | Project | Status | Description | Stack | Link |
 | --- | --- | --- | --- | --- | --- |
-| 01 | SmartBolus | 2026 | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses — time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
-| 02 | Thrive | 2026 | A family management app — shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
-| 03 | Xebec | 2026 | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
+| 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses — time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
+| 02 | Thrive | In development | A family management app — shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
+| 03 | Xebec | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
 
 ## Games
 
@@ -192,6 +192,7 @@ sections above — only what the web page has no place for lives here.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
 - Summary: Backend engineer with deep expertise in Java and Spring Boot, building high-volume, event-driven distributed systems on AWS. Comfortable across modern platform engineering — cloud-native architecture, Infrastructure-as-Code, CI/CD and automated testing — and increasingly focused on AI-assisted engineering: MCP integrations and agentic coding workflows that make whole teams faster.
 - Footer right: © 2026 Erik Espuñes Jubero
+- Version label: Build
 
 ### Certifications
 
@@ -224,6 +225,7 @@ sections above — only what the web page has no place for lives here.
 - Button: Download CV → cv.html
 - Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
+- Version label: Build
 
 | Key | Value | Link |
 | --- | --- | --- |

@@ -375,6 +375,10 @@ body {
   font-style: italic;
 }
 
+.cv-version {
+  color: #6f6f6f;
+}
+
 .cv-footer {
   padding-top: 14px;
   display: flex;

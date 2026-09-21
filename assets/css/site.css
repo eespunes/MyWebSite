@@ -1246,6 +1246,12 @@ a:hover {
   color: #5c5c5c;
 }
 
+/* Build stamp sits between the two footer lines and recedes. */
+.footer-version {
+  color: #8a8a8a;
+  letter-spacing: 0.08em;
+}
+
 /* ------------------------------------------------------------ responsive */
 
 @media (max-width: 900px) {
