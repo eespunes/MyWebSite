@@ -312,6 +312,8 @@
       var heading = el("h3", null, inline(entry.title));
       var meta = el("div", "tl-meta", inline(entry.fields.meta));
 
+      var entryTags = entry.fields.tags ? tagList(entry.fields.tags) : null;
+
       if (collapsible) {
         var headRow = el("div", "exp-head");
         headRow.setAttribute("data-exp-head", key);
@@ -322,6 +324,7 @@
         var titleBox = el("div");
         titleBox.appendChild(heading);
         titleBox.appendChild(meta);
+        if (entryTags) titleBox.appendChild(entryTags);
         headRow.appendChild(titleBox);
         var toggleLabel = startsOpen
           ? section.fields["collapse label"]
@@ -335,6 +338,7 @@
       } else {
         body.appendChild(heading);
         body.appendChild(meta);
+        if (entryTags) body.appendChild(entryTags);
       }
 
       var content = collapsible ? el("div", "exp-body") : body;
@@ -378,6 +382,7 @@
         cardHead.appendChild(el("h4", null, inline(engagement.title)));
         cardHead.appendChild(el("span", "mono", inline(engagement.fields.meta)));
         card.appendChild(cardHead);
+        if (engagement.fields.tags) card.appendChild(tagList(engagement.fields.tags));
         if (engagement.bullets.length) {
           card.appendChild(bulletList(engagement.bullets));
         }

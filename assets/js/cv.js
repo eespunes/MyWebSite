@@ -276,6 +276,9 @@
       if (entry.fields.meta) {
         body.appendChild(el("div", "cv-entry-meta", inline(entry.fields.meta)));
       }
+      if (entry.fields.tags) {
+        body.appendChild(el("div", "cv-entry-stack", inline(entry.fields.tags)));
+      }
       if (entry.fields.summary) {
         var summary = el("p", null, inline(entry.fields.summary));
         summary.style.marginTop = "7px";
@@ -306,6 +309,9 @@
         head.appendChild(el("h4", null, inline(engagement.title)));
         head.appendChild(el("span", null, inline(engagement.fields.meta)));
         card.appendChild(head);
+        if (engagement.fields.tags) {
+          card.appendChild(el("div", "cv-entry-stack", inline(engagement.fields.tags)));
+        }
         if (engagement.bullets.length) card.appendChild(bullets(engagement.bullets));
         body.appendChild(card);
       });

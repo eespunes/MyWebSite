@@ -92,6 +92,7 @@ Body: I take end-to-end ownership — technical design, delivery and production 
 
 - Period: 2025 / — / now
 - Meta: Hilversum, NL · Hybrid · Jun 2025 – Present
+- Tags: AI · Cloud
 - Summary: Brought into client engineering organisations to lead backend architecture and modernisation programmes — setting technical direction and raising the engineering standard of every team I join.
 - Collapsible: expanded
 - Engagements label: Client engagements
@@ -99,6 +100,7 @@ Body: I take end-to-end ownership — technical design, delivery and production 
 #### UPS
 
 - Meta: Eindhoven, NL · Remote · Jul 2025 – May 2026
+- Tags: .NET · AI
 
 * Led the transformation of global brokerage systems, migrating a large-scale legacy codebase to cloud-native architecture in **6 months with 7 engineers** — a programme originally scoped at multiple years.
 * Architected the customs data services processing cross-border declarations across three countries, meeting EU and US regulatory requirements in a compliance-driven enterprise environment.
@@ -108,6 +110,7 @@ Body: I take end-to-end ownership — technical design, delivery and production 
 
 - Period: 2022 / — / 2025
 - Meta: Hamburg, DE · Mar 2022 – Apr 2025 · In-house product
+- Tags: Java · Spring Boot
 - Collapsible: yes
 - Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter.pdf
 

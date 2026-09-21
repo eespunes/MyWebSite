@@ -504,6 +504,16 @@ body {
   font-weight: 600;
 }
 
+/* Per-role qualifications, as a compact mono line. */
+
+.cv-entry-stack {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
 /* Role progression, engagements and the letter link — as on the site. */
 
 .cv-entry-roles {

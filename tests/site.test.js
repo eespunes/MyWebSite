@@ -31,11 +31,13 @@ const SCRAPE = `JSON.stringify({
     title: item.querySelector('h3').textContent.trim(),
     meta: item.querySelector('.tl-meta').textContent.trim(),
     toggle: item.querySelector('.exp-toggle')?.textContent.trim() ?? null,
+    tags: Array.from(item.querySelectorAll(':scope > .tl-body > .tags .tag, :scope > .tl-body > .exp-head .tags .tag')).map(t => t.textContent.trim()),
     hidden: item.querySelector('.exp-body') ? item.querySelector('.exp-body').hidden : null,
     bullets: Array.from(item.querySelectorAll(':scope > .tl-body > ul > li, :scope > .tl-body > .exp-body > ul > li'))
       .map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     engagements: Array.from(item.querySelectorAll('.engagement')).map(e => ({
       title: e.querySelector('h4').textContent.trim(),
+      tags: Array.from(e.querySelectorAll('.tag')).map(t => t.textContent.trim()),
       meta: e.querySelector('.engagement-head span').textContent.trim(),
       bullets: Array.from(e.querySelectorAll('li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()) })) })),
   skills: Array.from(document.querySelectorAll('.skill-card')).map(c => ({
@@ -147,10 +149,12 @@ browserTest("experience entries, engagements and bullets match Experience", () =
     assert.equal(rendered.meta, plain(entry.fields.meta));
     assert.equal(rendered.when, plain(entry.fields.period));
     assert.deepEqual(rendered.bullets, entry.bullets.map(plain));
+    assert.deepEqual(rendered.tags, splitTags(entry.fields.tags));
     assert.deepEqual(
       rendered.engagements,
       entry.subs.map((e) => ({
         title: plain(e.title),
+        tags: splitTags(e.fields.tags),
         meta: plain(e.fields.meta),
         bullets: e.bullets.map(plain),
       }))

@@ -718,6 +718,17 @@ a:hover {
   letter-spacing: 0.1em;
 }
 
+/* Per-role qualifications */
+
+.tl-body > .tags,
+.exp-head .tags {
+  margin-top: 10px;
+}
+
+.engagement > .tags {
+  margin-top: 10px;
+}
+
 /* "Client engagements" rule */
 
 .tl-divider {
