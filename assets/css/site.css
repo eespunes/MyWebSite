@@ -56,7 +56,7 @@ a:hover {
 #cv-scroll {
   height: 100vh;
   overflow-y: auto;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   background: var(--ink);
   position: relative;
@@ -64,7 +64,8 @@ a:hover {
 }
 
 #cv-scroll::-webkit-scrollbar,
-.cv-pane::-webkit-scrollbar {
+.cv-pane::-webkit-scrollbar,
+.cv-rail::-webkit-scrollbar {
   display: none;
 }
 
@@ -1016,59 +1017,166 @@ a:hover {
 
 /* ------------------------------------------------------------------ games */
 
+.section-games {
+  flex-direction: column;
+  justify-content: center;
+  /* .section centres its children; the rail must span the viewport instead,
+     otherwise it sizes to its content and never scrolls. */
+  align-items: stretch;
+  padding: 104px 0 56px;
+}
+
 .games-head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  margin-bottom: 26px;
+}
+
+.games-head .rule {
+  margin-top: 14px;
 }
 
 .games-head .side-note {
   margin-top: 16px;
-  max-width: 520px;
+  max-width: 460px;
+  font-size: 13.5px;
+  line-height: 1.6;
 }
 
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 16px;
+/* Horizontal rail of cover art */
+
+.cv-rail {
+  overflow-x: auto;
+  padding: 2px 52px 18px 28px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
 }
 
-.game {
-  display: block;
+.game-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  align-items: stretch;
+}
+
+.game-card {
+  position: relative;
+  flex: 0 0 236px;
+  height: 320px;
+  scroll-snap-align: start;
   border: 1px solid var(--line);
-  background: var(--surface);
   border-radius: 2px;
   overflow: hidden;
+  display: block;
+  background: var(--surface);
 }
 
-.game:hover {
+.game-card--featured {
+  flex-basis: 460px;
+}
+
+.game-card:hover {
   border-color: var(--accent);
 }
 
-.game img {
-  display: block;
+.game-card img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
+  filter: saturate(0.85) contrast(1.05);
 }
 
-.game-body {
-  padding: 13px 15px;
+.game-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.94) 0%,
+    rgba(10, 10, 10, 0.72) 34%,
+    rgba(10, 10, 10, 0.12) 68%,
+    rgba(10, 10, 10, 0.35) 100%
+  );
 }
 
-.game-title {
-  font-size: 14.5px;
+.game-num,
+.game-year {
+  position: absolute;
+  top: 12px;
+  font-size: 10px;
+}
+
+.game-num {
+  left: 14px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.game-year {
+  right: 14px;
+  letter-spacing: 0.14em;
+  color: #d6d6d6;
+}
+
+.game-badge {
+  position: absolute;
+  top: 40px;
+  left: 14px;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0b0b0b;
+  background: var(--accent);
+  padding: 4px 9px;
+  border-radius: 2px;
+}
+
+.game-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px 16px 15px;
+  display: block;
+}
+
+.game-name {
+  display: block;
+  font-size: 16px;
   font-weight: 600;
   color: #fff;
+  line-height: 1.25;
+}
+
+.game-card--featured .game-name {
+  font-size: 21px;
 }
 
 .game-sub {
+  display: block;
   font-size: 10.5px;
-  color: #8f8f8f;
+  color: var(--text-dim);
+  margin-top: 6px;
+  letter-spacing: 0.06em;
+}
+
+.game-tech {
+  display: block;
+  font-size: 10px;
+  color: #9a9a9a;
   margin-top: 4px;
+  letter-spacing: 0.06em;
+}
+
+.rail-hint {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a9a9a;
 }
 
 /* ---------------------------------------------------------------- contact */
@@ -1272,6 +1380,16 @@ a:hover {
   .tag-row {
     grid-template-columns: minmax(0, 1fr);
     gap: 10px;
+  }
+
+  .cv-rail {
+    padding: 2px 24px 18px;
+  }
+
+  .game-card,
+  .game-card--featured {
+    flex-basis: 232px;
+    height: 290px;
   }
 }
 

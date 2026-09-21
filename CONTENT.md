@@ -11,7 +11,11 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 | Description | Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS. |
 | Author | eespunes |
 | Theme color | #121212 |
-| Favicon | assets/images/favicon.png |
+| Favicon | assets/images/favicon-32.png, favicon-180.png (apple-touch-icon) — face crop of the portrait |
+
+## Navigation
+
+One gesture moves exactly one section: wheel, arrow/page keys and swipes are locked to a single page turn and cannot rest between sections. Sections whose content overflows scroll internally first. Free scrolling below 900px.
 
 ## Design tokens
 
@@ -27,7 +31,7 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 
 - **Eyebrow:** Senior Software Engineer
 - **Name:** ERIK / ESPUÑES / JUBERÓ *(last line in accent green)*
-- **Portrait:** assets/images/avatar.png
+- **Portrait:** assets/images/avatar.jpg (900×1200, rendered grayscale by CSS)
 - **Lead:** Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - **Buttons:** View experience → #s-experience · Play the games → #s-games
 - **Typed terminal lines** (`assets/js/site.js`):
@@ -127,23 +131,24 @@ Side note: Things I build on my own time — usually to scratch an itch, always 
 ## My Games
 
 Intro: Where it started — the game design half of the double degree, plus a few jams.
-Link out: https://eespunes.itch.io
+Link out: https://eespunes.itch.io · Footer hint: "← Scroll sideways · 11 titles"
+Layout: horizontal rail of cover-art cards; card 01 is double-width and carries a "Featured" badge.
 
-| Game | Subtitle | Image | Link |
-| --- | --- | --- | --- |
-| Kart Online | Final Bachelor Project | assets/images/kart-online.png | https://eespunes.itch.io/kart-online |
-| Gun Goal Tournament | Indie Dev Day Jam 2020 | assets/images/gun-goal-tournament.png | https://eespunes.itch.io/gun-goal-tournament |
-| Stick Ink | Ludum Dare 46 | assets/images/stick-ink.png | https://eespunes.itch.io/stick-ink |
-| Space Out | Ludum Dare 42 | assets/images/space-out.png | https://eespunes.itch.io/space-out |
-| One Piece Tower Defense | University Project | assets/images/one-piece-tower-defense.png | https://eespunes.itch.io/one-piece-tower-defense |
-| Simpson's Pacman | University Project | assets/images/simpson-pacman.png | https://eespunes.itch.io/simpsons-pacman |
-| Angry Birds | University Project | assets/images/angry-birds.png | https://eespunes.itch.io/angry-birds |
-| Arkanoid | University Project | assets/images/arkanoid.png | https://eespunes.itch.io/arkanoid |
-| Pong | University Project | assets/images/pong.png | https://eespunes.itch.io/pong |
-| First Person Shooter Prototype | University Project | assets/images/fps.png | https://eespunes.itch.io/first-person-shooter |
-| Portal Prototype | University Project | assets/images/portal.png | https://eespunes.itch.io/portal |
-| Mario 64 | University Project | assets/images/mario-64.png | https://eespunes.itch.io/mario-64 |
-| Animal Instinct | My first game | assets/images/animal-instinct.png | https://eespunes.itch.io/animal-instinct |
+| # | Game | Subtitle | Tech | Year | Image | Link |
+| --- | --- | --- | --- | --- | --- | --- |
+| 01 | Kart Online *(featured)* | Final Bachelor Project | Unity · Multiplayer | 2021 | kart-online.png | https://eespunes.itch.io/kart-online |
+| 02 | Gun Goal Tournament | Indie Dev Day Jam 2020 | Unity · Jam | 2020 | gun-goal-tournament.png | https://eespunes.itch.io/gun-goal-tournament |
+| 03 | Stick Ink | Ludum Dare 46 | Unity · Jam | 2020 | stick-ink.png | https://eespunes.itch.io/stick-ink |
+| 04 | Space Out | Ludum Dare 42 | Unity · Jam | 2018 | space-out.png | https://eespunes.itch.io/space-out |
+| 05 | One Piece Tower Defense | University Project | Unity | 2020 | one-piece-tower-defense.png | https://eespunes.itch.io/one-piece-tower-defense |
+| 06 | Simpson's Pacman | University Project | Unity | 2019 | simpson-pacman.png | https://eespunes.itch.io/simpsons-pacman |
+| 07 | Angry Birds | University Project | Unity | 2019 | angry-birds.png | https://eespunes.itch.io/angry-birds |
+| 08 | Arkanoid | University Project | Unity | 2018 | arkanoid.png | https://eespunes.itch.io/arkanoid |
+| 09 | Pong | University Project | Unity | 2017 | pong.png | https://eespunes.itch.io/pong |
+| 10 | Portal Prototype | University Project | Unity | 2020 | portal.png | https://eespunes.itch.io/portal |
+| 11 | Mario 64 | University Project | Unity | 2020 | mario-64.png | https://eespunes.itch.io/mario-64 |
+
+Dropped from the earlier 13-card grid (no year/tech in the design): First Person Shooter Prototype (fps.png), Animal Instinct (animal-instinct.png).
 
 ## Contact
 
