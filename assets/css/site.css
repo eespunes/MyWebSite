@@ -1063,113 +1063,103 @@ a:hover {
 }
 
 .game-card {
-  position: relative;
-  flex: 0 0 236px;
-  height: 320px;
+  flex: 0 0 232px;
   scroll-snap-align: start;
   border: 1px solid var(--line);
   border-radius: 2px;
   overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--surface);
-}
-
-.game-card--featured {
-  flex-basis: 460px;
 }
 
 .game-card:hover {
   border-color: var(--accent);
 }
 
-.game-card img {
+.game-cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: #0d0d0d;
+}
+
+.game-cover img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.85) contrast(1.05);
 }
 
-.game-scrim {
+/* Corner chips over the cover art */
+
+.game-num,
+.game-year,
+.game-badge {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10, 10, 10, 0.94) 0%,
-    rgba(10, 10, 10, 0.72) 34%,
-    rgba(10, 10, 10, 0.12) 68%,
-    rgba(10, 10, 10, 0.35) 100%
-  );
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  padding: 4px 8px;
+  border-radius: 2px;
+  display: inline-block;
 }
 
 .game-num,
 .game-year {
-  position: absolute;
-  top: 12px;
-  font-size: 10px;
+  top: 10px;
+  background: rgba(10, 10, 10, 0.88);
 }
 
 .game-num {
-  left: 14px;
-  letter-spacing: 0.18em;
+  left: 10px;
   color: var(--accent);
 }
 
 .game-year {
-  right: 14px;
-  letter-spacing: 0.14em;
-  color: #d6d6d6;
+  right: 10px;
+  color: var(--paper);
 }
 
 .game-badge {
-  position: absolute;
-  top: 40px;
-  left: 14px;
+  bottom: 10px;
+  left: 10px;
   font-size: 9.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #0b0b0b;
   background: var(--accent);
   padding: 4px 9px;
-  border-radius: 2px;
 }
 
 .game-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 16px 16px 15px;
   display: block;
+  padding: 14px 15px 15px;
+  border-top: 1px solid #222;
 }
 
 .game-name {
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #fff;
-  line-height: 1.25;
-}
-
-.game-card--featured .game-name {
-  font-size: 21px;
+  line-height: 1.3;
 }
 
 .game-sub {
   display: block;
   font-size: 10.5px;
-  color: var(--text-dim);
+  color: var(--text-mute);
   margin-top: 6px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .game-tech {
   display: block;
   font-size: 10px;
-  color: #9a9a9a;
-  margin-top: 4px;
-  letter-spacing: 0.06em;
+  color: #8f8f8f;
+  margin-top: 3px;
+  letter-spacing: 0.05em;
 }
 
 .rail-hint {
@@ -1386,10 +1376,8 @@ a:hover {
     padding: 2px 24px 18px;
   }
 
-  .game-card,
-  .game-card--featured {
-    flex-basis: 232px;
-    height: 290px;
+  .game-card {
+    flex-basis: 208px;
   }
 }
 

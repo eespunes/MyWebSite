@@ -11,7 +11,7 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 | Description | Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS. |
 | Author | eespunes |
 | Theme color | #121212 |
-| Favicon | assets/images/favicon-32.png, favicon-180.png (apple-touch-icon) — face crop of the portrait |
+| Favicon | assets/images/favicon.png |
 
 ## Navigation
 
@@ -31,7 +31,7 @@ One gesture moves exactly one section: wheel, arrow/page keys and swipes are loc
 
 - **Eyebrow:** Senior Software Engineer
 - **Name:** ERIK / ESPUÑES / JUBERÓ *(last line in accent green)*
-- **Portrait:** assets/images/avatar.jpg (900×1200, rendered grayscale by CSS)
+- **Portrait:** assets/images/avatar.jpg (900×900 square, centre-cropped; rendered grayscale by CSS)
 - **Lead:** Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - **Buttons:** View experience → #s-experience · Play the games → #s-games
 - **Typed terminal lines** (`assets/js/site.js`):
@@ -63,10 +63,6 @@ Layout: light section, fixed height with inner scroll pane.
 | --- | --- | --- |
 | 2026–27 | MSc Artificial Intelligence | Udacity Institute of AI & Technology · expected |
 | 2016–21 | Double BSc Computer Engineering & Video Game Design | Pompeu Fabra University, Barcelona |
-
-### Certifications
-
-- Claude Certified Architect · expected Q3 2026
 
 ### Languages
 
@@ -131,8 +127,8 @@ Side note: Things I build on my own time — usually to scratch an itch, always 
 ## My Games
 
 Intro: Where it started — the game design half of the double degree, plus a few jams.
-Link out: https://eespunes.itch.io · Footer hint: "← Scroll sideways · 11 titles"
-Layout: horizontal rail of cover-art cards; card 01 is double-width and carries a "Featured" badge.
+Link out: https://eespunes.itch.io · Footer hint: "← Scroll sideways · 13 titles"
+Layout: horizontal rail of uniform 232px cards — square cover image with corner chips (index, year, "Featured"), caption panel below the fold line.
 
 | # | Game | Subtitle | Tech | Year | Image | Link |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -147,8 +143,10 @@ Layout: horizontal rail of cover-art cards; card 01 is double-width and carries 
 | 09 | Pong | University Project | Unity | 2017 | pong.png | https://eespunes.itch.io/pong |
 | 10 | Portal Prototype | University Project | Unity | 2020 | portal.png | https://eespunes.itch.io/portal |
 | 11 | Mario 64 | University Project | Unity | 2020 | mario-64.png | https://eespunes.itch.io/mario-64 |
+| 12 | First Person Shooter Prototype | University Project | Unity · Windows | — | fps.png | https://eespunes.itch.io/first-person-shooter |
+| 13 | Animal Instinct | My first game | Unity · Android | — | animal-instinct.png | https://eespunes.itch.io/animal-instinct |
 
-Dropped from the earlier 13-card grid (no year/tech in the design): First Person Shooter Prototype (fps.png), Animal Instinct (animal-instinct.png).
+Cards 12 and 13 show no year — itch.io does not publish their release dates. Add a year to the `game-year` span in `index.html` to show one.
 
 ## Contact
 
