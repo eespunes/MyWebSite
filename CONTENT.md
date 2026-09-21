@@ -1,4 +1,4 @@
-<!-- Build v1.81 · 2026-09-21 -->
+<!-- Build v1.82 · 2026-09-21 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -51,7 +51,7 @@ Rotating specialisations:
 - Title: About / Me
 - Theme: light
 
-Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in every language I propose.
+Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in whatever stack is brought to me.
 
 Body: I take end-to-end ownership of technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
 
