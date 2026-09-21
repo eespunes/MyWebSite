@@ -16,7 +16,7 @@ Keep the structure below — the parser relies on it:
 ## Meta
 
 - Title: Erik Espuñes Jubero
-- Description: Erik Espuñes Jubero — Senior Software Engineer. High-volume, event-driven backend platforms in Java and Spring Boot on AWS, owned from architecture through production.
+- Description: Erik Espuñes Jubero — Senior Software Engineer. High-volume, event-driven backend platforms in Java, Spring Boot and .NET on AWS, owned from architecture through production.
 - Author: eespunes
 - Theme color: #121212
 - Favicon: assets/images/favicon.png
@@ -31,7 +31,7 @@ Keep the structure below — the parser relies on it:
 - Eyebrow: Senior Software Engineer
 - Name: ERIK / ESPUÑES JUBERO
 - Portrait: assets/images/avatar.jpg
-- Lead: Scalable, secure backend platforms in Java and Spring Boot on AWS — owned end to end, from architecture through production operation.
+- Lead: Scalable, secure backend platforms on AWS — Java, Spring Boot and .NET — owned end to end, from architecture through production operation.
 - Primary button: View experience → #s-experience
 - Secondary button: Play the games → #s-games
 - Scroll hint: Scroll
@@ -49,9 +49,9 @@ Terminal lines:
 - Title: About / Me
 - Theme: light
 
-Lead: I build the backend systems businesses depend on — *scalable, secure and proven under production load* — in Java and Spring Boot on AWS.
+Lead: I build the backend systems businesses depend on — *scalable, secure and proven under production load* — in Java, Spring Boot and .NET on AWS.
 
-Body: I take end-to-end ownership — technical design, delivery and production operation — and shape the architecture and engineering standards a team works to. The problems most people would rather hand off are where I do my best work.
+Body: I take end-to-end ownership — technical design, delivery and production operation — and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
 
 ### Numbers
 
@@ -192,7 +192,7 @@ sections above — only what the web page has no place for lives here.
 - Also label: Also
 - Also: Game developer — Unity and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
-- Summary: Senior backend engineer with deep expertise in Java and Spring Boot, designing high-volume, event-driven distributed systems on AWS. Fluent across modern platform engineering — cloud-native architecture, infrastructure as code, CI/CD and automated testing — and a hands-on practitioner of AI-assisted engineering, building the MCP integrations and agentic workflows that make whole teams faster.
+- Summary: Senior backend engineer with deep expertise in Java and Spring Boot and a strong command of .NET, designing high-volume, event-driven distributed systems on AWS. Fluent across modern platform engineering — cloud-native architecture, infrastructure as code, CI/CD and automated testing — and a hands-on practitioner of AI-assisted engineering, building the MCP integrations and agentic workflows that make whole teams faster.
 - Footer right: Erik Espuñes Jubero
 - Version label: Build
 
