@@ -313,7 +313,7 @@
 
     var projects = by.projects;
     if (projects && projects.tables[0] && cv.fields["projects label"]) {
-      var projectBody = el("div", "cv-prior");
+      var projectBody = el("div", "cv-projects");
       projects.tables[0].forEach(function (row) {
         var item = el("div");
         var head = el("div", "cv-project-head");

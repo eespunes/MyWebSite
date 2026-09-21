@@ -575,10 +575,19 @@ body {
   font-weight: 600;
 }
 
-.cv-prior {
+.cv-projects {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+}
+
+/* A hairline above each project, so the three read as separate blocks. */
+.cv-projects > div {
+  border-top: 1px solid #2c2c2c;
+  padding: 9px 0;
+}
+
+.cv-projects > div:last-child {
+  padding-bottom: 0;
 }
 
 .cv-project-head {
@@ -604,7 +613,7 @@ body {
   letter-spacing: 0.04em;
 }
 
-.cv-prior h3 {
+.cv-projects h3 {
   margin: 0;
   font-size: 13px;
   font-weight: 600;

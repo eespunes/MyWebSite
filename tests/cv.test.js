@@ -40,7 +40,7 @@ const SCRAPE = `JSON.stringify({
     bullets: Array.from(e.querySelectorAll('li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     paras: Array.from(e.querySelectorAll('p')).map(p => p.textContent.replace(/\\s+/g,' ').trim()) })),
   versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
-  projects: Array.from(document.querySelectorAll('.cv-prior .cv-project-head')).map(h => ({
+  projects: Array.from(document.querySelectorAll('.cv-projects .cv-project-head')).map(h => ({
     title: h.querySelector('h3').textContent.trim(),
     status: h.querySelector('.cv-project-status')?.textContent.trim() || '',
     description: h.parentElement.querySelector('p').textContent.replace(/\\s+/g,' ').trim(),
