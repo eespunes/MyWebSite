@@ -854,43 +854,87 @@ a:hover {
 
 /* ----------------------------------------------------------- competencies */
 
-.cards {
+.skill-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  align-items: stretch;
 }
 
-.card {
+.skill-card {
   background: var(--surface);
-  padding: 24px 22px;
-  transition: background-color 0.2s ease;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease;
 }
 
-.card:hover {
-  background: #1c1c1c;
+.skill-card:hover {
+  border-color: #3a3a3a;
 }
 
-.card-num {
+.skill-num {
   font-size: 11px;
   color: var(--accent);
   letter-spacing: 0.18em;
 }
 
-.card-title {
-  font-size: 16.5px;
+.skill-card h3 {
+  margin: 10px 0 0;
+  font-size: 17px;
   font-weight: 600;
   color: #fff;
-  margin-top: 10px;
 }
 
-.card-desc {
-  font-size: 13.5px;
+.skill-card p {
+  margin: 8px 0 0;
+  font-size: 13px;
   color: var(--text-mute);
-  margin-top: 7px;
   line-height: 1.6;
   font-weight: 300;
+}
+
+/* Tag pills — shared by the cards and the labelled rows below them. */
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.skill-card .tags {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.tag {
+  font-size: 11px;
+  color: #d6d6d6;
+  border: 1px solid #333;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.tag-rows {
+  margin-top: 28px;
+}
+
+.tag-row {
+  display: grid;
+  grid-template-columns: minmax(0, 120px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid #242424;
+}
+
+.tag-row-label {
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9a9a9a;
 }
 
 /* -------------------------------------------------------- personal projects */
@@ -1223,6 +1267,11 @@ a:hover {
   .tl-body {
     border-left: none;
     padding-left: 0;
+  }
+
+  .tag-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
   }
 }
 

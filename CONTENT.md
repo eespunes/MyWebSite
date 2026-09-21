@@ -98,14 +98,21 @@ Roles: Software Engineer · Mar 2025 – Apr 2025 | Junior Software Engineer · 
 
 Side note: High-volume, event-driven distributed systems on AWS — and increasingly, AI-assisted engineering that makes whole teams faster.
 
-| # | Title | Detail |
-| --- | --- | --- |
-| 01 | Backend & APIs | Java · Spring Boot · .NET · OpenAPI · event-driven microservices |
-| 02 | Cloud & Platform | AWS · Infrastructure-as-Code · CI/CD · automated testing |
-| 03 | AI-Assisted Engineering | Claude · Codex · Copilot · MCP integrations · agentic workflows |
-| 04 | Languages | C# · Java · Kotlin · Scala · C++ · SQL · TypeScript · Angular |
-| 05 | Methodology | Agile / Scrum · DDD · TDD · platform engineering · tech lead |
-| 06 | Leadership | Mentoring engineers · architecture & engineering standards |
+### Cards
+
+| # | Title | Description | Tags |
+| --- | --- | --- | --- |
+| 01 | Backend & APIs | Distributed, event-driven services designed to survive production — modelled with DDD, tested before they ship. | Java · Spring Boot · .NET · OpenAPI · REST · Microservices |
+| 02 | Cloud & Platform | Owning the path from laptop to production: infrastructure as code, pipelines and automated quality gates. | AWS · IaC · CI/CD · Automated testing · Observability |
+| 03 | AI-Assisted Engineering | Building the tooling that makes an entire department faster, not just the engineer using it. | Claude · Codex · Copilot · MCP · Agentic workflows |
+
+### Tag rows
+
+| Label | Tags |
+| --- | --- |
+| Languages | C# · Java · Kotlin · Scala · C++ · SQL · TypeScript · Angular |
+| Methodology | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
+| Leadership | Mentoring engineers · Architecture standards · Engineering standards |
 
 ## Personal Projects
 
