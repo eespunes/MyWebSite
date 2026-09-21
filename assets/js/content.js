@@ -325,7 +325,7 @@
     var education = subByTitle(section, "Education");
     if (education && education.tables[0]) {
       var eduCol = el("div");
-      eduCol.appendChild(el("div", "col-label mono", "Education"));
+      eduCol.appendChild(el("div", "col-label mono", inline(education.title)));
       var list = el("div", "edu-list");
       education.tables[0].forEach(function (row) {
         var item = el("div", "edu-row");
@@ -344,7 +344,7 @@
     if (languages && languages.tables[0]) {
       var stack = el("div", "about-col-stack");
       var langCol = el("div");
-      langCol.appendChild(el("div", "col-label mono", "Languages"));
+      langCol.appendChild(el("div", "col-label mono", inline(languages.title)));
       var pills = el("div", "lang-list");
       languages.tables[0].forEach(function (row) {
         pills.appendChild(
@@ -394,6 +394,11 @@
     if (note) note.classList.add("mono");
     wrap.appendChild(head);
 
+    window.CV_LABELS = {
+      expand: section.fields["expand label"] || "",
+      collapse: section.fields["collapse label"] || "",
+    };
+
     var timeline = el("div", "timeline");
     section.subs.forEach(function (entry, index) {
       if (entry.depth !== 3) return;
@@ -428,9 +433,15 @@
         titleBox.appendChild(heading);
         titleBox.appendChild(meta);
         headRow.appendChild(titleBox);
-        var toggle = el("span", "exp-toggle mono", "Expand +");
-        toggle.setAttribute("data-exp-chev", key);
-        headRow.appendChild(toggle);
+        if (section.fields["expand label"]) {
+          var toggle = el(
+            "span",
+            "exp-toggle mono",
+            inline(section.fields["expand label"])
+          );
+          toggle.setAttribute("data-exp-chev", key);
+          headRow.appendChild(toggle);
+        }
         body.appendChild(headRow);
       } else {
         body.appendChild(heading);
@@ -564,8 +575,8 @@
       card.appendChild(head);
       card.appendChild(el("p", null, inline(row.description)));
       if (row.stack) card.appendChild(el("div", "project-stack mono", inline(row.stack)));
-      if (row.link) {
-        var a = el("a", "inline-link mono", "View on GitHub →");
+      if (row.link && section.fields["link label"]) {
+        var a = el("a", "inline-link mono", inline(section.fields["link label"]) + " →");
         externalAttrs(a, row.link);
         card.appendChild(a);
       }
@@ -608,8 +619,13 @@
       cover.appendChild(img);
       cover.appendChild(el("span", "game-num mono", inline(row["#"])));
       if (row.year) cover.appendChild(el("span", "game-year mono", inline(row.year)));
-      if ((row.featured || "").toLowerCase() === "yes") {
-        cover.appendChild(el("span", "game-badge mono", "Featured"));
+      if (
+        (row.featured || "").toLowerCase() === "yes" &&
+        section.fields["featured label"]
+      ) {
+        cover.appendChild(
+          el("span", "game-badge mono", inline(section.fields["featured label"]))
+        );
       }
       card.appendChild(cover);
 

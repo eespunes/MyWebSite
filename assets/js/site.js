@@ -170,7 +170,8 @@ window.initSite = function () {
     var open = !body.hidden;
     body.hidden = open;
     head.setAttribute("aria-expanded", String(!open));
-    if (chev) chev.textContent = open ? "Expand +" : "Collapse \u2212";
+    var labels = window.CV_LABELS || {};
+    if (chev) chev.textContent = open ? labels.expand || "" : labels.collapse || "";
   }
 
   root.addEventListener("click", function (ev) {

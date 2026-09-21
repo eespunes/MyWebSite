@@ -82,6 +82,8 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Nav label: Experience
 - Title: Experience
 - Side note: Senior Software Engineer / Tech Lead
+- Expand label: Expand +
+- Collapse label: Collapse −
 
 ### Software Consultant · Xebia
 
@@ -137,6 +139,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Nav label: Projects
 - Title: Personal / Projects
 - Side note: Things I build on my own time — usually to scratch an itch, always to learn something that carries back into the day job.
+- Link label: View on GitHub
 
 | # | Project | Status | Description | Stack | Link |
 | --- | --- | --- | --- | --- | --- |
@@ -151,6 +154,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Side note: Where it started — the game design half of the double degree, plus a few jams.
 - Link: All on itch.io → https://eespunes.itch.io
 - Hint: ← Scroll sideways · {count} titles
+- Featured label: Featured
 
 | # | Game | Subtitle | Tech | Year | Image | Link | Featured |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -175,6 +179,14 @@ text, the highlight figures and the experience entries are reused from the
 sections above — only what the web page has no place for lives here.
 
 - Role: Senior Software Engineer
+- About label: About Me
+- Highlights label: Highlights
+- Competencies label: Competencies
+- Contact label: Contact
+- Kicker: Relevant Projects
+- Prior label: Prior / Roles
+- Back label: ← Back to site
+- Save label: Save as PDF
 - Also label: Also
 - Also: Game developer — Unity and C#. Games shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”

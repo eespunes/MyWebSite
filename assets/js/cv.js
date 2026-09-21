@@ -132,6 +132,15 @@
     return out.join(" ");
   }
 
+  var PAGES = 2;
+
+  function pageNo(n) {
+    var pad = function (v) {
+      return ("0" + v).slice(-2);
+    };
+    return pad(n) + " / " + pad(PAGES);
+  }
+
   function block(label, contentNode) {
     var node = el("div", "cv-block");
     node.appendChild(el("div", "cv-label", label));
@@ -181,6 +190,11 @@
     var root = document.getElementById("cv-root");
     document.title = fullName + " — CV";
 
+    var back = document.querySelector(".cv-back");
+    if (back) back.textContent = cv.fields["back label"] || "";
+    var saveButton = document.querySelector(".cv-save");
+    if (saveButton) saveButton.textContent = cv.fields["save label"] || "";
+
     /* ---------------------------------------------------------- page one */
     var page1 = el("section", "cv-page cv-page--1");
     var rail = el("div", "cv-rail");
@@ -206,7 +220,7 @@
     contactRows.forEach(function (row) {
       contactList.appendChild(el("div", null, inline(contactText(row))));
     });
-    railTop.appendChild(block("Contact", contactList));
+    railTop.appendChild(block(cv.fields["contact label"] || contact.title, contactList));
 
     var education = sub(about, "Education");
     if (education && education.tables[0]) {
@@ -218,7 +232,7 @@
         item.appendChild(el("div", "cv-item-when", inline(row.years)));
         eduList.appendChild(item);
       });
-      railTop.appendChild(block("Education", eduList));
+      railTop.appendChild(block(education.title, eduList));
     }
 
     var languages = sub(about, "Languages");
@@ -230,7 +244,7 @@
         item.appendChild(el("span", null, inline(row.level)));
         langList.appendChild(item);
       });
-      railTop.appendChild(block("Languages", langList));
+      railTop.appendChild(block(languages.title, langList));
     }
 
     var certs = sub(cv, "Certifications");
@@ -246,7 +260,7 @@
           )
         );
       });
-      railTop.appendChild(block("Certifications", certList));
+      railTop.appendChild(block(certs.title, certList));
     }
 
     if (cv.fields.also) {
@@ -255,14 +269,14 @@
       );
     }
     rail.appendChild(railTop);
-    rail.appendChild(el("div", "cv-pageno", "01 / 02"));
+    rail.appendChild(el("div", "cv-pageno", pageNo(1)));
     page1.appendChild(rail);
 
     var main = el("div", "cv-main");
     var mainTop = el("div");
 
     var aboutSection = el("div", "cv-section");
-    aboutSection.appendChild(heading("About Me"));
+    aboutSection.appendChild(heading(cv.fields["about label"] || about.title));
     [about.fields.lead, about.fields.body].forEach(function (text, i) {
       if (!text) return;
       var p = el("p", "cv-body", inline(text));
@@ -274,7 +288,7 @@
     var numbers = sub(about, "Numbers");
     if (numbers && numbers.tables[0]) {
       var statsSection = el("div", "cv-section");
-      statsSection.appendChild(heading("Highlights"));
+      statsSection.appendChild(heading(cv.fields["highlights label"] || numbers.title));
       var stats = el("div", "cv-stats");
       numbers.tables[0].forEach(function (row) {
         var stat = el("div", "cv-stat");
@@ -288,7 +302,7 @@
 
     var skills = sub(cv, "Skill groups");
     var compSection = el("div", "cv-section");
-    compSection.appendChild(heading("Competencies"));
+    compSection.appendChild(heading(cv.fields["competencies label"] || ((by.competencies || {}).title || "")));
     if (cv.fields.summary) {
       compSection.appendChild(el("p", "cv-body", inline(cv.fields.summary)));
     }
@@ -321,7 +335,7 @@
     var page2 = el("section", "cv-page cv-page--2");
     var head = el("div", "cv-page-head");
     var headLeft = el("div");
-    headLeft.appendChild(el("div", "cv-kicker", "Relevant Projects"));
+    headLeft.appendChild(el("div", "cv-kicker", inline(cv.fields.kicker || "")));
     headLeft.appendChild(el("h2", null, inline(fullName)));
     head.appendChild(headLeft);
     var bar = el("span");
@@ -367,7 +381,7 @@
         item.appendChild(el("p", null, inline(row.description)));
         priorBody.appendChild(item);
       });
-      entries.appendChild(entryShell(["Prior", "Roles"], priorBody));
+      entries.appendChild(entryShell(lines(cv.fields["prior label"] || prior.title), priorBody));
     }
     page2.appendChild(entries);
 
@@ -384,7 +398,7 @@
           .join(" · ")
       )
     );
-    foot.appendChild(el("span", null, "02 / 02"));
+    foot.appendChild(el("span", null, pageNo(2)));
     page2.appendChild(foot);
     root.appendChild(page2);
   }
