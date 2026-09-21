@@ -1,3 +1,4 @@
+// Build v1.34 · 2026-09-21
 /* The build stamp: derived from git, identical on both surfaces. */
 const test = require("node:test");
 const assert = require("node:assert/strict");
@@ -36,6 +37,67 @@ test("the version tracks the commit count", () => {
 test("both footers declare a version label", () => {
   assert.ok(sections.contact.fields["version label"], "Contact has no Version label");
   assert.ok(sections.cv.fields["version label"], "CV has no Version label");
+});
+
+
+test("every owned source file carries the current version stamp", () => {
+  const info = JSON.parse(fs.readFileSync(versionFile, "utf8"));
+  /* The same list scripts/version.js stamps: vendor and legacy template
+     assets are deliberately excluded. */
+  const owned = [
+    "index.html",
+    "cv.html",
+    "CONTENT.md",
+    "assets/js/parse.js",
+    "assets/js/content.js",
+    "assets/js/cv.js",
+    "assets/js/site.js",
+    "assets/css/site.css",
+    "assets/css/cv.css",
+    ...fs.readdirSync(path.join(ROOT, "scripts")).map((f) => `scripts/${f}`),
+    ...fs.readdirSync(path.join(ROOT, "tests")).map((f) => `tests/${f}`),
+    ...fs.readdirSync(path.join(ROOT, "tests", "helpers")).map((f) => `tests/helpers/${f}`),
+  ].filter(
+    (rel) =>
+      /\.(html|md|js|css)$/.test(rel) &&
+      fs.existsSync(path.join(ROOT, rel)) &&
+      fs.statSync(path.join(ROOT, rel)).isFile()
+  );
+  assert.ok(owned.length > 10, "expected to find the owned source files");
+
+  const unstamped = owned.filter((rel) => {
+    const text = fs.readFileSync(path.join(ROOT, rel), "utf8");
+    return rel.endsWith(".html")
+      ? !text.includes(`<meta name="version" content="${info.version}" />`)
+      : !text.includes(`Build ${info.version} ·`);
+  });
+  assert.deepEqual(unstamped, [], "these files are missing the current stamp");
+});
+
+test("vendor and legacy assets are left untouched", () => {
+  const vendor = ["assets/css/vendor.css", "assets/js/vendor.js", "assets/css/erik.css"];
+  for (const rel of vendor) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const text = fs.readFileSync(file, "utf8");
+    assert.ok(!text.startsWith("// Build"), `${rel} should not be stamped`);
+    assert.ok(!text.startsWith("/* Build"), `${rel} should not be stamped`);
+  }
+});
+
+test("package.json carries the same number", () => {
+  const info = JSON.parse(fs.readFileSync(versionFile, "utf8"));
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
+  assert.equal(pkg.version, `1.${info.commits}.0`);
+});
+
+test("the stamp never displaces a shebang", () => {
+  for (const name of fs.readdirSync(path.join(ROOT, "scripts"))) {
+    if (!name.endsWith(".js")) continue;
+    const text = fs.readFileSync(path.join(ROOT, "scripts", name), "utf8");
+    if (!text.includes("#!")) continue;
+    assert.ok(text.startsWith("#!"), `${name}: shebang must stay on line one`);
+  }
 });
 
 const browserTest = (name, fn) =>

@@ -1,3 +1,4 @@
+/* Build v1.34 · 2026-09-21 */
 /* ==========================================================================
    Printable CV — two A4 pages, built from CONTENT.md by assets/js/cv.js
    ========================================================================== */
@@ -504,6 +505,7 @@ body {
   padding: 10px 28px 14px;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
   font-family: var(--mono);
   font-size: 9.5px;

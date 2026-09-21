@@ -1,3 +1,4 @@
+// Build v1.34 · 2026-09-21
 /* Builds the printable CV from CONTENT.md — the same file the site renders
    from — then offers it to the browser's PDF printer. */
 (function () {
@@ -315,6 +316,11 @@
           .join(" · ")
       )
     );
+    var footVersion = el("span", "cv-version");
+    foot.appendChild(footVersion);
+    CVParse.loadVersion().then(function (versionInfo) {
+      footVersion.textContent = CVParse.versionText(versionInfo, cv.fields["version label"]);
+    });
     foot.appendChild(el("span", null, pageNo(2)));
     page2.appendChild(foot);
     root.appendChild(page2);

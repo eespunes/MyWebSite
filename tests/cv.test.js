@@ -1,3 +1,4 @@
+// Build v1.34 · 2026-09-21
 /* Renders cv.html and asserts the printable CV carries the same data as the
    site, in the same categories — both being views of CONTENT.md. */
 const test = require("node:test");
@@ -38,6 +39,7 @@ const SCRAPE = `JSON.stringify({
     meta: e.querySelector('.cv-entry-meta')?.textContent.replace(/\\s+/g,' ').trim() || '',
     bullets: Array.from(e.querySelectorAll('li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     paras: Array.from(e.querySelectorAll('p')).map(p => p.textContent.replace(/\\s+/g,' ').trim()) })),
+  versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
   pageNumbers: [
     document.querySelector('.cv-pageno')?.textContent.trim(),
     document.querySelector('.cv-page-foot span:last-child')?.textContent.trim() ],
@@ -172,6 +174,12 @@ browserTest("labels, quote and footer come from CONTENT.md", () => {
     "Languages",
     "Certifications",
   ]);
+});
+
+browserTest("both CV pages carry the version", () => {
+  assert.equal(cv.versions.length, 2, "expected a version stamp on each page");
+  assert.equal(cv.versions[0], cv.versions[1]);
+  assert.ok(cv.versions[0].startsWith(plain(sections.cv.fields["version label"])));
 });
 
 browserTest("page numbers are sequential and nothing overflows the paper", () => {

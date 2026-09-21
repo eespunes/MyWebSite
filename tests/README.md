@@ -1,3 +1,4 @@
+<!-- Build v1.34 · 2026-09-21 -->
 # Tests
 
     npm test
@@ -25,17 +26,25 @@ site disagreeing.
 
 ## Version stamp
 
-`version.json` carries `v1.<commit-count>`, shown in both footers as
-`Build v1.<n>`. The GitHub Action in `.github/workflows/version.yml` rewrites it
-after anything lands on `master`, counting its own stamping commit so the file
-matches the history it ships in. Pushes that only touch `version.json` are
-ignored, so the bot cannot retrigger itself.
+`v1.<commit-count>` appears in three places, all written by
+`scripts/version.js`:
 
-Nothing needs installing locally. To refresh it by hand:
+- `version.json` — fetched at runtime and shown as `Build v1.<n>` in the site
+  footer and on **both** CV pages
+- every source file — `<meta name="version">` in the HTML, a `// Build …`
+  comment in JS, `/* Build … */` in CSS, an HTML comment in Markdown
+- `package.json`'s `version` field
+
+The GitHub Action in `.github/workflows/version.yml` reruns it after anything
+lands on `master` and commits the result, counting its own stamping commit so
+the number matches the history it ships in. The bot pushes with `GITHUB_TOKEN`
+and GitHub raises no workflow events for those pushes, so it cannot retrigger
+itself.
+
+To refresh by hand:
 
     npm run version:write
 
-A pre-commit hook is available (`npm run hooks:install`) for anyone who wants
-the number to move without pushing — but with CI stamping too, each push would
-then bump it twice, so leave it off unless you have a reason. Without
-`version.json` the stamp simply does not render.
+A pre-commit hook is available (`npm run hooks:install`) but with CI stamping
+too it would bump the number twice per push, so leave it off unless you have a
+reason.
