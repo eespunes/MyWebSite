@@ -427,6 +427,15 @@ body {
   flex: 1;
 }
 
+/* Page two groups entries under the same accent headings page one uses. */
+.cv-entries .cv-heading {
+  margin-bottom: 2px;
+}
+
+.cv-entries .cv-heading + .cv-entry {
+  margin-top: 0;
+}
+
 .cv-entry {
   display: grid;
   grid-template-columns: 104px minmax(0, 1fr);
@@ -484,6 +493,84 @@ body {
 }
 
 .cv-entry-body strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Role progression, engagements and the letter link — as on the site. */
+
+.cv-entry-roles {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 14px;
+  row-gap: 2px;
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: #8f8f8f;
+}
+
+.cv-entry-link {
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.cv-entry-divider {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+}
+
+.cv-engagement {
+  margin-top: 7px;
+  border-left: 2px solid var(--accent);
+  background: var(--rail);
+  padding: 9px 12px;
+}
+
+.cv-engagement-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cv-engagement-head h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cv-engagement-head span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: #9a9a9a;
+}
+
+.cv-engagement ul {
+  margin: 7px 0 0;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cv-engagement li {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+.cv-engagement strong {
   color: #fff;
   font-weight: 600;
 }

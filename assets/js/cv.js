@@ -262,32 +262,53 @@
     page2.appendChild(head);
 
     var entries = el("div", "cv-entries");
+    if (cv.fields["experience label"]) {
+      entries.appendChild(heading(cv.fields["experience label"]));
+    }
+    /* Mirrors the site: the employer entry keeps its summary, and client
+       engagements sit nested beneath it rather than replacing it. */
     experience.subs.forEach(function (entry) {
       if (entry.depth !== 3) return;
-      /* An entry with client engagements contributes those; otherwise itself. */
-      if (entry.subs.length) {
-        entry.subs.forEach(function (engagement) {
-          entries.appendChild(
-            cvEntry(
-              datesFrom(engagement.fields.meta) || lines(entry.fields.period),
-              entry.title.split("·")[0].trim() + " · " + engagement.title,
-              engagement.fields.meta,
-              engagement.bullets,
-              null
-            )
-          );
+      var body = el("div");
+      body.appendChild(el("h3", null, inline(entry.title)));
+      if (entry.fields.meta) {
+        body.appendChild(el("div", "cv-entry-meta", inline(entry.fields.meta)));
+      }
+      if (entry.fields.summary) {
+        var summary = el("p", null, inline(entry.fields.summary));
+        summary.style.marginTop = "7px";
+        body.appendChild(summary);
+      }
+      if (entry.fields.roles) {
+        var roles = el("div", "cv-entry-roles");
+        entry.fields.roles.split("|").forEach(function (role) {
+          roles.appendChild(el("span", null, inline(role.trim())));
         });
-      } else {
-        entries.appendChild(
-          cvEntry(
-            datesFrom(entry.fields.meta) || lines(entry.fields.period),
-            entry.title,
-            entry.fields.meta,
-            entry.bullets,
-            entry.fields.summary
-          )
+        body.appendChild(roles);
+      }
+      if (entry.bullets.length) body.appendChild(bullets(entry.bullets));
+
+      var link = linkField(entry.fields.link);
+      if (link && link.href) {
+        body.appendChild(el("div", "cv-entry-link", inline(link.label) + " →"));
+      }
+
+      if (entry.fields["engagements label"]) {
+        body.appendChild(
+          el("div", "cv-entry-divider", inline(entry.fields["engagements label"]))
         );
       }
+      entry.subs.forEach(function (engagement) {
+        var card = el("div", "cv-engagement");
+        var head = el("div", "cv-engagement-head");
+        head.appendChild(el("h4", null, inline(engagement.title)));
+        head.appendChild(el("span", null, inline(engagement.fields.meta)));
+        card.appendChild(head);
+        if (engagement.bullets.length) card.appendChild(bullets(engagement.bullets));
+        body.appendChild(card);
+      });
+
+      entries.appendChild(entryShell(lines(entry.fields.period), body));
     });
 
     var projects = by.projects;
@@ -307,9 +328,8 @@
         }
         projectBody.appendChild(item);
       });
-      entries.appendChild(
-        entryShell(lines(cv.fields["projects label"]), projectBody)
-      );
+      entries.appendChild(heading(cv.fields["projects label"]));
+      entries.appendChild(entryShell([], projectBody));
     }
 
     page2.appendChild(entries);
@@ -337,12 +357,21 @@
     root.appendChild(page2);
   }
 
-  /* "Eindhoven, NL · Remote · Jul 2025 – May 2026" → ["Jul 2025", "—", "May 2026"] */
-  function datesFrom(meta) {
-    var match = String(meta || "").match(
-      /([A-Z][a-z]{2}\s+\d{4})\s*[–—-]\s*([A-Z][a-z]{2}\s+\d{4}|Present)/
-    );
-    return match ? [match[1], "—", match[2]] : null;
+  
+  /* `Label → target` pairs, as used for the recommendation letter. */
+  function linkField(value) {
+    if (!value) return null;
+    var parts = String(value).split("→");
+    if (parts.length < 2) return { label: value.trim(), href: "" };
+    return { label: parts[0].trim(), href: parts[1].trim() };
+  }
+
+  function bullets(items) {
+    var ul = el("ul");
+    items.forEach(function (text) {
+      ul.appendChild(el("li", null, inline(text)));
+    });
+    return ul;
   }
 
   function entryShell(when, bodyNode) {
@@ -364,36 +393,8 @@
     return entry;
   }
 
-  function cvEntry(when, title, meta, bullets, summary) {
-    var body = el("div");
-    body.appendChild(el("h3", null, inline(title)));
-    if (meta) body.appendChild(el("div", "cv-entry-meta", inline(placeOf(meta))));
-    if (summary) {
-      var p = el("p", null, inline(summary));
-      p.style.marginTop = "8px";
-      body.appendChild(p);
-    }
-    if (bullets && bullets.length) {
-      var ul = el("ul");
-      bullets.forEach(function (text) {
-        ul.appendChild(el("li", null, inline(text)));
-      });
-      body.appendChild(ul);
-    }
-    return entryShell(when, body);
-  }
 
-  /* Drop the date range from a meta line — the date column already shows it. */
-  function placeOf(meta) {
-    return String(meta)
-      .split("·")
-      .filter(function (part) {
-        return !/\d{4}/.test(part);
-      })
-      .join(" · ")
-      .trim();
-  }
-
+  
   /* ---------------------------------------------------------------- boot */
 
   fetch("CONTENT.md", { cache: "no-cache" })
@@ -402,7 +403,12 @@
       return res.text();
     })
     .then(function (md) {
-      build(parse(md));
+      try {
+        build(parse(md));
+      } catch (err) {
+        err.while_rendering = true;
+        throw err;
+      }
       var save = document.querySelector(".cv-save");
       if (save) save.addEventListener("click", function () { window.print(); });
       if (/[?&]print=1/.test(location.search)) {
@@ -416,9 +422,13 @@
         el(
           "div",
           "cv-error",
-          "<h1>CV unavailable</h1><p>CONTENT.md could not be loaded (" +
-            err.message +
-            "). Serve the folder over HTTP — fetch is blocked on file:// URLs.</p>"
+          err.while_rendering
+            ? "<h1>CV unavailable</h1><p>CONTENT.md loaded but the CV could not be built: " +
+              err.message +
+              "</p>"
+            : "<h1>CV unavailable</h1><p>CONTENT.md could not be loaded (" +
+              err.message +
+              "). Serve the folder over HTTP — fetch is blocked on file:// URLs.</p>"
         )
       );
     });

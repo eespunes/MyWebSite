@@ -128,13 +128,21 @@ browserTest("about copy matches the About section", () => {
   assert.deepEqual(cv.aboutParas.slice(0, 2), expected);
 });
 
-browserTest("certifications and skill groups match the CV section", () => {
+browserTest("certifications render when declared, and not when they are not", () => {
+  const table = sub(sections.cv, "Certifications");
+  if (!table || !table.tables[0] || !table.tables[0].length) {
+    assert.deepEqual(cv.certifications, [], "no Certifications table, so nothing should render");
+    return;
+  }
   assert.deepEqual(
     cv.certifications,
-    sub(sections.cv, "Certifications").tables[0].map((r) =>
+    table.tables[0].map((r) =>
       r.note ? `${plain(r.title)} (${plain(r.note)})` : plain(r.title)
     )
   );
+});
+
+browserTest("skill groups match the CV section", () => {
   assert.deepEqual(
     cv.skillGroups,
     sub(sections.cv, "Skill groups").tables[0].map((r) => ({
@@ -168,6 +176,8 @@ browserTest("labels, quote and footer come from CONTENT.md", () => {
     plain(sections.cv.fields["about label"]),
     plain(sections.cv.fields["highlights label"]),
     plain(sections.cv.fields["competencies label"]),
+    plain(sections.cv.fields["experience label"]),
+    plain(sections.cv.fields["projects label"]),
   ]);
   assert.equal(cv.kicker, plain(sections.cv.fields.kicker));
   assert.equal(cv.quote, plain(sections.cv.fields.quote));
@@ -177,12 +187,11 @@ browserTest("labels, quote and footer come from CONTENT.md", () => {
     plain(sections.cv.fields["save label"]),
   ]);
   assert.equal(cv.footer.at(-1), plain(sections.cv.fields["footer right"]));
-  assert.deepEqual(cv.railLabels.slice(0, 4), [
-    plain(sections.cv.fields["contact label"]),
-    "Education",
-    "Languages",
-    "Certifications",
-  ]);
+  const expectedRail = [plain(sections.cv.fields["contact label"]), "Education", "Languages"];
+  const certs = sub(sections.cv, "Certifications");
+  if (certs && certs.tables[0] && certs.tables[0].length) expectedRail.push("Certifications");
+  if (sections.cv.fields.also) expectedRail.push(plain(sections.cv.fields["also label"]));
+  assert.deepEqual(cv.railLabels, expectedRail);
 });
 
 browserTest("both CV pages carry the version", () => {

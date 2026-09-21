@@ -106,7 +106,6 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Period: 2022 / — / 2025
 - Meta: Hamburg, DE · Mar 2022 – Apr 2025 · In-house product
 - Collapsible: yes
-- Roles: Software Engineer · Mar 2025 – Apr 2025 | Junior Software Engineer · Sep 2022 – Mar 2025 | Intern · Mar 2022 – Aug 2022
 - Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter.pdf
 
 * Led development of a global logistics tracking platform with a team of **10 engineers** — distributed microservices, REST APIs and end-to-end features on AWS with Java, Spring Boot and Angular.
@@ -185,7 +184,8 @@ sections above — only what the web page has no place for lives here.
 - Competencies label: Competencies
 - Contact label: Contact
 - Kicker: Experience & Projects
-- Projects label: Personal / Projects
+- Experience label: Experience
+- Projects label: Personal Projects
 - Back label: ← Back to site
 - Save label: Save as PDF
 - Also label: Also
@@ -194,12 +194,6 @@ sections above — only what the web page has no place for lives here.
 - Summary: Backend engineer with deep expertise in Java and Spring Boot, building high-volume, event-driven distributed systems on AWS. Comfortable across modern platform engineering — cloud-native architecture, Infrastructure-as-Code, CI/CD and automated testing — and increasingly focused on AI-assisted engineering: MCP integrations and agentic coding workflows that make whole teams faster.
 - Footer right: © 2026 Erik Espuñes Jubero
 - Version label: Build
-
-### Certifications
-
-| Title | Note |
-| --- | --- |
-| Claude Certified Architect | expected Q3 2026 |
 
 ### Skill groups
 
