@@ -38,16 +38,35 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 
 ## About
 
-**Lead:** Senior Software Engineer specialized in building scalable, secure and reliable backend services with Java and Spring Boot on AWS. I enjoy owning solutions end to end, from technical design through to production, and helping shape architecture and engineering standards along the way.
+Layout: light section, fixed height with inner scroll pane.
 
-**Body:** I'm naturally curious and like working things out for myself — part of why I enjoy tackling problems most people would rather hand off.
+**Lead:** I build backend systems that hold up — *scalable, secure and boring in the way production should be* — in Java and Spring Boot on AWS. *(the italic clause renders in accent green)*
 
-| Label | Title | Sub |
+**Body:** I like owning a solution end to end, from technical design through to production, and shaping the architecture and engineering standards a team works to along the way. I'm naturally curious and work things out for myself — part of why I enjoy tackling the problems most people would rather hand off.
+
+### Headline numbers
+
+| Figure | Label |
+| --- | --- |
+| 6 mo | Legacy → cloud-native migration originally scoped in years |
+| $1M | Monthly revenue on the product whose squad I led |
+| 10 | Engineers on the tracking platform I led development of |
+| ~50 | Engineers using the AI tooling I shipped department-wide |
+
+### Education
+
+| Years | Title | Institution |
 | --- | --- | --- |
-| Education | MSc Artificial Intelligence | Udacity Institute of AI & Technology · 2026 – expected 2027 |
-| Education | Double BSc Computer Engineering & Video Game Design | Pompeu Fabra University, Barcelona · 2016 – 2021 |
-| Languages | Spanish & Catalan native · English fluent · Dutch basic | — |
-| Certifications | Claude Certified Architect | Expected Q3 2026 |
+| 2026–27 | MSc Artificial Intelligence | Udacity Institute of AI & Technology · expected |
+| 2016–21 | Double BSc Computer Engineering & Video Game Design | Pompeu Fabra University, Barcelona |
+
+### Certifications
+
+- Claude Certified Architect · expected Q3 2026
+
+### Languages
+
+Spanish native · Catalan native · English fluent · Dutch basic
 
 ## Experience
 

@@ -8,6 +8,7 @@
   --paper: #ededed;
   --accent: #00bf63;
   --accent-soft: #3ad98c;
+  --accent-dark: #00994f; /* accent on light backgrounds */
   --text: #ededed;
   --text-dim: #c9c9c9;
   --text-mute: #a8a8a8;
@@ -514,13 +515,19 @@ a:hover {
 
 /* ------------------------------------------------------------------ about */
 
-.lead-dark {
+.about-lead {
   margin: 0;
-  font-size: 18.5px;
-  line-height: 1.65;
-  color: #1f1f1f;
-  font-weight: 300;
-  max-width: 700px;
+  font-size: clamp(19px, 2vw, 25px);
+  line-height: 1.45;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: 800px;
+  text-wrap: pretty;
+}
+
+.about-lead span {
+  color: var(--accent-dark);
+  font-weight: 500;
 }
 
 .body-dark {
@@ -532,40 +539,129 @@ a:hover {
   font-weight: 300;
 }
 
-.fact-grid {
+/* Headline numbers */
+
+.stat-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1px;
   background: #d2d2d2;
-  margin-top: 34px;
+  margin-top: 30px;
   border: 1px solid #d2d2d2;
 }
 
-.fact {
+.stat {
   background: var(--paper);
   padding: 16px 18px;
 }
 
-.fact-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #5c5c5c;
+.stat-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  letter-spacing: -0.01em;
 }
 
-.fact-title {
+.stat-label {
+  font-size: 12.5px;
+  color: #3d3d3d;
+  margin-top: 5px;
+  line-height: 1.45;
+  font-weight: 300;
+}
+
+/* Education / certifications / languages */
+
+.about-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 34px;
+}
+
+.about-col-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.col-label {
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #5c5c5c;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.edu-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.edu-row {
+  display: grid;
+  grid-template-columns: minmax(0, 74px) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.edu-when {
+  font-size: 11px;
+  color: var(--accent-dark);
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+}
+
+.edu-title {
   font-size: 14.5px;
-  font-weight: 500;
-  margin-top: 6px;
+  font-weight: 600;
   color: var(--ink);
 }
 
-.fact-sub {
-  font-size: 13px;
+.edu-sub {
+  font-size: 12.5px;
   color: #3d3d3d;
-  margin-top: 3px;
+  margin-top: 2px;
   font-weight: 300;
+}
+
+.cert-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cert-item {
+  font-size: 14px;
+  color: #3d3d3d;
+  font-weight: 300;
+}
+
+.cert-item span {
+  font-size: 11px;
+  color: #5c5c5c;
+}
+
+.lang-list {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lang {
+  font-size: 13px;
+  color: var(--ink);
+  border: 1px solid #cfcfcf;
+  padding: 5px 11px;
+  border-radius: 2px;
+}
+
+.lang span {
+  color: #5c5c5c;
 }
 
 /* ------------------------------------------------------------- experience */
@@ -1033,13 +1129,31 @@ a:hover {
     padding: 0 24px;
   }
 
+  /* Keep the nav on one row so the fixed topbar stays a predictable height;
+     overflowing links scroll sideways instead of wrapping onto a third row. */
+  .nav-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topbar-inner {
+    padding: 12px 24px;
+    gap: 10px;
+  }
+
   #cv-scroll {
     scroll-snap-type: none;
   }
 
   .section {
     min-height: auto;
-    padding: 96px 0 56px;
+    padding: 132px 0 56px;
   }
 
   .section-paned {
@@ -1067,8 +1181,8 @@ a:hover {
     max-width: 240px;
   }
 
-  .fact-grid {
-    grid-template-columns: minmax(0, 1fr);
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .scroll-hint {
@@ -1080,7 +1194,7 @@ a:hover {
   }
 
   .section-home {
-    padding-top: 120px;
+    padding-top: 150px;
   }
 }
 
