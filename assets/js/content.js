@@ -130,9 +130,8 @@
     });
     left.appendChild(h1);
 
+    /* Typed rotation of specialisations — plain labels, no shell prompt. */
     var terminal = el("div", "terminal");
-    terminal.appendChild(el("span", "prompt", "$"));
-    terminal.appendChild(document.createTextNode(" "));
     var typed = el("span");
     typed.id = "cv-type";
     terminal.appendChild(typed);

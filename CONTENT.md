@@ -36,14 +36,14 @@ Keep the structure below — the parser relies on it:
 - Secondary button: Play the games → #s-games
 - Scroll hint: Scroll
 
-Terminal lines:
+Rotating specialisations:
 
-* java --spring-boot
-* dotnet build --release
-* deploy --aws --event-driven
-* migrate legacy/ --to cloud-native --in 6mo
-* scale pipeline 20 -> 300000 events/day
-* mcp connect copilot://customs-data
+* Java & Spring Boot
+* .NET
+* Event-Driven Systems on AWS
+* Cloud-Native Architecture
+* AI-Assisted Engineering
+* Game Development
 
 ## About
 

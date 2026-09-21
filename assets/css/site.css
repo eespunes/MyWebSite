@@ -373,10 +373,6 @@ a:hover {
   overflow: hidden;
 }
 
-.terminal .prompt {
-  color: var(--accent);
-}
-
 .caret {
   display: inline-block;
   width: 8px;
