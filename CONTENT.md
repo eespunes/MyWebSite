@@ -29,7 +29,7 @@ Keep the structure below — the parser relies on it:
 ## Home
 
 - Eyebrow: Senior Software Engineer
-- Name: ERIK / ESPUÑES / JUBERO
+- Name: ERIK / ESPUÑES JUBERO
 - Portrait: assets/images/avatar.jpg
 - Lead: Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - Primary button: View experience → #s-experience
@@ -184,8 +184,8 @@ sections above — only what the web page has no place for lives here.
 - Highlights label: Highlights
 - Competencies label: Competencies
 - Contact label: Contact
-- Kicker: Relevant Projects
-- Prior label: Prior / Roles
+- Kicker: Experience & Projects
+- Projects label: Personal / Projects
 - Back label: ← Back to site
 - Save label: Save as PDF
 - Also label: Also
@@ -209,13 +209,6 @@ sections above — only what the web page has no place for lives here.
 | Languages | Java · C# · Kotlin · Scala · C++ · SQL · TypeScript · Angular |
 | Web & APIs | Spring Boot · OpenAPI · .NET · AWS |
 | Method | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
-
-### Prior roles
-
-| Title | Description |
-| --- | --- |
-| Senior Software Engineer | High-volume, distributed backend systems in Java and Spring Boot — APIs, event-driven services and data pipelines, with a strong focus on automated testing, quality and reliability, owning solutions from technical design through to production. |
-| Tech Lead | Contributing to technical designs, engineering standards and architectural decisions — architecting scalable, cloud-native solutions aligned with business goals while mentoring teams and keeping delivery on track. |
 
 ## Contact
 

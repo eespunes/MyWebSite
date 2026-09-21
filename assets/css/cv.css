@@ -494,6 +494,29 @@ body {
   gap: 8px;
 }
 
+.cv-project-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cv-project-status {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--label);
+}
+
+.cv-project-stack {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #8f8f8f;
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
 .cv-prior h3 {
   margin: 0;
   font-size: 13px;

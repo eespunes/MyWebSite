@@ -40,6 +40,11 @@ const SCRAPE = `JSON.stringify({
     bullets: Array.from(e.querySelectorAll('li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     paras: Array.from(e.querySelectorAll('p')).map(p => p.textContent.replace(/\\s+/g,' ').trim()) })),
   versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
+  projects: Array.from(document.querySelectorAll('.cv-prior .cv-project-head')).map(h => ({
+    title: h.querySelector('h3').textContent.trim(),
+    status: h.querySelector('.cv-project-status')?.textContent.trim() || '',
+    description: h.parentElement.querySelector('p').textContent.replace(/\\s+/g,' ').trim(),
+    stack: h.parentElement.querySelector('.cv-project-stack')?.textContent.trim() || '' })),
   pageNumbers: [
     document.querySelector('.cv-pageno')?.textContent.trim(),
     document.querySelector('.cv-page-foot span:last-child')?.textContent.trim() ],
@@ -123,7 +128,7 @@ browserTest("about copy matches the About section", () => {
   assert.deepEqual(cv.aboutParas.slice(0, 2), expected);
 });
 
-browserTest("certifications, skill groups and prior roles match the CV section", () => {
+browserTest("certifications and skill groups match the CV section", () => {
   assert.deepEqual(
     cv.certifications,
     sub(sections.cv, "Certifications").tables[0].map((r) =>
@@ -137,11 +142,15 @@ browserTest("certifications, skill groups and prior roles match the CV section",
       tags: splitTags(r.tags),
     }))
   );
+});
 
-  const prior = sub(sections.cv, "Prior roles").tables[0];
-  const priorEntry = cv.entries[cv.entries.length - 1];
-  assert.deepEqual(priorEntry.heads, prior.map((r) => plain(r.title)));
-  assert.deepEqual(priorEntry.paras, prior.map((r) => plain(r.description)));
+browserTest("nothing renders for sections CONTENT.md no longer declares", () => {
+  assert.ok(!sub(sections.cv, "Prior roles"), "Prior roles is gone from CONTENT.md");
+  const labels = cv.entries.map((e) => e.when);
+  assert.ok(
+    !labels.some((l) => /PRIOR/i.test(l)),
+    "the CV still renders a Prior Roles block"
+  );
 });
 
 browserTest("every experience bullet reaches the CV", () => {
@@ -180,6 +189,18 @@ browserTest("both CV pages carry the version", () => {
   assert.equal(cv.versions.length, 2, "expected a version stamp on each page");
   assert.equal(cv.versions[0], cv.versions[1]);
   assert.ok(cv.versions[0].startsWith(plain(sections.cv.fields["version label"])));
+});
+
+browserTest("personal projects carry the same data as the site's Projects", () => {
+  assert.deepEqual(
+    cv.projects,
+    sections.projects.tables[0].map((r) => ({
+      title: plain(r.project),
+      status: plain(r.status),
+      description: plain(r.description),
+      stack: plain(r.stack),
+    }))
+  );
 });
 
 browserTest("page numbers are sequential and nothing overflows the paper", () => {

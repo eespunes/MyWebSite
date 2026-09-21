@@ -184,6 +184,13 @@ a:hover {
   color: var(--accent);
 }
 
+/* The Contact button is a nav link too, so it needs to out-specify the rules
+   above to keep its dark-on-green text — hover included. */
+.nav-links a.btn-primary,
+.nav-links a.btn-primary:hover {
+  color: #0b0b0b;
+}
+
 /* ------------------------------------------------------------------- dots */
 
 .dots {

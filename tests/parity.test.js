@@ -71,6 +71,10 @@ browserTest("no experience bullet appears on one surface only", () => {
   assert.deepEqual(onlyOnCv, [], "bullets in the CV but missing from the site");
 });
 
+browserTest("personal projects are identical on both surfaces", () => {
+  assert.deepEqual(cv.projects, site.projects);
+});
+
 browserTest("every contact value on the CV also appears on the site", () => {
   /* The CV shows profile URLs where the site shows handles, so match loosely. */
   const siteText = site.contactValues.join(" ").toLowerCase();

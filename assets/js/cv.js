@@ -290,17 +290,28 @@
       }
     });
 
-    var prior = sub(cv, "Prior roles");
-    if (prior && prior.tables[0]) {
-      var priorBody = el("div", "cv-prior");
-      prior.tables[0].forEach(function (row) {
+    var projects = by.projects;
+    if (projects && projects.tables[0] && cv.fields["projects label"]) {
+      var projectBody = el("div", "cv-prior");
+      projects.tables[0].forEach(function (row) {
         var item = el("div");
-        item.appendChild(el("h3", null, inline(row.title)));
+        var head = el("div", "cv-project-head");
+        head.appendChild(el("h3", null, inline(row.project)));
+        if (row.status) {
+          head.appendChild(el("span", "cv-project-status", inline(row.status)));
+        }
+        item.appendChild(head);
         item.appendChild(el("p", null, inline(row.description)));
-        priorBody.appendChild(item);
+        if (row.stack) {
+          item.appendChild(el("div", "cv-project-stack", inline(row.stack)));
+        }
+        projectBody.appendChild(item);
       });
-      entries.appendChild(entryShell(lines(cv.fields["prior label"] || prior.title), priorBody));
+      entries.appendChild(
+        entryShell(lines(cv.fields["projects label"]), projectBody)
+      );
     }
+
     page2.appendChild(entries);
 
     var foot = el("div", "cv-page-foot");

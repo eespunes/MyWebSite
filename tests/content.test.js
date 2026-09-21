@@ -21,7 +21,7 @@ const REQUIRED_FIELDS = {
   projects: ["title", "side note", "nav label", "link label"],
   games: ["title", "side note", "link", "hint", "nav label", "featured label"],
   cv: ["role", "about label", "highlights label", "competencies label",
-       "kicker", "prior label", "back label", "save label", "quote", "summary"],
+       "kicker", "projects label", "back label", "save label", "quote", "summary"],
   contact: ["heading", "body", "button", "footer left", "footer right"],
 };
 
@@ -32,8 +32,7 @@ const REQUIRED_TABLES = {
   competencies: { Cards: ["#", "title", "description", "tags"],
                   "Tag rows": ["label", "tags"] },
   cv: { Certifications: ["title", "note"],
-        "Skill groups": ["group", "tags"],
-        "Prior roles": ["title", "description"] },
+        "Skill groups": ["group", "tags"] },
 };
 
 test("every section the renderers expect is present", () => {
