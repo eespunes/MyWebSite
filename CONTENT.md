@@ -1,4 +1,4 @@
-<!-- Build v1.79 · 2026-09-21 -->
+<!-- Build v1.80 · 2026-09-21 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -51,7 +51,7 @@ Rotating specialisations:
 - Title: About / Me
 - Theme: light
 
-Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in Java, Spring Boot and .NET on AWS.
+Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in every language I propose.
 
 Body: I take end-to-end ownership of technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
 
@@ -153,7 +153,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | --- | --- | --- | --- | --- | --- |
 | 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
 | 02 | Thrive | In development | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
-| 03 | Xebec | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
+| 03 | Xebec | Live | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
 
 ## Games
 
