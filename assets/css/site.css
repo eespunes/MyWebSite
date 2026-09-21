@@ -62,8 +62,32 @@ a:hover {
   scrollbar-width: none;
 }
 
-#cv-scroll::-webkit-scrollbar {
+#cv-scroll::-webkit-scrollbar,
+.cv-pane::-webkit-scrollbar {
   display: none;
+}
+
+/* Section whose content scrolls inside a fixed-height viewport pane. */
+.section-paned {
+  height: 100vh;
+  max-height: 100vh;
+  flex-direction: column;
+  padding: 92px 0 40px;
+}
+
+.cv-pane {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  align-items: safe center;
+  width: 100%;
+  scrollbar-width: none;
+}
+
+.cv-pane > .wrap {
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .scanlines {
@@ -484,7 +508,8 @@ a:hover {
 .side-note.mono {
   font-size: 11px;
   line-height: 1.9;
-  color: var(--text-faint);
+  color: #9a9a9a;
+  letter-spacing: 0.1em;
 }
 
 /* ------------------------------------------------------------------ about */
@@ -548,20 +573,20 @@ a:hover {
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 30px;
 }
 
 .tl-item {
   display: grid;
-  grid-template-columns: minmax(0, 96px) minmax(0, 1fr);
-  gap: 22px;
+  grid-template-columns: minmax(0, 86px) minmax(0, 1fr);
+  gap: 24px;
 }
 
 .tl-when {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--accent);
-  letter-spacing: 0.06em;
-  line-height: 1.8;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
 }
 
 .tl-when span {
@@ -570,25 +595,35 @@ a:hover {
 
 .tl-body {
   border-left: 1px solid #2c2c2c;
-  padding-left: 24px;
+  padding-left: 26px;
 }
 
 .tl-body h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 600;
   color: #fff;
 }
 
 .tl-meta {
-  margin-top: 5px;
-  font-size: 13px;
+  margin-top: 6px;
+  font-size: 13.5px;
   color: #bdbdbd;
+}
+
+.tl-body > p,
+.exp-body > p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  font-weight: 300;
+  max-width: 680px;
 }
 
 .tl-body ul {
   margin: 14px 0 0;
-  padding-left: 18px;
+  padding-left: 17px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -600,21 +635,125 @@ a:hover {
 
 .tl-body ul strong {
   color: #fff;
-  font-weight: 500;
-}
-
-.tl-body p {
-  margin: 14px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--text-dim);
-  font-weight: 300;
-  max-width: 660px;
+  font-weight: 600;
 }
 
 .tl-body .inline-link {
   display: inline-block;
   margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+/* "Client engagements" rule */
+
+.tl-divider {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tl-divider span:first-child {
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #8f8f8f;
+}
+
+.tl-divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  display: block;
+}
+
+/* Client engagement card nested under an employer */
+
+.engagement {
+  margin-top: 14px;
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+  padding: 16px 20px;
+  border-radius: 0 2px 2px 0;
+}
+
+.engagement-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.engagement-head h4 {
+  margin: 0;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.engagement-head span {
+  font-size: 11px;
+  color: #9a9a9a;
+}
+
+.engagement ul {
+  margin: 12px 0 0;
+  padding-left: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.engagement ul strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Expandable entries */
+
+.exp-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.exp-head:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.exp-toggle {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.exp-head:hover .exp-toggle {
+  color: var(--accent-soft);
+}
+
+.exp-body[hidden] {
+  display: none;
+}
+
+.tl-roles {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 18px;
+  row-gap: 4px;
+  font-size: 10.5px;
+  color: #9a9a9a;
 }
 
 /* ----------------------------------------------------------- competencies */
@@ -819,6 +958,16 @@ a:hover {
   .section {
     min-height: auto;
     padding: 96px 0 56px;
+  }
+
+  .section-paned {
+    height: auto;
+    max-height: none;
+  }
+
+  .cv-pane {
+    overflow-y: visible;
+    display: block;
   }
 
   .dots {

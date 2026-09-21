@@ -49,25 +49,33 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 | Languages | Spanish & Catalan native · English fluent · Dutch basic | — |
 | Certifications | Xebia AI Growth Path: Foundation | Claude Certified Architect · expected Q3 2026 |
 
-## Relevant Projects (Experience)
+## Experience
 
-Side note: Senior Software Engineer / Tech Lead
+Side note: Software Consultant / Tech Lead
+Layout: fixed-height section, content scrolls inside an inner pane. Entries 2 and 3 are collapsed by default ("Expand +").
 
-### 2025 — 2026 · Software Developer · UPS Logistics
-Eindhoven, NL · July 2025 – May 2026
+### 2025 — now · Software Consultant · Xebia
+Hilversum, NL · Hybrid · Jun 2025 – Present
 
+Placed with client engineering organisations to lead backend architecture and modernisation work, and to raise the engineering standard of the teams I join.
+
+**Client engagements**
+
+#### UPS — Eindhoven, NL · Remote · Jul 2025 – May 2026
 - Led transformation of global brokerage systems — migrated a giant legacy codebase to cloud-native architecture in **6 months with 7 engineers**, work initially scoped at multiple years.
 - Architected customs data services handling cross-border declarations across three countries, meeting EU and US customs requirements in a regulated enterprise.
 - Built an MCP integration connecting GitHub Copilot to customs-data sources; rolled it out department-wide, adopted by **~50 of 100+ engineers**.
 
-### 2022 — 2025 · Software Engineer · Container xChange
-Hamburg, DE · March 2022 – May 2025 · [Recommendation letter](assets/cv/ErikEspunesJubero_RecommendationLetter.pdf)
+### 2022 — 2025 · Software Engineer · Container xChange *(collapsible)*
+Hamburg, DE · Mar 2022 – Apr 2025 · In-house product · [Recommendation letter](assets/cv/ErikEspunesJubero_RecommendationLetter.pdf)
+
+Roles: Software Engineer · Mar 2025 – Apr 2025 | Junior Software Engineer · Sep 2022 – Mar 2025 | Intern · Mar 2022 – Aug 2022
 
 - Led development of a global logistics tracking platform with a team of **10 engineers** — distributed microservices, REST APIs and end-to-end features on AWS with Java, Spring Boot and Angular.
 - Directly led a 3-engineer squad on a product generating **$1M monthly revenue**.
 - Automated the container-tracking pipeline into an event-driven system, scaling from **~20 to hundreds of thousands** of containers scraped per day.
 
-### In design · Xebec — Autonomous Agent Workbench
+### In design · Xebec — Autonomous Agent Workbench *(collapsible)*
 Personal project
 
 A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — local LLMs (Ollama) plus the Claude Agent SDK behind a swappable provider interface, gated by automated quality checks before any agent output is trusted.

@@ -47,6 +47,31 @@
     root.scrollTo({ top: target.offsetTop, behavior: "smooth" });
   });
 
+  /* ------------------------------------------------ expandable experience */
+  function toggleEntry(head) {
+    var key = head.getAttribute("data-exp-head");
+    var body = document.querySelector('[data-exp-body="' + key + '"]');
+    var chev = document.querySelector('[data-exp-chev="' + key + '"]');
+    if (!body) return;
+    var open = !body.hidden;
+    body.hidden = open;
+    head.setAttribute("aria-expanded", String(!open));
+    if (chev) chev.textContent = open ? "Expand +" : "Collapse \u2212";
+  }
+
+  root.addEventListener("click", function (ev) {
+    var head = ev.target.closest("[data-exp-head]");
+    if (head) toggleEntry(head);
+  });
+
+  root.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Enter" && ev.key !== " ") return;
+    var head = ev.target.closest("[data-exp-head]");
+    if (!head) return;
+    ev.preventDefault();
+    toggleEntry(head);
+  });
+
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ----------------------------------------------------- hero typing lines */
