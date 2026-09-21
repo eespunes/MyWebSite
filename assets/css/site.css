@@ -265,34 +265,13 @@ a:hover {
 .section-home {
   flex-direction: column;
   justify-content: center;
-  padding: 96px 0 64px;
+  padding: 104px 0 70px;
   overflow: hidden;
-}
-
-#cv-rain {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-.home-veil {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at 30% 45%,
-    rgba(18, 18, 18, 0.35) 0%,
-    rgba(18, 18, 18, 0.9) 62%,
-    #121212 100%
-  );
 }
 
 .marquee {
   position: absolute;
-  top: 57px;
+  top: 52px;
   left: 0;
   right: 0;
   overflow: hidden;
@@ -330,8 +309,8 @@ a:hover {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.75fr);
+  gap: 52px;
   align-items: center;
 }
 
@@ -339,7 +318,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .eyebrow-rule {
@@ -353,32 +332,37 @@ a:hover {
   font-family: var(--mono);
   font-size: 11px;
   color: var(--accent);
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
 .hero-title {
   margin: 0;
-  font-size: clamp(36px, 5.6vw, 70px);
+  font-size: clamp(34px, 5.2vw, 64px);
   line-height: 1.03;
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 34px rgba(0, 191, 99, 0.28);
 }
 
 .hero-title span {
   color: var(--accent);
-  text-shadow: 0 0 26px rgba(0, 191, 99, 0.5);
 }
 
+/* Boxed terminal line */
+
 .terminal {
-  margin-top: 26px;
-  max-width: 540px;
+  margin-top: 22px;
+  max-width: 520px;
   font-family: var(--mono);
   font-size: 13px;
-  line-height: 1.85;
   color: #9fe8c1;
+  background: #0d0d0d;
+  border: 1px solid #1f2f26;
+  border-radius: 2px;
+  padding: 11px 14px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .terminal .prompt {
@@ -389,8 +373,7 @@ a:hover {
   display: inline-block;
   width: 8px;
   background: var(--accent);
-  animation: cvcaret 1s step-end infinite;
-  margin-left: 2px;
+  animation: cvcaret 1s steps(1) infinite;
 }
 
 @keyframes cvcaret {
@@ -405,9 +388,9 @@ a:hover {
 }
 
 .hero-lead {
-  margin: 18px 0 0;
+  margin: 20px 0 0;
   max-width: 520px;
-  font-size: 15.5px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--text-dim);
   font-weight: 300;
@@ -423,21 +406,20 @@ a:hover {
   inset: 16px -16px -16px 16px;
   border: 1px solid var(--accent);
   border-radius: 2px;
-  box-shadow: 0 0 30px rgba(0, 191, 99, 0.22);
 }
 
 .portrait img {
   position: relative;
   display: block;
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   border-radius: 2px;
   filter: grayscale(1) contrast(1.05);
 }
 
 .scroll-hint {
   position: absolute;
-  bottom: 26px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -449,7 +431,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   animation: cvhint 2.2s ease-in-out infinite;
 }
 

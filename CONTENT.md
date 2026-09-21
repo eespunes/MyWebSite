@@ -31,9 +31,11 @@ One gesture moves exactly one section: wheel, arrow/page keys and swipes are loc
 
 - **Eyebrow:** Senior Software Engineer
 - **Name:** ERIK / ESPUÑES / JUBERÓ *(last line in accent green)*
-- **Portrait:** assets/images/avatar.jpg (900×900 square, centre-cropped; rendered grayscale by CSS)
+- **Portrait:** assets/images/avatar.jpg (900×900 square, centre-cropped; rendered grayscale by CSS, max 280px)
 - **Lead:** Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - **Buttons:** View experience → #s-experience · Play the games → #s-games
+- **Background:** binary marquee under the topbar; no matrix-rain canvas
+- **Terminal:** boxed panel (#0d0d0d on a #1f2f26 border) with the typed lines below
 - **Typed terminal lines** (`assets/js/site.js`):
   - `java --spring-boot --aws --event-driven`
   - `migrate legacy/ --to cloud-native --in 6mo`
