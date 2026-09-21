@@ -1,4 +1,4 @@
-// Build v1.46 · 2026-09-21
+// Build v1.47 · 2026-09-21
 /* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
    every string on screen comes from the Markdown. */
 (function () {
@@ -304,7 +304,10 @@
       );
 
       var body = el("div", "tl-body");
-      var collapsible = (entry.fields.collapsible || "").toLowerCase() === "yes";
+      /* Collapsible: yes → starts closed. expanded (or open) → starts open. */
+      var collapse = (entry.fields.collapsible || "").toLowerCase();
+      var collapsible = collapse === "yes" || collapse === "expanded" || collapse === "open";
+      var startsOpen = collapse === "expanded" || collapse === "open";
       var key = "exp" + index;
 
       var heading = el("h3", null, inline(entry.title));
@@ -315,18 +318,17 @@
         headRow.setAttribute("data-exp-head", key);
         headRow.setAttribute("role", "button");
         headRow.setAttribute("tabindex", "0");
-        headRow.setAttribute("aria-expanded", "false");
+        headRow.setAttribute("aria-expanded", String(startsOpen));
         headRow.setAttribute("aria-controls", key);
         var titleBox = el("div");
         titleBox.appendChild(heading);
         titleBox.appendChild(meta);
         headRow.appendChild(titleBox);
-        if (section.fields["expand label"]) {
-          var toggle = el(
-            "span",
-            "exp-toggle mono",
-            inline(section.fields["expand label"])
-          );
+        var toggleLabel = startsOpen
+          ? section.fields["collapse label"]
+          : section.fields["expand label"];
+        if (toggleLabel) {
+          var toggle = el("span", "exp-toggle mono", inline(toggleLabel));
           toggle.setAttribute("data-exp-chev", key);
           headRow.appendChild(toggle);
         }
@@ -340,7 +342,7 @@
       if (collapsible) {
         content.id = key;
         content.setAttribute("data-exp-body", key);
-        content.hidden = true;
+        content.hidden = !startsOpen;
       }
 
       if (entry.fields.summary) {
@@ -569,13 +571,18 @@
     grid.appendChild(left);
 
     var list = el("div", "contact-list");
-    (section.tables[0] || []).forEach(function (row) {
+    (section.tables[0] || [])
+      .filter(function (row) {
+        /* A link to this very site belongs on the CV, not on the site. */
+        return (row["cv only"] || "").toLowerCase() !== "yes";
+      })
+      .forEach(function (row) {
       var item = row.link ? el("a") : el("div", "contact-row");
       if (row.link) externalAttrs(item, row.link);
       item.appendChild(el("span", "mono contact-key", inline(row.key)));
       item.appendChild(el("span", "contact-val", inline(row.value)));
-      list.appendChild(item);
-    });
+        list.appendChild(item);
+      });
     grid.appendChild(list);
     node.appendChild(grid);
 

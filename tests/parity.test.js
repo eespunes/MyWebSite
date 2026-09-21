@@ -1,4 +1,4 @@
-// Build v1.46 · 2026-09-21
+// Build v1.47 · 2026-09-21
 /* The site and the CV are two views of one file. These compare them against
    each other, so a category that drifts on one surface fails here even if
    both still parse. */
@@ -34,7 +34,7 @@ const CV = `JSON.stringify({
     s.querySelector('.cv-stat-num').textContent.trim(),
     s.querySelector('.cv-stat-label').textContent.replace(/\\s+/g,' ').trim() ]),
   bullets: Array.from(document.querySelectorAll('.cv-entry-body li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
-  contactLines: Array.from(document.querySelectorAll('.cv-contact div')).map(d => d.textContent.trim()),
+  contactLines: Array.from(document.querySelectorAll('.cv-contact > *')).map(d => d.textContent.trim()),
   aboutLead: document.querySelectorAll('.cv-section .cv-body')[0].textContent.replace(/\\s+/g,' ').trim(),
 })`;
 
@@ -75,11 +75,22 @@ browserTest("personal projects are identical on both surfaces", () => {
   assert.deepEqual(cv.projects, site.projects);
 });
 
-browserTest("every contact value on the CV also appears on the site", () => {
-  /* The CV shows profile URLs where the site shows handles, so match loosely. */
+browserTest("shared contact values appear on both surfaces", () => {
+  const { sections } = require("./helpers/content.js");
+  const cvOnly = sections.contact.tables[0]
+    .filter((r) => (r["cv only"] || "").toLowerCase() === "yes")
+    .map((r) => plain(r.value).toLowerCase());
+
   const siteText = site.contactValues.join(" ").toLowerCase();
   for (const line of cv.contactLines) {
     const handle = line.split("/").pop().toLowerCase();
+    if (cvOnly.some((v) => line.toLowerCase().includes(v) || v.includes(handle))) {
+      assert.ok(
+        !siteText.includes(line.toLowerCase()),
+        `CV-only contact "${line}" should not be on the site`
+      );
+      continue;
+    }
     assert.ok(
       siteText.includes(line.toLowerCase()) || siteText.includes(handle),
       `CV contact "${line}" does not appear on the site`

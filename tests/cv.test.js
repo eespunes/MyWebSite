@@ -1,4 +1,4 @@
-// Build v1.46 · 2026-09-21
+// Build v1.47 · 2026-09-21
 /* Renders cv.html and asserts the printable CV carries the same data as the
    site, in the same categories — both being views of CONTENT.md. */
 const test = require("node:test");
@@ -12,7 +12,7 @@ const SCRAPE = `JSON.stringify({
   name: document.querySelector('.cv-name')?.innerText.replace(/\\n/g, ' / ').trim(),
   role: document.querySelector('.cv-role')?.textContent.trim(),
   railLabels: Array.from(document.querySelectorAll('.cv-label')).map(l => l.textContent.trim()),
-  contact: Array.from(document.querySelectorAll('.cv-contact div')).map(d => d.textContent.trim()),
+  contact: Array.from(document.querySelectorAll('.cv-contact > *')).map(d => d.textContent.trim()),
   education: Array.from(document.querySelectorAll('.cv-list > div')).map(d => ({
     title: d.querySelector('.cv-item-title').textContent.trim(),
     institution: d.querySelector('.cv-item-sub').textContent.trim(),
@@ -40,7 +40,7 @@ const SCRAPE = `JSON.stringify({
     bullets: Array.from(e.querySelectorAll('li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     paras: Array.from(e.querySelectorAll('p')).map(p => p.textContent.replace(/\\s+/g,' ').trim()) })),
   versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
-  projects: Array.from(document.querySelectorAll('.cv-projects .cv-project-head')).map(h => ({
+  projects: Array.from(document.querySelectorAll('.cv-project-head')).map(h => ({
     title: h.querySelector('h3').textContent.trim(),
     status: h.querySelector('.cv-project-status')?.textContent.trim() || '',
     description: h.parentElement.querySelector('p').textContent.replace(/\\s+/g,' ').trim(),

@@ -1,4 +1,4 @@
-// Build v1.46 · 2026-09-21
+// Build v1.47 · 2026-09-21
 /* Renders index.html in a real browser and asserts the page shows exactly what
    CONTENT.md says — same values, in the same categories, nothing extra. */
 const test = require("node:test");
@@ -30,6 +30,8 @@ const SCRAPE = `JSON.stringify({
     when: item.querySelector('.tl-when').innerText.replace(/\\n/g, ' / ').trim(),
     title: item.querySelector('h3').textContent.trim(),
     meta: item.querySelector('.tl-meta').textContent.trim(),
+    toggle: item.querySelector('.exp-toggle')?.textContent.trim() ?? null,
+    hidden: item.querySelector('.exp-body') ? item.querySelector('.exp-body').hidden : null,
     bullets: Array.from(item.querySelectorAll(':scope > .tl-body > ul > li, :scope > .tl-body > .exp-body > ul > li'))
       .map(li => li.textContent.replace(/\\s+/g,' ').trim()),
     engagements: Array.from(item.querySelectorAll('.engagement')).map(e => ({
@@ -156,6 +158,30 @@ browserTest("experience entries, engagements and bullets match Experience", () =
   });
 });
 
+browserTest("collapsible entries honour their declared start state", () => {
+  const entries = sections.experience.subs.filter((s) => s.depth === 3);
+  entries.forEach((entry, i) => {
+    const mode = (entry.fields.collapsible || "").toLowerCase();
+    const rendered = page.experience[i];
+    if (!mode) {
+      assert.equal(rendered.toggle, null, `${entry.title} should not be collapsible`);
+      return;
+    }
+    const open = mode === "expanded" || mode === "open";
+    assert.equal(
+      rendered.hidden,
+      !open,
+      `${entry.title} should start ${open ? "open" : "closed"}`
+    );
+    assert.equal(
+      rendered.toggle,
+      open
+        ? plain(sections.experience.fields["collapse label"])
+        : plain(sections.experience.fields["expand label"])
+    );
+  });
+});
+
 browserTest("competency cards and tag rows match Competencies", () => {
   assert.deepEqual(
     page.skills,
@@ -212,12 +238,23 @@ browserTest("game cards match Games, in order", () => {
 browserTest("contact rows and footer match Contact", () => {
   assert.deepEqual(
     page.contact,
-    sections.contact.tables[0].map((r) => ({
-      key: plain(r.key),
-      value: plain(r.value),
-      link: r.link || "",
-    }))
+    sections.contact.tables[0]
+      .filter((r) => (r["cv only"] || "").toLowerCase() !== "yes")
+      .map((r) => ({
+        key: plain(r.key),
+        value: plain(r.value),
+        link: r.link || "",
+      }))
   );
+
+  /* Rows marked CV only must not leak onto the page. */
+  for (const row of sections.contact.tables[0]) {
+    if ((row["cv only"] || "").toLowerCase() !== "yes") continue;
+    assert.ok(
+      !page.contact.some((r) => r.key === plain(row.key)),
+      `${row.key} is marked CV only but renders on the site`
+    );
+  }
   /* The middle span is the build stamp, covered by version.test.js. */
   assert.equal(page.footer.at(0), plain(sections.contact.fields["footer left"]));
   assert.equal(page.footer.at(-1), plain(sections.contact.fields["footer right"]));

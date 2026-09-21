@@ -1,4 +1,4 @@
-// Build v1.46 · 2026-09-21
+// Build v1.47 · 2026-09-21
 /* Builds the printable CV from CONTENT.md — the same file the site renders
    from — then offers it to the browser's PDF printer. */
 (function () {
@@ -129,7 +129,11 @@
     var contactRows = contact.tables[0] || [];
     var contactList = el("div", "cv-contact");
     contactRows.forEach(function (row) {
-      contactList.appendChild(el("div", null, inline(contactText(row))));
+      /* Rows with a target become links, so the PDF stays clickable. */
+      var node = row.link ? el("a") : el("div");
+      if (row.link) externalAttrs(node, row.link);
+      node.innerHTML = inline(contactText(row));
+      contactList.appendChild(node);
     });
     railTop.appendChild(block(cv.fields["contact label"] || contact.title, contactList));
 
@@ -311,7 +315,9 @@
 
     var projects = by.projects;
     if (projects && projects.tables[0] && cv.fields["projects label"]) {
-      var projectBody = el("div", "cv-projects");
+      entries.appendChild(heading(cv.fields["projects label"]));
+      /* Each project is its own entry, so the accent rail breaks between them
+         the way it does between experience entries. */
       projects.tables[0].forEach(function (row) {
         var item = el("div");
         var head = el("div", "cv-project-head");
@@ -324,31 +330,28 @@
         if (row.stack) {
           item.appendChild(el("div", "cv-project-stack", inline(row.stack)));
         }
-        projectBody.appendChild(item);
+        entries.appendChild(entryShell([], item));
       });
-      entries.appendChild(heading(cv.fields["projects label"]));
-      entries.appendChild(entryShell([], projectBody));
     }
 
     page2.appendChild(entries);
 
     var foot = el("div", "cv-page-foot");
-    foot.appendChild(
-      el(
-        "span",
-        null,
-        contactRows
-          .filter(function (row) {
-            /* The address needs three lines; the footer has one. */
-            return (row.key || "").toLowerCase() !== "address";
-          })
-          .slice(0, 3)
-          .map(function (row) {
-            return inline(contactText(row));
-          })
-          .join(" · ")
-      )
-    );
+    var footContacts = el("span", "cv-foot-contacts");
+    contactRows
+      .filter(function (row) {
+        /* The address needs three lines; the footer has one. */
+        return (row.key || "").toLowerCase() !== "address";
+      })
+      .slice(0, 3)
+      .forEach(function (row, i) {
+        if (i) footContacts.appendChild(document.createTextNode(" · "));
+        var node = row.link ? el("a") : el("span");
+        if (row.link) externalAttrs(node, row.link);
+        node.innerHTML = inline(contactText(row));
+        footContacts.appendChild(node);
+      });
+    foot.appendChild(footContacts);
     var footVersion = el("span", "cv-version");
     foot.appendChild(footVersion);
     CVParse.loadVersion().then(function (versionInfo) {
@@ -366,6 +369,14 @@
     var parts = String(value).split("→");
     if (parts.length < 2) return { label: value.trim(), href: "" };
     return { label: parts[0].trim(), href: parts[1].trim() };
+  }
+
+  function externalAttrs(node, href) {
+    node.href = href;
+    if (/^https?:/.test(href)) {
+      node.target = "_blank";
+      node.rel = "noopener noreferrer";
+    }
   }
 
   function bullets(items) {

@@ -1,4 +1,4 @@
-<!-- Build v1.46 · 2026-09-21 -->
+<!-- Build v1.47 · 2026-09-21 -->
 # Site Content — Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -91,6 +91,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Period: 2025 / — / now
 - Meta: Hilversum, NL · Hybrid · Jun 2025 – Present
 - Summary: Placed with client engineering organisations to lead backend architecture and modernisation work, and to raise the engineering standard of the teams I join.
+- Collapsible: expanded
 - Engagements label: Client engagements
 
 #### UPS
@@ -215,11 +216,11 @@ sections above — only what the web page has no place for lives here.
 - Footer right: Feanwâlden, NL
 - Version label: Build
 
-| Key | Value | Link |
-| --- | --- | --- |
-| Address | Toarteldostrjitte 40, 9269 NG, Feanwâlden, The Netherlands | |
-| Email | erik.espunyes7@outlook.com | mailto:erik.espunyes7@outlook.com |
-| Phone | +31 6 2559 2282 | tel:+31625592282 |
-| Website | eespunes.github.io/MyWebSite | https://eespunes.github.io/MyWebSite/ |
-| LinkedIn | eespunes | https://www.linkedin.com/in/eespunes/ |
-| GitHub | eespunes | https://github.com/eespunes |
+| Key | Value | Link | CV only |
+| --- | --- | --- | --- |
+| Address | Toarteldostrjitte 40, 9269 NG, Feanwâlden, The Netherlands | | |
+| Email | erik.espunyes7@outlook.com | mailto:erik.espunyes7@outlook.com | |
+| Phone | +31 6 2559 2282 | tel:+31625592282 | |
+| Website | eespunes.github.io/MyWebSite | https://eespunes.github.io/MyWebSite/ | yes |
+| LinkedIn | eespunes | https://www.linkedin.com/in/eespunes/ | |
+| GitHub | eespunes | https://github.com/eespunes | |
