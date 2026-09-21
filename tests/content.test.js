@@ -1,4 +1,4 @@
-// Build v1.52 · 2026-09-21
+// Build v1.53 · 2026-09-21
 /* Schema checks on CONTENT.md — fast, no browser. These guard the contract
    the renderers rely on: if a category or column is renamed here without the
    renderers following, the page silently loses content. */
@@ -108,6 +108,33 @@ test("linked rows point at real targets", () => {
   for (const row of rows) {
     assert.match(row.link, /^https?:\/\//, `${row.what} has a malformed link`);
   }
+});
+
+test("games are listed newest first", () => {
+  const rows = sections.games.tables[0];
+  const years = rows.map((r) => r.year.trim());
+
+  /* Rows without a year sort last; the rest run newest to oldest. */
+  const dated = years.filter((y) => y);
+  const undatedFirst = years.findIndex((y) => !y);
+  if (undatedFirst !== -1) {
+    assert.ok(
+      years.slice(undatedFirst).every((y) => !y),
+      "games without a year must all be at the end"
+    );
+  }
+  for (let i = 1; i < dated.length; i++) {
+    assert.ok(
+      Number(dated[i - 1]) >= Number(dated[i]),
+      `${rows[i].game} (${dated[i]}) comes after ${rows[i - 1].game} (${dated[i - 1]})`
+    );
+  }
+});
+
+test("game numbering is sequential from 01", () => {
+  sections.games.tables[0].forEach((row, i) => {
+    assert.equal(row["#"], String(i + 1).padStart(2, "0"), `${row.game} is numbered ${row["#"]}`);
+  });
 });
 
 test("every game image exists on disk", () => {
