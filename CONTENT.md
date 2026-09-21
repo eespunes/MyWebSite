@@ -8,7 +8,7 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 | Field | Value |
 | --- | --- |
 | Page title | Erik Espuñes Juberó |
-| Description | Erik Espuñes Juberó — Software Consultant. Scalable, secure backend services in Java and Spring Boot on AWS. |
+| Description | Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS. |
 | Author | eespunes |
 | Theme color | #121212 |
 | Favicon | assets/images/favicon.png |
@@ -25,7 +25,7 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 
 ## Home
 
-- **Eyebrow:** Software Consultant · Xebia
+- **Eyebrow:** Senior Software Engineer
 - **Name:** ERIK / ESPUÑES / JUBERÓ *(last line in accent green)*
 - **Portrait:** assets/images/avatar.png
 - **Lead:** Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
@@ -38,7 +38,7 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 
 ## About
 
-**Lead:** Software Consultant specialized in building scalable, secure and reliable backend services with Java and Spring Boot on AWS. I enjoy owning solutions end to end, from technical design through to production, and helping shape architecture and engineering standards along the way.
+**Lead:** Senior Software Engineer specialized in building scalable, secure and reliable backend services with Java and Spring Boot on AWS. I enjoy owning solutions end to end, from technical design through to production, and helping shape architecture and engineering standards along the way.
 
 **Body:** I'm naturally curious and like working things out for myself — part of why I enjoy tackling problems most people would rather hand off.
 
@@ -47,12 +47,12 @@ Edit here, then mirror the change into the matching `<!-- START: ... -->` block.
 | Education | MSc Artificial Intelligence | Udacity Institute of AI & Technology · 2026 – expected 2027 |
 | Education | Double BSc Computer Engineering & Video Game Design | Pompeu Fabra University, Barcelona · 2016 – 2021 |
 | Languages | Spanish & Catalan native · English fluent · Dutch basic | — |
-| Certifications | Xebia AI Growth Path: Foundation | Claude Certified Architect · expected Q3 2026 |
+| Certifications | Claude Certified Architect | Expected Q3 2026 |
 
 ## Experience
 
-Side note: Software Consultant / Tech Lead
-Layout: fixed-height section, content scrolls inside an inner pane. Entries 2 and 3 are collapsed by default ("Expand +").
+Side note: Senior Software Engineer / Tech Lead
+Layout: fixed-height section, content scrolls inside an inner pane. The Container xChange entry is collapsed by default ("Expand +").
 
 ### 2025 — now · Software Consultant · Xebia
 Hilversum, NL · Hybrid · Jun 2025 – Present
@@ -75,11 +75,6 @@ Roles: Software Engineer · Mar 2025 – Apr 2025 | Junior Software Engineer · 
 - Directly led a 3-engineer squad on a product generating **$1M monthly revenue**.
 - Automated the container-tracking pipeline into an event-driven system, scaling from **~20 to hundreds of thousands** of containers scraped per day.
 
-### In design · Xebec — Autonomous Agent Workbench *(collapsible)*
-Personal project
-
-A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — local LLMs (Ollama) plus the Claude Agent SDK behind a swappable provider interface, gated by automated quality checks before any agent output is trusted.
-
 ## Competencies
 
 Side note: High-volume, event-driven distributed systems on AWS — and increasingly, AI-assisted engineering that makes whole teams faster.
@@ -92,6 +87,16 @@ Side note: High-volume, event-driven distributed systems on AWS — and increasi
 | 04 | Languages | C# · Java · Kotlin · Scala · C++ · SQL · TypeScript · Angular |
 | 05 | Methodology | Agile / Scrum · DDD · TDD · platform engineering · tech lead |
 | 06 | Leadership | Mentoring engineers · architecture & engineering standards |
+
+## Personal Projects
+
+Side note: Things I build on my own time — usually to scratch an itch, always to learn something that carries back into the day job.
+
+| # | Project | Status | Description | Stack |
+| --- | --- | --- | --- | --- |
+| 01 | SmartBolus | [GitHub](https://github.com/eespunes/SmartBolus) | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses — time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences |
+| 02 | Thrive | In development · [GitHub](https://github.com/eespunes/thrive) | A family management app — shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions |
+| 03 | Xebec | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API |
 
 ## My Games
 
@@ -117,14 +122,15 @@ Link out: https://eespunes.itch.io
 ## Contact
 
 - **Heading:** Let's build something solid.
-- **Body:** Software Consultant at Xebia. Open to conversations about backend architecture, platform engineering and agentic developer tooling.
+- **Body:** Senior Software Engineer. Open to conversations about backend architecture, platform engineering and agentic developer tooling.
 - **CV:** assets/cv/ErikEspunesJubero_CV.pdf
 
 | Key | Value | Link |
 | --- | --- | --- |
-| Email | erik.espunesjubero@xebia.com | mailto:erik.espunesjubero@xebia.com |
+| Address | Toarteldostrjitte 40, 9269 NG, Feanwâlden, The Netherlands |
+| Email | erik.espunyes7@outlook.com | mailto:erik.espunyes7@outlook.com |
 | Phone | +31 6 2559 2282 | tel:+31625592282 |
 | LinkedIn | eespunes | https://www.linkedin.com/in/eespunes/ |
 | GitHub | eespunes | https://github.com/eespunes |
 
-- **Footer:** © 2026 Erik Espuñes Juberó · Leeuwarden, NL
+- **Footer:** © 2026 Erik Espuñes Juberó · Feanwâlden, NL

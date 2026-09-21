@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Erik Espuñes Juberó</title>
-    <meta name="description" content="Erik Espuñes Juberó — Software Consultant. Scalable, secure backend services in Java and Spring Boot on AWS." />
-    <meta name="keywords" content="software consultant, backend engineer, java, spring boot, aws, portfolio, cv, resume, game developer" />
+    <meta name="description" content="Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS." />
+    <meta name="keywords" content="senior software engineer, backend engineer, java, spring boot, aws, portfolio, cv, resume, game developer" />
     <meta name="author" content="eespunes" />
     <meta name="theme-color" content="#121212" />
     <link rel="shortcut icon" href="assets/images/favicon.png" />
@@ -28,6 +28,7 @@
             <a href="#s-about">About</a>
             <a href="#s-experience">Experience</a>
             <a href="#s-skills">Competencies</a>
+            <a href="#s-projects">Projects</a>
             <a href="#s-games">Games</a>
             <a href="#s-contact" class="btn btn-primary btn-sm">Contact</a>
           </nav>
@@ -41,6 +42,7 @@
         <a href="#s-about" data-dot="s-about" title="About" class="dot"></a>
         <a href="#s-experience" data-dot="s-experience" title="Experience" class="dot"></a>
         <a href="#s-skills" data-dot="s-skills" title="Competencies" class="dot"></a>
+        <a href="#s-projects" data-dot="s-projects" title="Personal Projects" class="dot"></a>
         <a href="#s-games" data-dot="s-games" title="Games" class="dot"></a>
         <a href="#s-contact" data-dot="s-contact" title="Contact" class="dot"></a>
       </div>
@@ -62,7 +64,7 @@
           <div>
             <div class="eyebrow">
               <span class="eyebrow-rule"></span>
-              <span class="eyebrow-text">Software Consultant · Xebia</span>
+              <span class="eyebrow-text">Senior Software Engineer</span>
             </div>
             <h1 class="hero-title">ERIK<br />ESPUÑES<br /><span>JUBERÓ</span></h1>
             <div class="terminal">
@@ -96,7 +98,7 @@
           </div>
           <div>
             <p class="lead-dark">
-              Software Consultant specialized in building scalable, secure and
+              Senior Software Engineer specialized in building scalable, secure and
               reliable backend services with Java and Spring Boot on AWS. I enjoy
               owning solutions end to end, from technical design through to
               production, and helping shape architecture and engineering
@@ -123,8 +125,8 @@
               </div>
               <div class="fact">
                 <div class="fact-label">Certifications</div>
-                <div class="fact-title">Xebia AI Growth Path: Foundation</div>
-                <div class="fact-sub">Claude Certified Architect · expected Q3 2026</div>
+                <div class="fact-title">Claude Certified Architect</div>
+                <div class="fact-sub">Expected Q3 2026</div>
               </div>
             </div>
           </div>
@@ -139,7 +141,7 @@
             <div>
               <h2 class="side-title light">Experience</h2>
               <span class="rule"></span>
-              <p class="side-note mono">Software Consultant<br />Tech Lead</p>
+              <p class="side-note mono">Senior Software Engineer<br />Tech Lead</p>
             </div>
             <div class="timeline">
               <div class="tl-item">
@@ -198,28 +200,6 @@
                 </div>
               </div>
 
-              <div class="tl-item">
-                <div class="tl-when mono">in<br />design</div>
-                <div class="tl-body">
-                  <div class="exp-head" data-exp-head="xb" role="button" tabindex="0" aria-expanded="false" aria-controls="exp-xb">
-                    <div>
-                      <h3>Xebec — Autonomous Agent Workbench</h3>
-                      <div class="tl-meta">Personal project</div>
-                    </div>
-                    <span class="exp-toggle mono" data-exp-chev="xb">Expand +</span>
-                  </div>
-                  <div class="exp-body" id="exp-xb" data-exp-body="xb" hidden>
-                    <p>
-                      A multi-agent orchestration platform where autonomous coding
-                      agents pick up GitHub issues, work in isolated git-worktree
-                      sandboxes, and ship pull requests — local LLMs (Ollama) plus
-                      the Claude Agent SDK behind a swappable provider interface,
-                      gated by automated quality checks before any agent output is
-                      trusted.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -272,6 +252,78 @@
         </div>
       </section>
       <!-- END: Competencies -->
+
+      <!-- START: Personal Projects -->
+      <section id="s-projects" data-snap="1" class="section section-paned">
+        <div class="cv-pane">
+          <div class="wrap split">
+            <div>
+              <h2 class="side-title light">Personal<br />Projects</h2>
+              <span class="rule"></span>
+              <p class="side-note">Things I build on my own time — usually to scratch an itch, always to learn something that carries back into the day job.</p>
+            </div>
+            <div class="projects">
+              <article class="project">
+                <div class="project-head">
+                  <div>
+                    <div class="project-num mono">01</div>
+                    <h3>SmartBolus</h3>
+                  </div>
+                  <span class="project-status mono">Personal project</span>
+                </div>
+                <p>
+                  A minimalist Flutter app that helps people with diabetes
+                  calculate mealtime insulin doses — time-banded carb-to-insulin
+                  ratios, glucose correction via a sensitivity factor, and
+                  rounding for both standard and half-unit pens. Medical settings
+                  never leave the device: local storage only, no cloud, no
+                  tracking.
+                </p>
+                <div class="project-stack mono">Flutter · Dart · Material 3 · shared_preferences</div>
+                <a class="inline-link mono" href="https://github.com/eespunes/SmartBolus" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+              </article>
+
+              <article class="project">
+                <div class="project-head">
+                  <div>
+                    <div class="project-num mono">02</div>
+                    <h3>Thrive</h3>
+                  </div>
+                  <span class="project-status mono">In development</span>
+                </div>
+                <p>
+                  A family management app — shared budget, calendar, lists,
+                  weekly meal plan and a kitchen wall dashboard, synced in real
+                  time between family members across Android and iOS. No Cloud
+                  Functions: persistence is client-direct, and joining a family
+                  is verified by Firestore security rules over a salted hash,
+                  tested against the Firestore emulator in CI.
+                </p>
+                <div class="project-stack mono">Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions</div>
+                <a class="inline-link mono" href="https://github.com/eespunes/thrive" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+              </article>
+
+              <article class="project">
+                <div class="project-head">
+                  <div>
+                    <div class="project-num mono">03</div>
+                    <h3>Xebec — Autonomous Agent Workbench</h3>
+                  </div>
+                  <span class="project-status mono">In design</span>
+                </div>
+                <p>
+                  A multi-agent orchestration platform where autonomous coding
+                  agents pick up GitHub issues, work in isolated git-worktree
+                  sandboxes, and ship pull requests — gated by automated quality
+                  checks before any agent output is trusted.
+                </p>
+                <div class="project-stack mono">Claude Agent SDK · Ollama · git worktrees · GitHub API</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END: Personal Projects -->
 
       <!-- START: Games -->
       <section id="s-games" data-snap="1" class="section">
@@ -349,7 +401,7 @@
             <h2 class="contact-title">Let's build<br />something solid.</h2>
             <span class="rule"></span>
             <p class="body-dark">
-              Software Consultant at Xebia. Open to conversations about backend
+              Senior Software Engineer. Open to conversations about backend
               architecture, platform engineering and agentic developer tooling.
             </p>
             <a class="btn btn-primary" href="assets/cv/ErikEspunesJubero_CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
