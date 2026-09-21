@@ -234,8 +234,8 @@
       quote.appendChild(el("p", null, inline(cv.fields.quote)));
       mainBottom.appendChild(quote);
     }
+    /* Name and role are already the page's masthead; the footer stays spare. */
     var footer = el("div", "cv-footer");
-    footer.appendChild(el("span", null, inline(fullName + " · " + role)));
     var version = el("span", "cv-version");
     footer.appendChild(version);
     CVParse.loadVersion().then(function (info) {

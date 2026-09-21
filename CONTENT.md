@@ -220,5 +220,6 @@ sections above — only what the web page has no place for lives here.
 | Address | Toarteldostrjitte 40, 9269 NG, Feanwâlden, The Netherlands | |
 | Email | erik.espunyes7@outlook.com | mailto:erik.espunyes7@outlook.com |
 | Phone | +31 6 2559 2282 | tel:+31625592282 |
+| Website | eespunes.github.io/MyWebSite | https://eespunes.github.io/MyWebSite/ |
 | LinkedIn | eespunes | https://www.linkedin.com/in/eespunes/ |
 | GitHub | eespunes | https://github.com/eespunes |
