@@ -1,4 +1,4 @@
-// Build v1.73 · 2026-09-21
+// Build v1.74 · 2026-09-21
 /* Builds the printable CV from CONTENT.md — the same file the site renders
    from — then offers it to the browser's PDF printer. */
 (function () {

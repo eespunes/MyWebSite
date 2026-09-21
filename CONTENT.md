@@ -1,4 +1,4 @@
-<!-- Build v1.73 · 2026-09-21 -->
+<!-- Build v1.74 · 2026-09-21 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -138,6 +138,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | --- | --- |
 | Languages | C# · Java · Kotlin · Scala · C++ · Dart · SQL · TypeScript · Angular |
 | Mobile | Flutter · Dart |
+| Gaming | Unity · Unreal |
 | Methodology | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
 | Leadership | Mentoring engineers · Architecture standards · Engineering standards |
 
@@ -210,6 +211,7 @@ sections above, only what the web page has no place for lives here.
 | Languages | Java · C# · Kotlin · Scala · C++ · Dart · SQL · TypeScript · Angular |
 | Web & APIs | Spring Boot · OpenAPI · .NET · AWS |
 | Mobile | Flutter · Dart |
+| Gaming | Unity · Unreal |
 | Method | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
 
 ## Contact
