@@ -1,4 +1,4 @@
-# Site Content — Erik Espuñes Juberó
+# Site Content — Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
 at load and renders every section from it. Nothing is hard-coded in the HTML, so
@@ -14,21 +14,21 @@ Keep the structure below — the parser relies on it:
 
 ## Meta
 
-- Title: Erik Espuñes Juberó
-- Description: Erik Espuñes Juberó — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS.
+- Title: Erik Espuñes Jubero
+- Description: Erik Espuñes Jubero — Senior Software Engineer. Scalable, secure backend services in Java and Spring Boot on AWS.
 - Author: eespunes
 - Theme color: #121212
 - Favicon: assets/images/favicon.png
 
 ## Nav
 
-- Brand: Erik Espuñes Juberó
+- Brand: Erik Espuñes Jubero
 - Contact label: Contact
 
 ## Home
 
 - Eyebrow: Senior Software Engineer
-- Name: ERIK / ESPUÑES / JUBERÓ
+- Name: ERIK / ESPUÑES / JUBERO
 - Portrait: assets/images/avatar.jpg
 - Lead: Scalable, secure backend services in Java and Spring Boot on AWS — owned end to end, from technical design through production.
 - Primary button: View experience → #s-experience
@@ -140,9 +140,9 @@ Body: I like owning a solution end to end, from technical design through to prod
 
 | # | Project | Status | Description | Stack | Link |
 | --- | --- | --- | --- | --- | --- |
-| 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses — time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
-| 02 | Thrive | In development | A family management app — shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
-| 03 | Xebec | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
+| 01 | SmartBolus | 2026 | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses — time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
+| 02 | Thrive | 2026 | A family management app — shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
+| 03 | Xebec | 2026 | In design | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests — gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
 
 ## Games
 
@@ -158,15 +158,15 @@ Body: I like owning a solution end to end, from technical design through to prod
 | 02 | Gun Goal Tournament | Indie Dev Day Jam 2020 | Unity · Jam | 2020 | gun-goal-tournament.png | https://eespunes.itch.io/gun-goal-tournament | |
 | 03 | Stick Ink | Ludum Dare 46 | Unity · Jam | 2020 | stick-ink.png | https://eespunes.itch.io/stick-ink | |
 | 04 | Space Out | Ludum Dare 42 | Unity · Jam | 2018 | space-out.png | https://eespunes.itch.io/space-out | |
-| 05 | One Piece Tower Defense | University Project | Unity | 2020 | one-piece-tower-defense.png | https://eespunes.itch.io/one-piece-tower-defense | |
-| 06 | Simpson's Pacman | University Project | Unity | 2019 | simpson-pacman.png | https://eespunes.itch.io/simpsons-pacman | |
-| 07 | Angry Birds | University Project | Unity | 2019 | angry-birds.png | https://eespunes.itch.io/angry-birds | |
-| 08 | Arkanoid | University Project | Unity | 2018 | arkanoid.png | https://eespunes.itch.io/arkanoid | |
+| 05 | One Piece Tower Defense | University Project | Unity | 2017 | one-piece-tower-defense.png | https://eespunes.itch.io/one-piece-tower-defense | |
+| 06 | Simpson's Pacman | University Project | Unity | 2017 | simpson-pacman.png | https://eespunes.itch.io/simpsons-pacman | |
+| 07 | Angry Birds | University Project | Unity | 2017 | angry-birds.png | https://eespunes.itch.io/angry-birds | |
+| 08 | Arkanoid | University Project | Unity | 2017 | arkanoid.png | https://eespunes.itch.io/arkanoid | |
 | 09 | Pong | University Project | Unity | 2017 | pong.png | https://eespunes.itch.io/pong | |
-| 10 | Portal Prototype | University Project | Unity | 2020 | portal.png | https://eespunes.itch.io/portal | |
-| 11 | Mario 64 | University Project | Unity | 2020 | mario-64.png | https://eespunes.itch.io/mario-64 | |
-| 12 | First Person Shooter Prototype | University Project | Unity · Windows | | fps.png | https://eespunes.itch.io/first-person-shooter | |
-| 13 | Animal Instinct | My first game | Unity · Android | | animal-instinct.png | https://eespunes.itch.io/animal-instinct | |
+| 10 | Portal Prototype | University Project | Unity | 2018 | portal.png | https://eespunes.itch.io/portal | |
+| 11 | Mario 64 | University Project | Unity | 2018 | mario-64.png | https://eespunes.itch.io/mario-64 | |
+| 12 | First Person Shooter Prototype | University Project | Unity · Windows | 2018 | fps.png | https://eespunes.itch.io/first-person-shooter | |
+| 13 | Animal Instinct | My first game | Unity · Android | 2016 | animal-instinct.png | https://eespunes.itch.io/animal-instinct | |
 
 ## Contact
 
@@ -175,7 +175,7 @@ Body: I like owning a solution end to end, from technical design through to prod
 - Heading: Let's build / something solid.
 - Body: Senior Software Engineer. Open to conversations about backend architecture, platform engineering and agentic developer tooling.
 - Button: Download CV → assets/cv/ErikEspunesJubero_CV.pdf
-- Footer left: © 2026 Erik Espuñes Juberó
+- Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
 
 | Key | Value | Link |

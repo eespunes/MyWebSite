@@ -508,9 +508,17 @@ a:hover {
   text-wrap: pretty;
 }
 
-.about-lead span {
-  color: var(--accent-dark);
+/* `*emphasis*` in CONTENT.md — accent-coloured, not italic. Light sections
+   use the darker accent so it stays legible on paper. */
+
+.accent {
+  color: var(--accent);
+  font-style: normal;
   font-weight: 500;
+}
+
+.section-light .accent {
+  color: var(--accent-dark);
 }
 
 .body-dark {
@@ -1013,9 +1021,17 @@ a:hover {
 /* Horizontal rail of cover art */
 
 .cv-rail {
+  /* Align the rail's first card with the page gutter, and keep matching space
+     after the last one. The inset lives on the track: padding on the scroll
+     container itself is not honoured by a max-content flex child. */
+  --rail-start: max(28px, calc((100vw - var(--maxw)) / 2 + 28px));
+  --rail-end: max(52px, calc((100vw - var(--maxw)) / 2 + 52px));
   overflow-x: auto;
-  padding: 2px 52px 18px 28px;
+  padding: 2px 0 18px;
   scroll-snap-type: x proximity;
+  /* Without this, snapping aligns the first card to the scrollport edge and
+     eats the gutter the track's padding just created. */
+  scroll-padding-left: var(--rail-start);
   scrollbar-width: none;
 }
 
@@ -1024,6 +1040,8 @@ a:hover {
   gap: 14px;
   width: max-content;
   align-items: stretch;
+  padding-left: var(--rail-start);
+  padding-right: var(--rail-end);
 }
 
 .game-card {
@@ -1337,7 +1355,8 @@ a:hover {
   }
 
   .cv-rail {
-    padding: 2px 24px 18px;
+    --rail-start: 24px;
+    --rail-end: 24px;
   }
 
   .game-card {

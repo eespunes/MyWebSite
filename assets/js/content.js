@@ -127,7 +127,10 @@
       );
     });
     html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    html = html.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
+    html = html.replace(
+      /(^|[^*])\*([^*]+)\*/g,
+      '$1<em class="accent">$2</em>'
+    );
     html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
     return html;
   }
