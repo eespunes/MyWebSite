@@ -654,7 +654,10 @@
     var button = linkField(section.fields.button);
     if (button && button.href) {
       var cta = el("a", "btn btn-primary", inline(button.label));
-      externalAttrs(cta, button.href);
+      /* cv.html builds the PDF from this same file; ?print=1 opens the
+         browser's save-as-PDF dialog on arrival. */
+      var isCv = /cv\.html$/.test(button.href);
+      cta.href = isCv ? button.href + "?print=1" : button.href;
       cta.target = "_blank";
       cta.rel = "noopener noreferrer";
       left.appendChild(cta);

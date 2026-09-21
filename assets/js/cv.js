@@ -1,0 +1,477 @@
+/* Builds the printable CV from CONTENT.md — the same file the site renders
+   from — then offers it to the browser's PDF printer. */
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------- markdown (subset) --- */
+
+  function parse(md) {
+    var lines = md.replace(/\r\n/g, "\n").split("\n");
+    var doc = [];
+    var section = null;
+    var sub = null;
+
+    function blank(title) {
+      return { title: title, fields: {}, bullets: [], tables: [], subs: [] };
+    }
+    function target() {
+      return sub || section;
+    }
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+
+      if (/^##\s+/.test(line) && !/^###/.test(line)) {
+        section = blank(line.replace(/^##\s+/, ""));
+        doc.push(section);
+        sub = null;
+        continue;
+      }
+      if (!section) continue;
+
+      if (/^####\s+/.test(line)) {
+        sub = blank(line.replace(/^####\s+/, ""));
+        sub.depth = 4;
+        (section.subs[section.subs.length - 1] || section).subs.push(sub);
+        continue;
+      }
+      if (/^###\s+/.test(line)) {
+        sub = blank(line.replace(/^###\s+/, ""));
+        sub.depth = 3;
+        section.subs.push(sub);
+        continue;
+      }
+      if (/^\|/.test(line)) {
+        var rows = [];
+        while (i < lines.length && /^\s*\|/.test(lines[i])) rows.push(lines[i].trim()), i++;
+        i--;
+        target().tables.push(table(rows));
+        continue;
+      }
+      var field = line.match(/^-\s+([^:]+):\s*(.*)$/);
+      if (field) {
+        target().fields[field[1].trim().toLowerCase()] = field[2].trim();
+        continue;
+      }
+      if (/^\*\s+/.test(line)) {
+        target().bullets.push(line.replace(/^\*\s+/, ""));
+        continue;
+      }
+      if (line) {
+        var labelled = line.match(/^([A-Z][A-Za-z ]{2,20}):\s+(.*)$/);
+        if (labelled) target().fields[labelled[1].trim().toLowerCase()] = labelled[2].trim();
+      }
+    }
+    return doc;
+  }
+
+  function cells(row) {
+    return row.replace(/^\|/, "").replace(/\|$/, "").split("|").map(function (c) {
+      return c.trim();
+    });
+  }
+
+  function table(rows) {
+    var head = cells(rows[0]).map(function (h) {
+      return h.toLowerCase();
+    });
+    var out = [];
+    for (var i = 2; i < rows.length; i++) {
+      var values = cells(rows[i]);
+      var record = {};
+      head.forEach(function (key, n) {
+        record[key] = values[n] === undefined ? "" : values[n];
+      });
+      out.push(record);
+    }
+    return out;
+  }
+
+  function inline(text) {
+    return String(text === undefined ? "" : text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*]+)\*/g, "$1$2");
+  }
+
+  function el(tag, className, html) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (html !== undefined) node.innerHTML = html;
+    return node;
+  }
+
+  function lines(value) {
+    return String(value || "").split("/").map(function (p) {
+      return p.trim();
+    });
+  }
+
+  /* ------------------------------------------------------------ helpers --- */
+
+  /* linkedin.com/in/eespunes rather than the bare handle. */
+  function contactText(row) {
+    var link = row.link || "";
+    if (/^https?:/.test(link)) {
+      return link.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "");
+    }
+    return row.value;
+  }
+
+  function toBinary(text) {
+    var out = [];
+    for (var i = 0; i < text.length; i++) {
+      var bytes = unescape(encodeURIComponent(text[i]));
+      for (var b = 0; b < bytes.length; b++) {
+        out.push(("00000000" + bytes.charCodeAt(b).toString(2)).slice(-8));
+      }
+    }
+    return out.join(" ");
+  }
+
+  function block(label, contentNode) {
+    var node = el("div", "cv-block");
+    node.appendChild(el("div", "cv-label", label));
+    node.appendChild(contentNode);
+    return node;
+  }
+
+  function heading(text) {
+    var node = el("div", "cv-heading");
+    node.appendChild(el("span"));
+    node.appendChild(el("span", null, inline(text)));
+    return node;
+  }
+
+  function tags(value) {
+    var wrap = el("div", "cv-tags");
+    String(value || "").split("·").forEach(function (tag) {
+      if (tag.trim()) wrap.appendChild(el("span", "cv-tag", inline(tag.trim())));
+    });
+    return wrap;
+  }
+
+  /* --------------------------------------------------------------- build --- */
+
+  function build(doc) {
+    var by = {};
+    doc.forEach(function (s) {
+      by[s.title.toLowerCase()] = s;
+    });
+    var sub = function (section, title) {
+      var found = null;
+      (section ? section.subs : []).forEach(function (s) {
+        if (s.title.toLowerCase() === title.toLowerCase()) found = s;
+      });
+      return found;
+    };
+
+    var home = by.home || { fields: {} };
+    var about = by.about || { fields: {}, subs: [] };
+    var cv = by.cv || { fields: {}, subs: [] };
+    var contact = by.contact || { fields: {}, tables: [[]] };
+    var experience = by.experience || { subs: [] };
+
+    var nameLines = lines(home.fields.name);
+    var fullName = (by.nav && by.nav.fields.brand) || nameLines.join(" ");
+    var role = cv.fields.role || home.fields.eyebrow || "";
+    var root = document.getElementById("cv-root");
+    document.title = fullName + " — CV";
+
+    /* ---------------------------------------------------------- page one */
+    var page1 = el("section", "cv-page cv-page--1");
+    var rail = el("div", "cv-rail");
+    var railTop = el("div");
+
+    var nameBlock = el("div", "cv-block cv-block--name");
+    nameBlock.appendChild(el("div", "cv-binary", toBinary(fullName)));
+    nameBlock.appendChild(el("div", "cv-bar"));
+    var h1 = el("h1", "cv-name");
+    nameLines.forEach(function (part, i) {
+      if (i) h1.appendChild(document.createElement("br"));
+      if (i === nameLines.length - 1) h1.appendChild(el("span", null, part));
+      else h1.appendChild(document.createTextNode(part));
+    });
+    nameBlock.appendChild(h1);
+    nameBlock.appendChild(el("div", "cv-role", inline(role)));
+    railTop.appendChild(nameBlock);
+
+    var contactRows = (contact.tables[0] || []).filter(function (row) {
+      return (row.key || "").toLowerCase() !== "address";
+    });
+    var contactList = el("div", "cv-contact");
+    contactRows.forEach(function (row) {
+      contactList.appendChild(el("div", null, inline(contactText(row))));
+    });
+    railTop.appendChild(block("Contact", contactList));
+
+    var education = sub(about, "Education");
+    if (education && education.tables[0]) {
+      var eduList = el("div", "cv-list");
+      education.tables[0].forEach(function (row) {
+        var item = el("div");
+        item.appendChild(el("div", "cv-item-title", inline(row.title)));
+        item.appendChild(el("div", "cv-item-sub", inline(row.institution)));
+        item.appendChild(el("div", "cv-item-when", inline(row.years)));
+        eduList.appendChild(item);
+      });
+      railTop.appendChild(block("Education", eduList));
+    }
+
+    var languages = sub(about, "Languages");
+    if (languages && languages.tables[0]) {
+      var langList = el("div", "cv-langs");
+      languages.tables[0].forEach(function (row) {
+        var item = el("div", "cv-lang");
+        item.appendChild(el("span", null, inline(row.language)));
+        item.appendChild(el("span", null, inline(row.level)));
+        langList.appendChild(item);
+      });
+      railTop.appendChild(block("Languages", langList));
+    }
+
+    var certs = sub(cv, "Certifications");
+    if (certs && certs.tables[0] && certs.tables[0].length) {
+      var certList = el("div", "cv-certs");
+      certs.tables[0].forEach(function (row) {
+        certList.appendChild(
+          el(
+            "div",
+            null,
+            inline(row.title) +
+              (row.note ? ' <em>(' + inline(row.note) + ")</em>" : "")
+          )
+        );
+      });
+      railTop.appendChild(block("Certifications", certList));
+    }
+
+    if (cv.fields.also) {
+      railTop.appendChild(
+        block(cv.fields["also label"] || "Also", el("div", "cv-also", inline(cv.fields.also)))
+      );
+    }
+    rail.appendChild(railTop);
+    rail.appendChild(el("div", "cv-pageno", "01 / 02"));
+    page1.appendChild(rail);
+
+    var main = el("div", "cv-main");
+    var mainTop = el("div");
+
+    var aboutSection = el("div", "cv-section");
+    aboutSection.appendChild(heading("About Me"));
+    [about.fields.lead, about.fields.body].forEach(function (text, i) {
+      if (!text) return;
+      var p = el("p", "cv-body", inline(text));
+      if (i) p.style.marginTop = "7px";
+      aboutSection.appendChild(p);
+    });
+    mainTop.appendChild(aboutSection);
+
+    var numbers = sub(about, "Numbers");
+    if (numbers && numbers.tables[0]) {
+      var statsSection = el("div", "cv-section");
+      statsSection.appendChild(heading("Highlights"));
+      var stats = el("div", "cv-stats");
+      numbers.tables[0].forEach(function (row) {
+        var stat = el("div", "cv-stat");
+        stat.appendChild(el("div", "cv-stat-num", inline(row.figure)));
+        stat.appendChild(el("div", "cv-stat-label", inline(row.label)));
+        stats.appendChild(stat);
+      });
+      statsSection.appendChild(stats);
+      mainTop.appendChild(statsSection);
+    }
+
+    var skills = sub(cv, "Skill groups");
+    var compSection = el("div", "cv-section");
+    compSection.appendChild(heading("Competencies"));
+    if (cv.fields.summary) {
+      compSection.appendChild(el("p", "cv-body", inline(cv.fields.summary)));
+    }
+    if (skills && skills.tables[0]) {
+      skills.tables[0].forEach(function (row) {
+        var group = el("div", "cv-group");
+        group.appendChild(el("div", "cv-group-label", inline(row.group)));
+        group.appendChild(tags(row.tags));
+        compSection.appendChild(group);
+      });
+    }
+    mainTop.appendChild(compSection);
+    main.appendChild(mainTop);
+
+    var mainBottom = el("div");
+    if (cv.fields.quote) {
+      var quote = el("div", "cv-quote");
+      quote.appendChild(el("p", null, inline(cv.fields.quote)));
+      mainBottom.appendChild(quote);
+    }
+    var footer = el("div", "cv-footer");
+    footer.appendChild(el("span", null, inline(fullName + " · " + role)));
+    footer.appendChild(el("span", null, inline(cv.fields["footer right"] || "")));
+    mainBottom.appendChild(footer);
+    main.appendChild(mainBottom);
+    page1.appendChild(main);
+    root.appendChild(page1);
+
+    /* ---------------------------------------------------------- page two */
+    var page2 = el("section", "cv-page cv-page--2");
+    var head = el("div", "cv-page-head");
+    var headLeft = el("div");
+    headLeft.appendChild(el("div", "cv-kicker", "Relevant Projects"));
+    headLeft.appendChild(el("h2", null, inline(fullName)));
+    head.appendChild(headLeft);
+    var bar = el("span");
+    bar.style.cssText = "width:52px;height:3px;background:var(--accent);display:block";
+    head.appendChild(bar);
+    page2.appendChild(head);
+
+    var entries = el("div", "cv-entries");
+    experience.subs.forEach(function (entry) {
+      if (entry.depth !== 3) return;
+      /* An entry with client engagements contributes those; otherwise itself. */
+      if (entry.subs.length) {
+        entry.subs.forEach(function (engagement) {
+          entries.appendChild(
+            cvEntry(
+              datesFrom(engagement.fields.meta) || lines(entry.fields.period),
+              entry.title.split("·")[0].trim() + " · " + engagement.title,
+              engagement.fields.meta,
+              engagement.bullets,
+              null
+            )
+          );
+        });
+      } else {
+        entries.appendChild(
+          cvEntry(
+            datesFrom(entry.fields.meta) || lines(entry.fields.period),
+            entry.title,
+            entry.fields.meta,
+            entry.bullets,
+            entry.fields.summary
+          )
+        );
+      }
+    });
+
+    var prior = sub(cv, "Prior roles");
+    if (prior && prior.tables[0]) {
+      var priorBody = el("div", "cv-prior");
+      prior.tables[0].forEach(function (row) {
+        var item = el("div");
+        item.appendChild(el("h3", null, inline(row.title)));
+        item.appendChild(el("p", null, inline(row.description)));
+        priorBody.appendChild(item);
+      });
+      entries.appendChild(entryShell(["Prior", "Roles"], priorBody));
+    }
+    page2.appendChild(entries);
+
+    var foot = el("div", "cv-page-foot");
+    foot.appendChild(
+      el(
+        "span",
+        null,
+        contactRows
+          .slice(0, 3)
+          .map(function (row) {
+            return inline(contactText(row));
+          })
+          .join(" · ")
+      )
+    );
+    foot.appendChild(el("span", null, "02 / 02"));
+    page2.appendChild(foot);
+    root.appendChild(page2);
+  }
+
+  /* "Eindhoven, NL · Remote · Jul 2025 – May 2026" → ["Jul 2025", "—", "May 2026"] */
+  function datesFrom(meta) {
+    var match = String(meta || "").match(
+      /([A-Z][a-z]{2}\s+\d{4})\s*[–—-]\s*([A-Z][a-z]{2}\s+\d{4}|Present)/
+    );
+    return match ? [match[1], "—", match[2]] : null;
+  }
+
+  function entryShell(when, bodyNode) {
+    var entry = el("div", "cv-entry");
+    entry.appendChild(
+      el(
+        "div",
+        "cv-entry-when",
+        when
+          .map(function (part, i) {
+            return when.length === 3 && i === 1 ? "<em>" + part + "</em>" : part;
+          })
+          .join("<br />")
+      )
+    );
+    var body = el("div", "cv-entry-body");
+    body.appendChild(bodyNode);
+    entry.appendChild(body);
+    return entry;
+  }
+
+  function cvEntry(when, title, meta, bullets, summary) {
+    var body = el("div");
+    body.appendChild(el("h3", null, inline(title)));
+    if (meta) body.appendChild(el("div", "cv-entry-meta", inline(placeOf(meta))));
+    if (summary) {
+      var p = el("p", null, inline(summary));
+      p.style.marginTop = "8px";
+      body.appendChild(p);
+    }
+    if (bullets && bullets.length) {
+      var ul = el("ul");
+      bullets.forEach(function (text) {
+        ul.appendChild(el("li", null, inline(text)));
+      });
+      body.appendChild(ul);
+    }
+    return entryShell(when, body);
+  }
+
+  /* Drop the date range from a meta line — the date column already shows it. */
+  function placeOf(meta) {
+    return String(meta)
+      .split("·")
+      .filter(function (part) {
+        return !/\d{4}/.test(part);
+      })
+      .join(" · ")
+      .trim();
+  }
+
+  /* ---------------------------------------------------------------- boot */
+
+  fetch("CONTENT.md", { cache: "no-cache" })
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.text();
+    })
+    .then(function (md) {
+      build(parse(md));
+      var save = document.querySelector(".cv-save");
+      if (save) save.addEventListener("click", function () { window.print(); });
+      if (/[?&]print=1/.test(location.search)) {
+        window.addEventListener("load", function () {
+          setTimeout(function () { window.print(); }, 350);
+        });
+      }
+    })
+    .catch(function (err) {
+      document.getElementById("cv-root").appendChild(
+        el(
+          "div",
+          "cv-error",
+          "<h1>CV unavailable</h1><p>CONTENT.md could not be loaded (" +
+            err.message +
+            "). Serve the folder over HTTP — fetch is blocked on file:// URLs.</p>"
+        )
+      );
+    });
+})();

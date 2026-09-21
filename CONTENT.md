@@ -168,13 +168,48 @@ Body: I like owning a solution end to end, from technical design through to prod
 | 12 | First Person Shooter Prototype | University Project | Unity · Windows | 2018 | fps.png | https://eespunes.itch.io/first-person-shooter | |
 | 13 | Animal Instinct | My first game | Unity · Android | 2016 | animal-instinct.png | https://eespunes.itch.io/animal-instinct | |
 
+## CV
+
+The printable CV at `cv.html`. Name, contact, education, languages, the about
+text, the highlight figures and the experience entries are reused from the
+sections above — only what the web page has no place for lives here.
+
+- Role: Senior Software Engineer
+- Also label: Also
+- Also: Game developer — Unity and C#. Games shipped on itch.io, from jam prototypes to a networked multiplayer racer.
+- Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
+- Summary: Backend engineer with deep expertise in Java and Spring Boot, building high-volume, event-driven distributed systems on AWS. Comfortable across modern platform engineering — cloud-native architecture, Infrastructure-as-Code, CI/CD and automated testing — and increasingly focused on AI-assisted engineering: MCP integrations and agentic coding workflows that make whole teams faster.
+- Footer right: © 2026 Erik Espuñes Jubero
+
+### Certifications
+
+| Title | Note |
+| --- | --- |
+| Claude Certified Architect | expected Q3 2026 |
+
+### Skill groups
+
+| Group | Tags |
+| --- | --- |
+| AI | Claude · Codex · Copilot · MCP |
+| Languages | Java · C# · Kotlin · Scala · C++ · SQL · TypeScript · Angular |
+| Web & APIs | Spring Boot · OpenAPI · .NET · AWS |
+| Method | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
+
+### Prior roles
+
+| Title | Description |
+| --- | --- |
+| Senior Software Engineer | High-volume, distributed backend systems in Java and Spring Boot — APIs, event-driven services and data pipelines, with a strong focus on automated testing, quality and reliability, owning solutions from technical design through to production. |
+| Tech Lead | Contributing to technical designs, engineering standards and architectural decisions — architecting scalable, cloud-native solutions aligned with business goals while mentoring teams and keeping delivery on track. |
+
 ## Contact
 
 - Nav label: Contact
 - Theme: light
 - Heading: Let's build / something solid.
 - Body: Senior Software Engineer. Open to conversations about backend architecture, platform engineering and agentic developer tooling.
-- Button: Download CV → assets/cv/ErikEspunesJubero_CV.pdf
+- Button: Download CV → cv.html
 - Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
 
