@@ -1,1212 +1,345 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Erik Espuñes Juberó</title>
-    <meta name="description" content="Erik Espuñes Juberó - CV" />
-    <meta
-      name="keywords"
-      content="blog, business card, creative, creative portfolio, cv theme, online resume, personal, portfolio, professional cv, responsive portfolio, resume, resume theme, vcard"
-    />
+    <meta name="description" content="Erik Espuñes Juberó — Software Consultant. Scalable, secure backend services in Java and Spring Boot on AWS." />
+    <meta name="keywords" content="software consultant, backend engineer, java, spring boot, aws, portfolio, cv, resume, game developer" />
     <meta name="author" content="eespunes" />
-    <meta name="theme-color" content="#000" />
+    <meta name="theme-color" content="#121212" />
     <link rel="shortcut icon" href="assets/images/favicon.png" />
 
-    <link rel="stylesheet" href="assets/css/vendor.css" />
-    <link rel="stylesheet" href="assets/css/LineIcons.min.css" />
-    <link rel="stylesheet" href="assets/css/jquery.pagepiling.css" />
-
-    <link href="assets/css/erik.css" rel="stylesheet" />
-
-    <link href="assets/css/custom.css" rel="stylesheet" />
-
-    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/site.css" />
   </head>
 
-  <body data-spy="scroll" data-target=".navbar">
-    <!-- START: Preloader -->
-    <div id="preloader" class="preloader">
-      <div class="spinner-grow text-light" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-    <!-- END: Preloader -->
+  <body>
+    <div id="cv-scroll">
+      <div class="scanlines" aria-hidden="true"></div>
 
-    <header>
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <a href="/#HOME" class="header-logo">Erik Espuñes Juberó</a>
+      <!-- START: Navbar -->
+      <div class="topbar">
+        <div class="topbar-inner">
+          <a href="#s-home" class="brand">Erik Espuñes Juberó</a>
+          <nav class="nav-links">
+            <a href="#s-about">About</a>
+            <a href="#s-experience">Experience</a>
+            <a href="#s-skills">Competencies</a>
+            <a href="#s-games">Games</a>
+            <a href="#s-contact" class="btn btn-primary btn-sm">Contact</a>
+          </nav>
         </div>
       </div>
-    </header>
+      <!-- END: Navbar -->
 
-    <div id="pagepiling">
+      <!-- START: Dots -->
+      <div class="dots">
+        <a href="#s-home" data-dot="s-home" title="Home" class="dot is-active"></a>
+        <a href="#s-about" data-dot="s-about" title="About" class="dot"></a>
+        <a href="#s-experience" data-dot="s-experience" title="Experience" class="dot"></a>
+        <a href="#s-skills" data-dot="s-skills" title="Competencies" class="dot"></a>
+        <a href="#s-games" data-dot="s-games" title="Games" class="dot"></a>
+        <a href="#s-contact" data-dot="s-contact" title="Contact" class="dot"></a>
+      </div>
+      <!-- END: Dots -->
+
       <!-- START: Home -->
-      <div class="section section-home" id="HOME">
-        <div class="container">
-          <div class="hero-content text-center">
-            <h1>Erik Espuñes Juberó</h1>
+      <section id="s-home" data-snap="1" class="section section-home">
+        <canvas id="cv-rain" aria-hidden="true"></canvas>
+        <div class="home-veil" aria-hidden="true"></div>
 
-            <div id="autoplay" class="my-4">
-              <span>Software Engineer</span>
-              <span>Backend Engineer</span>
-              <span>Game Developer</span>
-            </div>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <span>01001001 01101101 00100000 01000101 01110010 01101001 01101011 00100000 01000101 01110011 01110000 01110101 11000011 10110001 01100101 01110011 00100000 01001010 01110101 01100010 01100101 01110010 11000011 10110011 00101100 00100000 01110011 01101111 01100110 01110100 01110111 01100001 01110010 01100101 00100000 01100011 01101111 01101110 01110011 01110101 01101100 01110100 01100001 01101110 01110100</span>
+            <span>01001001 01101101 00100000 01000101 01110010 01101001 01101011 00100000 01000101 01110011 01110000 01110101 11000011 10110001 01100101 01110011 00100000 01001010 01110101 01100010 01100101 01110010 11000011 10110011 00101100 00100000 01110011 01101111 01100110 01110100 01110111 01100001 01110010 01100101 00100000 01100011 01101111 01101110 01110011 01110101 01101100 01110100 01100001 01101110 01110100</span>
           </div>
         </div>
-      </div>
+
+        <div class="wrap home-grid">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-rule"></span>
+              <span class="eyebrow-text">Software Consultant · Xebia</span>
+            </div>
+            <h1 class="hero-title">ERIK<br />ESPUÑES<br /><span>JUBERÓ</span></h1>
+            <div class="terminal">
+              <span class="prompt">$</span> <span id="cv-type"></span><span class="caret">&nbsp;</span>
+            </div>
+            <p class="hero-lead">
+              Scalable, secure backend services in Java and Spring Boot on AWS —
+              owned end to end, from technical design through production.
+            </p>
+            <div class="btn-row">
+              <a href="#s-experience" class="btn btn-primary">View experience</a>
+              <a href="#s-games" class="btn btn-ghost">Play the games</a>
+            </div>
+          </div>
+          <div class="portrait">
+            <div class="portrait-frame" aria-hidden="true"></div>
+            <img src="assets/images/avatar.png" alt="Erik Espuñes Juberó" />
+          </div>
+        </div>
+
+        <a href="#s-about" class="scroll-hint">Scroll<span>↓</span></a>
+      </section>
       <!-- END: Home -->
 
-      <!-- START: ABOUT -->
-      <div class="section" id="ABOUT">
-        <div class="container">
-          <div class="section-head text-center">
-            <div class="hero-content text-center">
-              <h1>About Me</h1>
-            </div>
+      <!-- START: About -->
+      <section id="s-about" data-snap="1" class="section section-light">
+        <div class="wrap split">
+          <div>
+            <h2 class="side-title">About<br />Me</h2>
+            <span class="rule"></span>
           </div>
-          <div class="row justify-content-center align-items-center">
-            <div class="col-md-5">
-              <img
-                class="about-img img-fluid wow fadeInUp"
-                data-wow-duration="1s"
-                src="assets/images/avatar.png"
-                alt="About Picture"
-              />
-            </div>
-            <div class="col-md-7">
-              <div
-                class="about-desc wow fadeInUp"
-                data-wow-duration="1s"
-                data-wow-delay="500ms"
-              >
-                <div class="resume-list b-box p-4">
-                  <p style="text-align: justify; text-justify: inter-word">
-                    I consider myself a dedicated and driven programmer with a
-                    strong commitment to continuous learning and
-                    problem-solving. I take pride in delivering not only
-                    effective solutions but also clean, maintainable, and
-                    efficient code. I believe that quality code is the
-                    foundation of sustainable development, and I ensure that
-                    every project I work on adheres to best practices and
-                    industry standards. Guided by the principle, 'Good, better,
-                    best. Never let it rest. Until your good is better and your
-                    better is best,' I consistently strive for excellence. If
-                    the solutions I deliver are not up to the standard I expect,
-                    I am motivated to put in the extra effort required to
-                    achieve the highest level of quality.
-                  </p>
-                </div>
-
-                <div class="about-desc-more text-left mt-3">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-calendar"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <span>19/01/1998</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-8">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-pin"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <span>Hamburg, DE (07.25 in Leeuwarden, NL)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-linkedin"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <a
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="https://www.linkedin.com/in/eespunes/"
-                              >eespunes</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-github"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <a
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="https://github.com/eespunes"
-                              >eespunes</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-mobile"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <a href="tel:004915117994720">+49 1511 7994720</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="about-desc-info">
-                        <div
-                          class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                        >
-                          <div class="about-desc-icon">
-                            <i class="lni lni-envelope"></i>
-                          </div>
-                          <div class="about-desc-info-desc">
-                            <a href="mailto:erik.espunyes7@outlook.com"
-                              >erik.espunyes7@outlook.com</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div>
+            <p class="lead-dark">
+              Software Consultant specialized in building scalable, secure and
+              reliable backend services with Java and Spring Boot on AWS. I enjoy
+              owning solutions end to end, from technical design through to
+              production, and helping shape architecture and engineering
+              standards along the way.
+            </p>
+            <p class="body-dark">
+              I'm naturally curious and like working things out for myself — part
+              of why I enjoy tackling problems most people would rather hand off.
+            </p>
+            <div class="fact-grid">
+              <div class="fact">
+                <div class="fact-label">Education</div>
+                <div class="fact-title">MSc Artificial Intelligence</div>
+                <div class="fact-sub">Udacity Institute of AI &amp; Technology · 2026 – expected 2027</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Education</div>
+                <div class="fact-title">Double BSc Computer Engineering &amp; Video Game Design</div>
+                <div class="fact-sub">Pompeu Fabra University, Barcelona · 2016 – 2021</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Languages</div>
+                <div class="fact-title">Spanish &amp; Catalan native · English fluent · Dutch basic</div>
+              </div>
+              <div class="fact">
+                <div class="fact-label">Certifications</div>
+                <div class="fact-title">Xebia AI Growth Path: Foundation</div>
+                <div class="fact-sub">Claude Certified Architect · expected Q3 2026</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- END: ABOUT -->
+      </section>
+      <!-- END: About -->
 
-      <!-- START: RESUME -->
-      <div class="section" id="RESUME">
-        <div class="container">
-          <div class="section-head text-center">
-            <div class="hero-content text-center">
-              <h1>My Resume</h1>
-            </div>
+      <!-- START: Experience -->
+      <section id="s-experience" data-snap="1" class="section">
+        <div class="wrap split">
+          <div>
+            <h2 class="side-title light">Relevant<br />Projects</h2>
+            <span class="rule"></span>
+            <p class="side-note mono">Senior Software Engineer<br />Tech Lead</p>
           </div>
-          <div class="row justify-content-center align-items-center">
-            <div class="col-md-3">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#tab1"
-                    >Experience</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#tab2"
-                    >Education</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#tab3">Skills</a>
-                </li>
-              </ul>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-when mono">2025<br /><span>—</span><br />2026</div>
+              <div class="tl-body">
+                <h3>Software Developer · UPS Logistics</h3>
+                <div class="tl-meta">Eindhoven, NL · July 2025 – May 2026</div>
+                <ul>
+                  <li>Led transformation of global brokerage systems — migrated a giant legacy codebase to cloud-native architecture in <strong>6 months with 7 engineers</strong>, work initially scoped at multiple years.</li>
+                  <li>Architected customs data services handling cross-border declarations across three countries, meeting EU and US customs requirements in a regulated enterprise.</li>
+                  <li>Built an MCP integration connecting GitHub Copilot to customs-data sources; rolled it out department-wide, adopted by <strong>~50 of 100+ engineers</strong>.</li>
+                </ul>
+              </div>
             </div>
-
-            <div class="col-md-9">
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab1">
-                  <div class="ExperienceList pb-3">
-                    <div class="resume-list b-box p-4 mb-4">
-                      <div>
-                        <h5>Container xChange</h5>
-                        <h6>Hamburg, DE</h6>
-                        <h6 class="badge badge-light d-inline-block my-3">
-                          03.2022 – 04.2025
-                        </h6>
-                        <p
-                          style="text-align: justify; text-justify: inter-word"
-                        >
-                          I began my career as an intern, where I primarily
-                          focused on developing web scrapers to extract and
-                          process data efficiently. During this time, I gained
-                          hands-on experience with data extraction techniques
-                          and strengthened my foundational programming skills.
-                          Due to my dedication and performance, I was promoted
-                          to a Junior Software Engineer. In this role, I
-                          contributed to the development of microservices using
-                          Spring Boot, where I honed my skills in designing
-                          scalable and maintainable backend systems. I also
-                          collaborated with cross-functional teams to ensure the
-                          seamless integration of these services within the
-                          broader system architecture. As my journey at the
-                          company progressed, I transitioned into the role of
-                          Fullstack Developer. While I focused primarily on
-                          backend development, I also gained experience working
-                          with Angular on the frontend. This allowed me to
-                          contribute to both the client and server sides of
-                          applications, ensuring a cohesive development approach
-                          and delivering high-quality, full-stack solutions.
-                          Throughout my career, I have consistently demonstrated
-                          a strong ability to adapt to new challenges,
-                          contribute to the success of my team, and work towards
-                          creating scalable and reliable software solutions.
-                        </p>
-                        <div class="services-list-icon">
-                          <table>
-                            <td><i class="lni lni-java"></i></td>
-                            <td>
-                              <object
-                                data="assets/images/spring.svg"
-                                type="image/svg+xml"
-                                class="logo"
-                              ></object>
-                            </td>
-                            <td><i class="lni lni-javascript"></i></td>
-                            <td><i class="lni lni-angular"></i></td>
-                            <td><i class="lni lni-aws"></i></td>
-                          </table>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <div class="about-desc-info">
-                              <div
-                                class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                              >
-                                <div class="about-desc-icon">
-                                  <i class="lni lni-file-multiple"></i>
-                                </div>
-                                <div class="about-desc-info-desc">
-                                  <a
-                                    href="assets/cv/ErikEspunesJubero_RecommendationLetter.pdf"
-                                    download
-                                    >Download Recommendation Letter</a
-                                  >
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tab2">
-                  <div class="EducationList pb-3">
-                    <div class="resume-list b-box p-4 mb-4">
-                      <div>
-                        <h5>
-                          Double Degree in Computer Engineering and Video Game
-                          Design and Production
-                        </h5>
-                        <h6>
-                          Tecnocampus, Pompeu Fabra University | Mataró, Spain
-                        </h6>
-                        <h6 class="badge badge-light d-inline-block my-3">
-                          September 2016 - July 2021
-                        </h6>
-                        <p
-                          style="text-align: justify; text-justify: inter-word"
-                        >
-                          During my time at university, I had the opportunity to
-                          engage with a wide range of subjects that provided me
-                          with a comprehensive understanding of software
-                          development. My coursework included topics such as
-                          game production, software patterns, software design,
-                          and game design, which allowed me to develop both the
-                          technical and creative aspects of development. I also
-                          gained proficiency in core programming concepts,
-                          ranging from foundational principles to advanced
-                          topics such as object-oriented programming (OOP), data
-                          structures, and algorithms, including backtracking.
-                          Furthermore, I explored frameworks like Spring and
-                          embraced practices such as Test-Driven Development
-                          (TDD), which enhanced my ability to write clean,
-                          maintainable code. Additionally, I gained hands-on
-                          experience in both 2D and 3D game development, as well
-                          as artificial intelligence (AI), which expanded my
-                          skill set and deepened my understanding of how
-                          technology can drive innovative solutions. This
-                          diverse academic background has equipped me with the
-                          knowledge and skills necessary to approach complex
-                          development challenges with a balanced perspective of
-                          both theory and practical application.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tab3">
-                  <div class="section-skills-wrap">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="resume-list b-box p-4">
-                          <h4 class="mb-5">Programming Languages</h4>
-
-                          <div class="resume-panel">
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".1s"
-                            >
-                              <h5>Java</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 100%"
-                                  aria-valuenow="95"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".2s"
-                            >
-                              <h5>JavaScript</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 70%"
-                                  aria-valuenow="75"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".3s"
-                            >
-                              <h5>C#</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 80%"
-                                  aria-valuenow="85"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".4s"
-                            >
-                              <h5>React</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 50%"
-                                  aria-valuenow="80"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                            <div
-                              class="mb-0 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".5s"
-                            >
-                              <h5>Angular</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 50%"
-                                  aria-valuenow="80"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="resume-list b-box p-4">
-                          <div class="resume-panel">
-                            <h4 class="mb-5">Other Skills</h4>
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".1s"
-                            >
-                              <h5>Spring</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 90%"
-                                  aria-valuenow="75"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".2s"
-                            >
-                              <h5>DevOps</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 60%"
-                                  aria-valuenow="85"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".3s"
-                            >
-                              <h5>Unity</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 80%"
-                                  aria-valuenow="95"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                            <div
-                              class="mb-4 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".4s"
-                            >
-                              <h5>Backend</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 100%"
-                                  aria-valuenow="95"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                            <div
-                              class="mb-0 wow fadeInUp"
-                              data-wow-duration="1.5s"
-                              data-wow-delay=".5s"
-                            >
-                              <h5>Frontend</h5>
-                              <div class="progress mt-2">
-                                <div
-                                  class="progress-bar"
-                                  role="progressbar"
-                                  style="width: 60%"
-                                  aria-valuenow="80"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="tl-item">
+              <div class="tl-when mono">2022<br /><span>—</span><br />2025</div>
+              <div class="tl-body">
+                <h3>Software Engineer · Container xChange</h3>
+                <div class="tl-meta">Hamburg, DE · March 2022 – May 2025</div>
+                <ul>
+                  <li>Led development of a global logistics tracking platform with a team of <strong>10 engineers</strong> — distributed microservices, REST APIs and end-to-end features on AWS with Java, Spring Boot and Angular.</li>
+                  <li>Directly led a 3-engineer squad on a product generating <strong>$1M monthly revenue</strong>.</li>
+                  <li>Automated the container-tracking pipeline into an event-driven system, scaling from <strong>~20 to hundreds of thousands</strong> of containers scraped per day.</li>
+                </ul>
+                <a class="inline-link mono" href="assets/cv/ErikEspunesJubero_RecommendationLetter.pdf" target="_blank" rel="noopener noreferrer">Recommendation letter →</a>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-when mono">in<br />design</div>
+              <div class="tl-body">
+                <h3>Xebec — Autonomous Agent Workbench</h3>
+                <div class="tl-meta">Personal project</div>
+                <p>
+                  A multi-agent orchestration platform where autonomous coding
+                  agents pick up GitHub issues, work in isolated git-worktree
+                  sandboxes, and ship pull requests — local LLMs (Ollama) plus the
+                  Claude Agent SDK behind a swappable provider interface, gated by
+                  automated quality checks before any agent output is trusted.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- END: RESUME -->
+      </section>
+      <!-- END: Experience -->
 
-      <!-- START: SERVICES -->
-      <div class="section" id="WHAT I DO">
-        <div class="container">
-          <div class="section-head text-center">
-            <div class="hero-content text-center">
-              <h1>WHAT I DO</h1>
-            </div>
+      <!-- START: Competencies -->
+      <section id="s-skills" data-snap="1" class="section">
+        <div class="wrap split">
+          <div>
+            <h2 class="side-title light">Compe-<br />tencies</h2>
+            <span class="rule"></span>
+            <p class="side-note">
+              High-volume, event-driven distributed systems on AWS — and
+              increasingly, AI-assisted engineering that makes whole teams faster.
+            </p>
           </div>
-
-          <div class="row mt-4">
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni lni-monitor-code"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">Backend Development</h5>
-                  </div>
-                </div>
-              </div>
+          <div class="cards">
+            <div class="card">
+              <div class="card-num mono">01</div>
+              <div class="card-title">Backend &amp; APIs</div>
+              <div class="card-desc">Java · Spring Boot · .NET · OpenAPI · event-driven microservices</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-                data-wow-delay=".2s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni lni-code-1"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">Frontend Development</h5>
-                  </div>
-                </div>
-              </div>
+            <div class="card">
+              <div class="card-num mono">02</div>
+              <div class="card-title">Cloud &amp; Platform</div>
+              <div class="card-desc">AWS · Infrastructure-as-Code · CI/CD · automated testing</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-                data-wow-delay=".3s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni-game"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">Game Development</h5>
-                  </div>
-                </div>
-              </div>
+            <div class="card">
+              <div class="card-num mono">03</div>
+              <div class="card-title">AI-Assisted Engineering</div>
+              <div class="card-desc">Claude · Codex · Copilot · MCP integrations · agentic workflows</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-                data-wow-delay=".4s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni-mobile"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">Mobile Development</h5>
-                  </div>
-                </div>
-              </div>
+            <div class="card">
+              <div class="card-num mono">04</div>
+              <div class="card-title">Languages</div>
+              <div class="card-desc">C# · Java · Kotlin · Scala · C++ · SQL · TypeScript · Angular</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-                data-wow-delay=".5s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni-database"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">Database</h5>
-                  </div>
-                </div>
-              </div>
+            <div class="card">
+              <div class="card-num mono">05</div>
+              <div class="card-title">Methodology</div>
+              <div class="card-desc">Agile / Scrum · DDD · TDD · platform engineering · tech lead</div>
             </div>
-            <div class="col-sm-6 col-lg-4">
-              <div
-                class="services-list mt-4 wow fadeInUp"
-                data-wow-duration="1.5s"
-                data-wow-delay=".6s"
-              >
-                <div
-                  class="services-list--content d-flex align-items-center b-box hover-state p-4"
-                >
-                  <div class="services-list-icon">
-                    <i class="lni lni-cloud-refresh-clockwise"></i>
-                  </div>
-                  <div class="services-list-desc">
-                    <h5 class="mb-0">DevOps</h5>
-                  </div>
-                </div>
-              </div>
+            <div class="card">
+              <div class="card-num mono">06</div>
+              <div class="card-title">Leadership</div>
+              <div class="card-desc">Mentoring engineers · architecture &amp; engineering standards</div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      <!-- END: Competencies -->
 
-      <!-- START: PORTFOLIO -->
-      <div class="section" id="MY GAMES">
-        <div class="container">
-          <div class="section-head text-center">
-            <div class="hero-content text-center">
-              <h1>My Games</h1>
+      <!-- START: Games -->
+      <section id="s-games" data-snap="1" class="section">
+        <div class="wrap">
+          <div class="games-head">
+            <div>
+              <h2 class="side-title light">My Games</h2>
+              <span class="rule"></span>
+              <p class="side-note">Where it started — the game design half of the double degree, plus a few jams.</p>
             </div>
+            <a class="mono inline-link" href="https://eespunes.itch.io" target="_blank" rel="noopener noreferrer">All on itch.io →</a>
           </div>
-
-          <div
-            class="container swiper-container swiper-portfolio wow fadeInUp"
-            data-wow-duration="1.5s"
-          >
-            <div class="swiper-wrapper">
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/kart-online"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/kart-online.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Kart Online</h3>
-                        <p>Final Bachelor Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/gun-goal-tournament"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/gun-goal-tournament.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Gun Goal Tournament</h3>
-                        <p>Indie Dev Day Game Jam 2020</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide slideshow"
-                data-groups="all slideshow"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/stick-ink"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/stick-ink.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Stick Ink</h3>
-                        <p>Ludum Dare 46</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide video"
-                data-groups="all video"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/space-out"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/space-out.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Space Out</h3>
-                        <p>Ludum Dare 42</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide slideshow"
-                data-groups="all slideshow"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/one-piece-tower-defense"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/one-piece-tower-defense.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>One Piece Tower Defense</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/simpsons-pacman"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/simpson-pacman.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Simpson's Pacman</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide video"
-                data-groups="all video"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/angry-birds"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/angry-birds.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Angry Birds</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide slideshow"
-                data-groups="all slideshow"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/arkanoid"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/arkanoid.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Arkanoid</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide slideshow"
-                data-groups="all slideshow"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/pong"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/pong.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Pong</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/first-person-shooter"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/fps.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>First Person Shooter Prototype</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/portal"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/portal.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Portal Prototype</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div
-                class="portfolio-item swiper-slide image"
-                data-groups="all image"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/mario-64"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/mario-64.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Mario 64</h3>
-                        <p>University Project</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div
-                class="portfolio-item swiper-slide"
-                data-groups="all slideshow"
-              >
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://eespunes.itch.io/animal-instinct"
-                  class="portfolio-item--content"
-                >
-                  <div class="portfolio-item--img b-box">
-                    <img
-                      src="assets/images/animal-instinct.png"
-                      class="img-fluid mx-auto"
-                      alt="work-img"
-                    />
-                  </div>
-                  <div
-                    class="portfolio-item--desc d-flex justify-content-center align-items-center"
-                  >
-                    <div class="portfolio-item--desc-in">
-                      <div class="hero-content text-center">
-                        <h3>Animal Instinct</h3>
-                        <p>My first game</p>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="portfolio-pagination"></div>
+          <div class="game-grid">
+            <a class="game" href="https://eespunes.itch.io/kart-online" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/kart-online.png" alt="Kart Online" loading="lazy" />
+              <div class="game-body"><div class="game-title">Kart Online</div><div class="game-sub mono">Final Bachelor Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/gun-goal-tournament" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/gun-goal-tournament.png" alt="Gun Goal Tournament" loading="lazy" />
+              <div class="game-body"><div class="game-title">Gun Goal Tournament</div><div class="game-sub mono">Indie Dev Day Jam 2020</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/stick-ink" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/stick-ink.png" alt="Stick Ink" loading="lazy" />
+              <div class="game-body"><div class="game-title">Stick Ink</div><div class="game-sub mono">Ludum Dare 46</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/space-out" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/space-out.png" alt="Space Out" loading="lazy" />
+              <div class="game-body"><div class="game-title">Space Out</div><div class="game-sub mono">Ludum Dare 42</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/one-piece-tower-defense" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/one-piece-tower-defense.png" alt="One Piece Tower Defense" loading="lazy" />
+              <div class="game-body"><div class="game-title">One Piece Tower Defense</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/simpsons-pacman" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/simpson-pacman.png" alt="Simpson's Pacman" loading="lazy" />
+              <div class="game-body"><div class="game-title">Simpson's Pacman</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/angry-birds" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/angry-birds.png" alt="Angry Birds" loading="lazy" />
+              <div class="game-body"><div class="game-title">Angry Birds</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/arkanoid" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/arkanoid.png" alt="Arkanoid" loading="lazy" />
+              <div class="game-body"><div class="game-title">Arkanoid</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/pong" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/pong.png" alt="Pong" loading="lazy" />
+              <div class="game-body"><div class="game-title">Pong</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/first-person-shooter" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/fps.png" alt="First Person Shooter Prototype" loading="lazy" />
+              <div class="game-body"><div class="game-title">First Person Shooter Prototype</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/portal" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/portal.png" alt="Portal Prototype" loading="lazy" />
+              <div class="game-body"><div class="game-title">Portal Prototype</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/mario-64" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/mario-64.png" alt="Mario 64" loading="lazy" />
+              <div class="game-body"><div class="game-title">Mario 64</div><div class="game-sub mono">University Project</div></div>
+            </a>
+            <a class="game" href="https://eespunes.itch.io/animal-instinct" target="_blank" rel="noopener noreferrer">
+              <img src="assets/images/animal-instinct.png" alt="Animal Instinct" loading="lazy" />
+              <div class="game-body"><div class="game-title">Animal Instinct</div><div class="game-sub mono">My first game</div></div>
+            </a>
           </div>
         </div>
-      </div>
-      <!-- END: PORTFOLIO -->
+      </section>
+      <!-- END: Games -->
 
-      <!-- START: CONTACT -->
-      <div class="section" id="CONTACT">
-        <div class="container">
-          <div class="row justify-content-center align-items-center">
-            <div class="col-md-8">
-              <div class="contact-details">
-                <div class="hero-content text-center">
-                  <h1>Get in Touch</h1>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="about-desc-info">
-                      <div
-                        class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                      >
-                        <div class="about-desc-icon">
-                          <i class="lni-mobile"></i>
-                        </div>
-                        <div class="about-desc-info-desc">
-                          <a href="tel:004915117994720" class=""
-                            >+49 1511 7994720</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="about-desc-info">
-                      <div
-                        class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                      >
-                        <div class="about-desc-icon">
-                          <i class="lni-envelope"></i>
-                        </div>
-                        <div class="about-desc-info-desc">
-                          <a href="mailto:erik.espunyes7@outlook.com"
-                            >erik.espunyes7@outlook.com</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="about-desc-info">
-                      <div
-                        class="about-desc-info-content d-flex align-items-center hover-state b-box"
-                      >
-                        <div class="about-desc-icon">
-                          <i class="lni lni-file-multiple"></i>
-                        </div>
-                        <div class="about-desc-info-desc">
-                          <a href="assets/cv/ErikEspunesJubero_CV.pdf" download
-                            >Download CV</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <!-- START: Contact -->
+      <section id="s-contact" data-snap="1" class="section section-light section-contact">
+        <div class="wrap contact-grid">
+          <div>
+            <h2 class="contact-title">Let's build<br />something solid.</h2>
+            <span class="rule"></span>
+            <p class="body-dark">
+              Software Consultant at Xebia. Open to conversations about backend
+              architecture, platform engineering and agentic developer tooling.
+            </p>
+            <a class="btn btn-primary" href="assets/cv/ErikEspunesJubero_CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+          </div>
+          <div class="contact-list">
+            <a href="mailto:erik.espunesjubero@xebia.com">
+              <span class="mono contact-key">Email</span>
+              <span class="contact-val">erik.espunesjubero@xebia.com</span>
+            </a>
+            <a href="tel:+31625592282">
+              <span class="mono contact-key">Phone</span>
+              <span class="contact-val">+31 6 2559 2282</span>
+            </a>
+            <a href="https://www.linkedin.com/in/eespunes/" target="_blank" rel="noopener noreferrer">
+              <span class="mono contact-key">LinkedIn</span>
+              <span class="contact-val">eespunes</span>
+            </a>
+            <a href="https://github.com/eespunes" target="_blank" rel="noopener noreferrer">
+              <span class="mono contact-key">GitHub</span>
+              <span class="contact-val">eespunes</span>
+            </a>
           </div>
         </div>
-      </div>
-      <!-- END: CONTACT -->
-    </div>
-    <canvas id="c"></canvas>
-
-    <div class="mobileView">
-      <div class="mobileView-wrap">
-        <div class="mobileView-content">
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-            <defs>
-              <linearGradient id="grad1" x1="100%" y1="100%" x2="0%" y2="60%">
-                <stop
-                  offset="40%"
-                  style="stop-color: #ff1ba6; stop-opacity: 1"
-                ></stop>
-                <stop
-                  offset="100%"
-                  style="stop-color: #ed2a4a; stop-opacity: 1"
-                ></stop>
-              </linearGradient>
-            </defs>
-            <text
-              fill="url(#grad1)"
-              font-size="60"
-              x="0"
-              y="100"
-              style="font-weight: 700"
-            >
-              Too small!
-            </text>
-          </svg>
-          <h4 class="mb-3">MAKE YOUR BROWSER WINDOW WIDER</h4>
-          <p>
-            Please resize the browser window wider, you are not in mobile
-            device. Switch to mobile device to see the mobile view.
-          </p>
+        <div class="footer">
+          <span class="mono">© 2026 Erik Espuñes Juberó</span>
+          <span class="mono">Leeuwarden, NL</span>
         </div>
-      </div>
+      </section>
+      <!-- END: Contact -->
     </div>
 
-    <!-- JAVASCRIPTS -->
-
-    <script src="assets/js/vendor.js"></script>
-    <script src="assets/js/jquery.pagepiling.min.js"></script>
-
-    <script src="assets/js/imagesloaded.pkgd.js"></script>
-    <script src="assets/js/textition.min.js"></script>
-    <script src="assets/js/matrixRain.js"></script>
-
-    <!-- Contact Js -->
-    <script src="assets/js/contact.js"></script>
-
-    <!-- Custom Js -->
-    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/site.js"></script>
   </body>
 </html>
