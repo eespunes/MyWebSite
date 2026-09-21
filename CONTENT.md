@@ -1,4 +1,4 @@
-<!-- Build v1.75 · 2026-09-21 -->
+<!-- Build v1.76 · 2026-09-21 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -166,7 +166,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 | # | Game | Subtitle | Tech | Year | Image | Link | Featured |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 01 | Kart Online | Final Bachelor Project | Unity · Multiplayer | 2021 | kart-online.png | https://eespunes.itch.io/kart-online | yes |
+| 01 | Kart Online | Final Bachelor Project | Unreal · Multiplayer | 2021 | kart-online.png | https://eespunes.itch.io/kart-online | yes |
 | 02 | Gun Goal Tournament | Indie Dev Day Jam 2020 | Unity · Jam | 2020 | gun-goal-tournament.png | https://eespunes.itch.io/gun-goal-tournament |  |
 | 03 | Stick Ink | Ludum Dare 46 | Unity · Jam | 2020 | stick-ink.png | https://eespunes.itch.io/stick-ink |  |
 | 04 | Space Out | Ludum Dare 42 | Unity · Jam | 2018 | space-out.png | https://eespunes.itch.io/space-out |  |
@@ -197,7 +197,7 @@ sections above, only what the web page has no place for lives here.
 - Back label: ← Back to site
 - Save label: Save as PDF
 - Also label: Also
-- Also: Game developer, Unity and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
+- Also: Game developer in Unity, Unreal and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
 - Summary: Senior backend engineer with deep expertise in Java and Spring Boot and a strong command of .NET, designing high-volume, event-driven distributed systems on AWS. Fluent across modern platform engineering, cloud-native architecture, infrastructure as code, CI/CD and automated testing, and a hands-on practitioner of AI-assisted engineering, building the MCP integrations and agentic workflows that make whole teams faster.
 - Footer right: Erik Espuñes Jubero
