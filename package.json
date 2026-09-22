@@ -8,5 +8,5 @@
     "version:write": "node scripts/version.js",
     "hooks:install": "node scripts/install-hooks.js"
   },
-  "version": "1.86.0"
+  "version": "1.87.0"
 }
