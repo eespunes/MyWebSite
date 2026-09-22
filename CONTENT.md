@@ -1,4 +1,4 @@
-<!-- Build v1.85 · 2026-09-22 -->
+<!-- Build v1.86 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -110,7 +110,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 - Period: 2022 / - / 2025
 - Meta: Hamburg, DE · Mar 2022 – Apr 2025 · In-house product
-- Tags: Java · Spring Boot · Angular · Typescript
+- Tags: Java · Spring Boot · Angular · TypeScript
 - Collapsible: yes
 - Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter.pdf
 
