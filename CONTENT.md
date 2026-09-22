@@ -1,4 +1,4 @@
-<!-- Build v1.97 · 2026-09-22 -->
+<!-- Build v1.98 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -16,7 +16,7 @@ Keep the structure below; the parser relies on it:
 ## Meta
 
 - Title: Erik Espuñes Jubero
-- Description: Erik Espuñes Jubero, Senior Software Engineer. High-volume, event-driven backend platforms in Java, Spring Boot and .NET on AWS, owned from architecture through production.
+- Description: Erik Espuñes Jubero, Senior Software Engineer. Scalable, secure platforms in Java, Spring Boot and .NET on AWS: fullstack delivery on a deep backend core, owned from architecture through production.
 - Author: eespunes
 - Theme color: #121212
 - Favicon: assets/images/favicon.png
@@ -31,7 +31,7 @@ Keep the structure below; the parser relies on it:
 - Eyebrow: Senior Software Engineer
 - Name: ERIK / ESPUÑES JUBERO
 - Portrait: assets/images/avatar.jpg
-- Lead: Scalable, secure backend platforms in Java, Spring Boot and .NET on AWS, owned end to end from architecture through production operation.
+- Lead: Scalable, secure platforms in Java, Spring Boot and .NET on AWS: fullstack delivery on a deep backend core, owned end to end from architecture through production operation.
 - Primary button: View experience → #s-experience
 - Secondary button: Play the games → #s-games
 - Scroll hint: Scroll
@@ -40,6 +40,7 @@ Rotating specialisations:
 
 * Java & Spring Boot
 * .NET
+* Fullstack Engineering
 * AI Solutions Architecture
 * Cloud-Native Architecture
 * Mobile Development
@@ -51,9 +52,9 @@ Rotating specialisations:
 - Title: About / Me
 - Theme: light
 
-Lead: I build the backend systems businesses depend on: *scalable, secure and proven under production load*, in whatever stack is brought to me.
+Lead: I build the systems businesses depend on: *scalable, secure and proven under production load*, in whatever stack is brought to me.
 
-Body: I take end-to-end ownership of technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. Java and Spring Boot are my deepest expertise; I bring the same standard to .NET. The problems most people would rather hand off are where I do my best work.
+Body: I take end-to-end ownership of technical design, delivery and production operation, and shape the architecture and engineering standards a team works to. I deliver fullstack, with my deepest expertise in the backend: Java and Spring Boot above all, and the same standard brought to .NET. The problems most people would rather hand off are where I do my best work.
 
 ### Numbers
 
