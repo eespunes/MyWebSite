@@ -1,4 +1,4 @@
-// Build v1.93 · 2026-09-22
+// Build v1.94 · 2026-09-22
 /* Full-page paging, scroll-spy dots, expandable entries and the hero typing line. */
 window.initSite = function () {
   "use strict";

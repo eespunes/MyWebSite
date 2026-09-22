@@ -1,4 +1,4 @@
-<!-- Build v1.93 · 2026-09-22 -->
+<!-- Build v1.94 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file

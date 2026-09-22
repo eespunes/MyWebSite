@@ -1,4 +1,4 @@
-// Build v1.93 · 2026-09-22
+// Build v1.94 · 2026-09-22
 /* Renders cv.html (Spine v3) and asserts the printable CV carries exactly what
    CONTENT.md says — same values, same categories, nothing extra. */
 const test = require("node:test");
@@ -55,6 +55,8 @@ const SCRAPE = `JSON.stringify({
   allBullets: Array.from(document.querySelectorAll('.cv-page--2 li')).map(li =>
     li.textContent.replace(/\\s+/g, ' ').trim()),
   versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
+  versionOnLastPage: !!document.querySelector('.cv-page--2 .cv-version'),
+  footContacts: Array.from(document.querySelectorAll('.cv-foot-contacts > a, .cv-foot-contacts > span')).map(a => a.textContent.trim()),
   pageNumbers: Array.from(document.querySelectorAll('.cv-foot')).map(f =>
     f.lastElementChild.textContent.trim()),
   bodyText: document.body.textContent.replace(/\\s+/g, ' '),
@@ -201,10 +203,19 @@ browserTest("projects match the Projects table, status lowercased", () => {
   );
 });
 
-browserTest("both CV pages carry the version", () => {
-  assert.equal(cv.versions.length, 2, "expected a version stamp on each page");
-  assert.equal(cv.versions[0], cv.versions[1]);
+browserTest("the version appears once, on the last page only", () => {
+  assert.equal(cv.versions.length, 1, "expected exactly one version stamp");
+  assert.ok(cv.versionOnLastPage, "the stamp belongs on the last page");
   assert.ok(cv.versions[0].startsWith(plain(sections.cv.fields["version label"])));
+});
+
+browserTest("the page-two footer shows only email, phone and website", () => {
+  const rows = sections.contact.tables[0];
+  const expected = ["email", "phone", "website"]
+    .map((k) => rows.find((r) => r.key.toLowerCase() === k))
+    .filter(Boolean)
+    .map(asDisplayed);
+  assert.deepEqual(cv.footContacts, expected);
 });
 
 browserTest("page numbers are sequential and nothing overflows the paper", () => {

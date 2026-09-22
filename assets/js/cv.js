@@ -1,4 +1,4 @@
-// Build v1.93 · 2026-09-22
+// Build v1.94 · 2026-09-22
 /* Builds the printable CV (Spine v3) from CONTENT.md — the same file the site
    renders from — then offers it to the browser's PDF printer. */
 (function () {
@@ -272,7 +272,6 @@
     body1.appendChild(grid1);
     var foot1 = el("footer", "cv-foot");
     foot1.appendChild(el("span", "mono", inline(fullName + " · " + role)));
-    foot1.appendChild(footerVersion(cv));
     foot1.appendChild(el("span", "mono", pageNo(1)));
     body1.appendChild(foot1);
     page1.appendChild(body1);
@@ -345,7 +344,7 @@
     var footContacts = el("span", "cv-foot-contacts mono");
     contactRows
       .filter(function (row) {
-        return (row.key || "").toLowerCase() !== "address";
+        return ["email", "phone", "website"].indexOf((row.key || "").toLowerCase()) !== -1;
       })
       .forEach(function (row, i) {
         if (i) footContacts.appendChild(document.createTextNode(" · "));
