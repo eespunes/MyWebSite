@@ -1,4 +1,4 @@
-// Build v1.88 · 2026-09-22
+// Build v1.89 · 2026-09-22
 /* Serves the project over HTTP and renders a page in headless Chrome, so the
    tests see exactly what a browser builds from CONTENT.md. */
 const http = require("node:http");
