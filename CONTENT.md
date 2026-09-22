@@ -1,4 +1,4 @@
-<!-- Build v1.95 · 2026-09-22 -->
+<!-- Build v1.96 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -121,14 +121,14 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 ## Competencies
 
 - Nav label: Competencies
-- Title: Compe- / tencies
+- Title: Competencies
 - Side note: High-volume, event-driven distributed systems on AWS, and the AI-assisted engineering practices that make whole teams faster.
 
 ### Cards
 
 | # | Title | Description | Tags |
 | --- | --- | --- | --- |
-| 01 | Backend & APIs | Distributed, event-driven services engineered for production reality, domain-modelled, contract-first and tested before they ship. | Java · Spring Boot · .NET · OpenAPI · REST · Microservices |
+| 01 | Fullstack Engineering | Distributed, event-driven services engineered for production reality: domain-modelled, contract-first and tested before they ship, delivered end to end from API to interface. | Java · Spring Boot · .NET · Angular · TypeScript · OpenAPI · REST · Microservices |
 | 02 | Cloud & Platform | Ownership of the full path to production: infrastructure as code, CI/CD pipelines and automated quality gates. | AWS · IaC · CI/CD · Automated testing · Observability |
 | 03 | AI Solutions Architecture | Designing the AI solutions projects run on: multi-agent architectures, MCP integrations and the tooling that raises a whole department's output. | MCP · Claude Agent SDK · Multi-agent systems · Agentic workflows · Copilot |
 
