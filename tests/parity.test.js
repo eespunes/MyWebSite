@@ -1,4 +1,4 @@
-// Build v1.87 · 2026-09-22
+// Build v1.88 · 2026-09-22
 /* The site and the CV are two views of one file. These compare them against
    each other, so a category that drifts on one surface fails here even if
    both still parse. */
@@ -21,21 +21,29 @@ const SITE = `JSON.stringify({
   contactValues: Array.from(document.querySelectorAll('.contact-val')).map(v => v.textContent.trim()),
   contactKeys: Array.from(document.querySelectorAll('.contact-key')).map(v => v.textContent.trim()),
   aboutLead: document.querySelector('.about-lead').textContent.replace(/\\s+/g,' ').trim(),
+  projects: Array.from(document.querySelectorAll('.project')).map(p => ({
+    title: p.querySelector('h3').textContent.trim(),
+    description: p.querySelector('p').textContent.replace(/\\s+/g,' ').trim() })),
 })`;
 
 const CV = `JSON.stringify({
-  education: Array.from(document.querySelectorAll('.cv-list > div')).map(d => [
-    d.querySelector('.cv-item-title').textContent.trim(),
-    d.querySelector('.cv-item-sub').textContent.trim(),
-    d.querySelector('.cv-item-when').textContent.trim() ]),
-  languages: Array.from(document.querySelectorAll('.cv-lang')).map(l => [
-    l.children[0].textContent.trim(), l.children[1].textContent.trim() ]),
-  numbers: Array.from(document.querySelectorAll('.cv-stat')).map(s => [
-    s.querySelector('.cv-stat-num').textContent.trim(),
-    s.querySelector('.cv-stat-label').textContent.replace(/\\s+/g,' ').trim() ]),
-  bullets: Array.from(document.querySelectorAll('.cv-entry-body li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
-  contactLines: Array.from(document.querySelectorAll('.cv-contact > *')).map(d => d.textContent.trim()),
-  aboutLead: document.querySelectorAll('.cv-section .cv-body')[0].textContent.replace(/\\s+/g,' ').trim(),
+  education: Array.from(document.querySelectorAll('.cv-page--1 .cv-spine-content'))
+    .filter(n => n.querySelector('.cv-item-title'))
+    .map(n => [
+      n.querySelector('.cv-item-title').childNodes[0].textContent.trim(),
+      n.querySelector('.cv-item-sub')?.textContent.trim() || '' ]),
+  languagesText: Array.from(document.querySelectorAll('.cv-row'))
+    .map(r => r.textContent.replace(/\\s+/g, ' ').trim()).join(' | '),
+  bullets: Array.from(document.querySelectorAll('.cv-page--2 li')).map(li => li.textContent.replace(/\\s+/g,' ').trim()),
+  contactLines: Array.from(document.querySelectorAll('.cv-contact-item .cv-contact-value, .cv-online a'))
+    .map(d => d.textContent.trim()).filter(t => t),
+  aboutLead: document.querySelector('.cv-lead').textContent.replace(/\\s+/g,' ').trim(),
+  projects: Array.from(document.querySelectorAll('.cv-page--2 .cv-spine-content'))
+    .filter(n => n.querySelector('.cv-item-title'))
+    .map(n => ({
+      title: n.querySelector('.cv-item-title').childNodes[0].textContent.trim(),
+      description: n.querySelector('p').textContent.replace(/\\s+/g,' ').trim() })),
+  bodyText: document.body.textContent.replace(/\\s+/g, ' '),
 })`;
 
 let site, cv;
@@ -49,15 +57,16 @@ const browserTest = (name, fn) =>
   test(name, { skip: chromeAvailable() ? false : `Chrome not found at ${CHROME}` }, fn);
 
 browserTest("education is identical on both surfaces", () => {
-  assert.deepEqual(cv.education, site.education);
+  assert.deepEqual(cv.education, site.education.map((row) => [row[0], row[1]]));
 });
 
-browserTest("languages are identical on both surfaces", () => {
-  assert.deepEqual(cv.languages, site.languages);
-});
-
-browserTest("the highlight figures are identical on both surfaces", () => {
-  assert.deepEqual(cv.numbers, site.numbers);
+browserTest("every spoken language and level appears on the CV", () => {
+  for (const [language, level] of site.languages) {
+    assert.ok(
+      cv.languagesText.includes(`${language} ${level}`),
+      `${language} ${level} missing from the CV rows`
+    );
+  }
 });
 
 browserTest("the about lead is identical on both surfaces", () => {
@@ -71,8 +80,11 @@ browserTest("no experience bullet appears on one surface only", () => {
   assert.deepEqual(onlyOnCv, [], "bullets in the CV but missing from the site");
 });
 
-browserTest("personal projects are identical on both surfaces", () => {
-  assert.deepEqual(cv.projects, site.projects);
+browserTest("personal project copy is identical on both surfaces", () => {
+  assert.deepEqual(
+    cv.projects,
+    site.projects.map((p) => ({ title: p.title, description: p.description }))
+  );
 });
 
 browserTest("shared contact values appear on both surfaces", () => {
@@ -98,13 +110,15 @@ browserTest("shared contact values appear on both surfaces", () => {
   }
 });
 
-browserTest("the address appears on both surfaces", () => {
+browserTest("the street address stays off the CV, the city stays on it", () => {
   const index = site.contactKeys.findIndex((k) => k.toLowerCase() === "address");
   if (index === -1) return;
-  const address = site.contactValues[index];
-  assert.ok(address, "site shows an address");
+  const street = site.contactValues[index].split(",")[0];
+  assert.ok(street, "site shows an address");
+  assert.ok(!cv.bodyText.includes(street), "the CV must not print the street address");
+  const { sections } = require("./helpers/content.js");
   assert.ok(
-    cv.contactLines.some((line) => line === address),
-    "the CV should show the same address as the site"
+    cv.bodyText.includes(plain(sections.contact.fields.location)),
+    "the CV should show the city-level location"
   );
 });

@@ -1,4 +1,4 @@
-<!-- Build v1.87 · 2026-09-22 -->
+<!-- Build v1.88 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -151,7 +151,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 | # | Project | Status | Description | Stack | Link |
 | --- | --- | --- | --- | --- | --- |
-| 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Firebase · Android · Medical | https://github.com/eespunes/SmartBolus |
+| 01 | SmartBolus | Shipped | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Firebase · Android · Medical | https://github.com/eespunes/SmartBolus |
 | 02 | Thrive | In development | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase · Android | https://github.com/eespunes/thrive |
 | 03 | Xebec | Live | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
 
@@ -187,32 +187,28 @@ text, the highlight figures and the experience entries are reused from the
 sections above, only what the web page has no place for lives here.
 
 - Role: Senior Software Engineer
-- About label: About Me
-- Highlights label: Highlights
 - Competencies label: Competencies
-- Contact label: Contact
-- Kicker: Experience & Projects
+- Education label: Education
 - Experience label: Experience
-- Projects label: Personal Projects
+- Projects label: Personal projects
+- Engagement label: Client engagement
+- Online label: Online
+- Languages label: Languages
 - Back label: ← Back to site
 - Save label: Save as PDF
-- Also label: Also
-- Also: Game developer in Unity, Unreal and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
-- Quote: “Good, better, best. Never let it rest. Until your good is better and your better is best.”
-- Summary: Senior backend engineer with deep expertise in Java and Spring Boot and a strong command of .NET, designing high-volume, event-driven distributed systems on AWS. Fluent across modern platform engineering: cloud-native architecture, infrastructure as code, CI/CD and automated testing. A hands-on practitioner of AI-assisted engineering, building the MCP integrations and agentic workflows that make whole teams faster.
-- Footer right: Erik Espuñes Jubero
+- Also label: Additional
+- Also: Game development in Unity, Unreal and C#. Titles shipped on itch.io, from jam prototypes to a networked multiplayer racer.
 - Version label: Build
 
 ### Skill groups
 
 | Group | Tags |
 | --- | --- |
-| AI | Claude · Codex · Copilot · MCP |
-| Languages | Java · C# · Kotlin · Scala · C++ · Dart · SQL · TypeScript · Angular |
-| Web & APIs | Spring Boot · OpenAPI · .NET · AWS |
+| Programming | Java · C# · Kotlin · Scala · C++ · Dart · SQL · TypeScript · Angular |
 | Mobile | Flutter · Dart |
 | Gaming | Unity · Unreal |
-| Method | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
+| Methodology | Agile / Scrum · DDD · TDD · Platform engineering · Tech lead |
+| Leadership | Mentoring engineers · Architecture standards · Engineering standards |
 
 ## Contact
 
@@ -221,6 +217,7 @@ sections above, only what the web page has no place for lives here.
 - Heading: Let's build / something solid.
 - Body: Senior Software Engineer. Open to conversations on backend architecture, platform engineering and AI-assisted developer tooling.
 - Button: Download CV → cv.html
+- Location: Feanwâlden, The Netherlands
 - Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
 - Version label: Build
