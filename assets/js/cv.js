@@ -1,4 +1,4 @@
-// Build v1.91 · 2026-09-22
+// Build v1.92 · 2026-09-22
 /* Builds the printable CV (Spine v3) from CONTENT.md — the same file the site
    renders from — then offers it to the browser's PDF printer. */
 (function () {
@@ -245,9 +245,10 @@
     if (cv.fields.also && cv.fields["also label"]) {
       dividerRow(full, cv.fields["also label"], inline(cv.fields.also));
     }
-    var fullWrap = el("div", "cv-span-both");
-    fullWrap.appendChild(full);
-    grid1.appendChild(fullWrap);
+    /* The rows sit in the content column, aligned with the section text —
+       an empty rail cell keeps the grid in step. */
+    grid1.appendChild(el("div"));
+    grid1.appendChild(full);
 
     /* education */
     var education = sub(about, "Education");

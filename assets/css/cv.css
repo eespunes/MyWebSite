@@ -1,4 +1,4 @@
-/* Build v1.91 · 2026-09-22 */
+/* Build v1.92 · 2026-09-22 */
 /* ==========================================================================
    Printable CV — Spine v3: light paper, dark masthead, dotted timeline spine.
    Two A4 pages, built from CONTENT.md by assets/js/cv.js.
@@ -179,8 +179,7 @@ a { color: inherit; text-decoration: none; }
   margin-left: -9px;
 }
 
-.cv-section-head,
-.cv-span-both { grid-column: 1 / -1; }
+.cv-section-head { grid-column: 1 / -1; }
 
 .cv-section-head {
   font-size: 14px;
