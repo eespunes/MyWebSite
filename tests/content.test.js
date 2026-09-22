@@ -1,4 +1,4 @@
-// Build v1.89 · 2026-09-22
+// Build v1.90 · 2026-09-22
 /* Schema checks on CONTENT.md — fast, no browser. These guard the contract
    the renderers rely on: if a category or column is renamed here without the
    renderers following, the page silently loses content. */
@@ -22,7 +22,7 @@ const REQUIRED_FIELDS = {
   games: ["title", "side note", "link", "hint", "nav label", "featured label"],
   cv: ["role", "competencies label", "education label", "experience label",
        "projects label", "engagement label", "online label", "languages label",
-       "back label", "save label", "also label", "also"],
+       "back label", "save label"],
   contact: ["heading", "body", "button", "location", "footer left", "footer right"],
 };
 

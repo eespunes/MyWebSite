@@ -1,4 +1,4 @@
-// Build v1.89 · 2026-09-22
+// Build v1.90 · 2026-09-22
 /* Renders cv.html (Spine v3) and asserts the printable CV carries exactly what
    CONTENT.md says — same values, same categories, nothing extra. */
 const test = require("node:test");
@@ -133,10 +133,12 @@ browserTest("divider rows carry skill groups, languages and the additional line"
       .tables[0].map((r) => `${plain(r.language)} ${plain(r.level)}`)
       .join(" · "),
   });
-  expected.push({
-    label: plain(sections.cv.fields["also label"]),
-    value: plain(sections.cv.fields.also),
-  });
+  if (sections.cv.fields.also && sections.cv.fields["also label"]) {
+    expected.push({
+      label: plain(sections.cv.fields["also label"]),
+      value: plain(sections.cv.fields.also),
+    });
+  }
   assert.deepEqual(cv.rows, expected);
 });
 
