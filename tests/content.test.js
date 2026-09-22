@@ -1,4 +1,4 @@
-// Build v1.83 · 2026-09-21
+// Build v1.84 · 2026-09-22
 /* Schema checks on CONTENT.md — fast, no browser. These guard the contract
    the renderers rely on: if a category or column is renamed here without the
    renderers following, the page silently loses content. */

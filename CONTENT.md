@@ -1,4 +1,4 @@
-<!-- Build v1.83 · 2026-09-21 -->
+<!-- Build v1.84 · 2026-09-22 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -92,7 +92,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 - Period: 2025 / - / now
 - Meta: Hilversum, NL · Hybrid · Jun 2025 – Present
-- Tags: AI · Cloud
+- Tags: Leadership · AI · Cloud
 - Summary: Brought into client engineering organisations to lead backend architecture and modernisation programmes, setting technical direction and raising the engineering standard of every team I join.
 - Collapsible: expanded
 - Engagements label: Client engagements
@@ -100,7 +100,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 #### UPS
 
 - Meta: Eindhoven, NL · Remote · Jul 2025 – May 2026
-- Tags: .NET · AI
+- Tags: .NET · AI · Leadership
 
 * Led the transformation of global brokerage systems, migrating a large-scale legacy codebase to cloud-native architecture in **6 months with 7 engineers**, a programme originally scoped at multiple years.
 * Architected the customs data services processing cross-border declarations across three countries, meeting EU and US regulatory requirements in a compliance-driven enterprise environment.
@@ -110,7 +110,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 - Period: 2022 / - / 2025
 - Meta: Hamburg, DE · Mar 2022 – Apr 2025 · In-house product
-- Tags: Java · Spring Boot
+- Tags: Java · Spring Boot · Angular · Typescript
 - Collapsible: yes
 - Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter.pdf
 
@@ -130,7 +130,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | --- | --- | --- | --- |
 | 01 | Backend & APIs | Distributed, event-driven services engineered for production reality, domain-modelled, contract-first and tested before they ship. | Java · Spring Boot · .NET · OpenAPI · REST · Microservices |
 | 02 | Cloud & Platform | Ownership of the full path to production: infrastructure as code, CI/CD pipelines and automated quality gates. | AWS · IaC · CI/CD · Automated testing · Observability |
-| 03 | AI-Assisted Engineering | Engineering the tooling that raises an entire department's output, not just one engineer's. | Claude · Codex · Copilot · MCP · Agentic workflows |
+| 03 | AI Solutions Architecture | Designing the AI solutions projects run on: multi-agent architectures, MCP integrations and the tooling that raises a whole department's output. | MCP · Claude Agent SDK · Multi-agent systems · Agentic workflows · Copilot |
 
 ### Tag rows
 
@@ -151,8 +151,8 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 | # | Project | Status | Description | Stack | Link |
 | --- | --- | --- | --- | --- | --- |
-| 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Material 3 · shared_preferences | https://github.com/eespunes/SmartBolus |
-| 02 | Thrive | In development | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase Auth · Firestore · App Check · GitHub Actions | https://github.com/eespunes/thrive |
+| 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Firebase · Android · Medical | https://github.com/eespunes/SmartBolus |
+| 02 | Thrive | In development | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase · Android | https://github.com/eespunes/thrive |
 | 03 | Xebec | Live | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | |
 
 ## Games
