@@ -96,6 +96,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 - Tags: Leadership · AI · Cloud
 - Summary: Brought into client engineering organisations to lead backend architecture and modernisation programmes, setting technical direction and raising the engineering standard of every team I join.
 - Collapsible: expanded
+- Link: Recommendation letter → assets/cv/ErikEspunesJubero_RecommendationLetter_Xebia.pdf
 - Engagements label: Client engagements
 
 #### UPS
