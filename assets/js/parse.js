@@ -1,4 +1,4 @@
-// Build v1.100 · 2026-09-24
+// Build v1.102 · 2026-10-14
 /* The CONTENT.md reader shared by the site (content.js) and the CV (cv.js),
    so both — and the tests — read the file exactly the same way.
 
