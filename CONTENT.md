@@ -91,8 +91,8 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 
 ### Software Consultant · Xebia
 
-- Period: 2025 / - / now
-- Meta: Hilversum, NL · Hybrid · Jun 2025 – Present
+- Period: 2025 / - / 2026
+- Meta: Hilversum, NL · Hybrid · Jun 2025 – Dec 2026
 - Tags: Leadership · AI · Cloud
 - Summary: Brought into client engineering organisations to lead backend architecture and modernisation programmes, setting technical direction and raising the engineering standard of every team I join.
 - Collapsible: expanded

@@ -6,7 +6,8 @@
     "test": "node --test tests/*.test.js",
     "serve": "python3 -m http.server 8000",
     "version:write": "node scripts/version.js",
-    "hooks:install": "node scripts/install-hooks.js"
+    "hooks:install": "node scripts/install-hooks.js",
+    "privacy:build": "node scripts/build-privacy.js"
   },
   "version": "1.102.0"
 }

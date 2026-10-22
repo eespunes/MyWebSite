@@ -598,6 +598,9 @@
       version.textContent = CVParse.versionText(info, section.fields["version label"]);
     });
     footer.appendChild(el("span", "mono", inline(section.fields["footer right"])));
+    var privacy = el("a", "mono", "App privacy & deletion");
+    privacy.href = "/privacy/";
+    footer.appendChild(privacy);
     node.appendChild(footer);
     return node;
   }
