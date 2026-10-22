@@ -9,5 +9,5 @@
     "hooks:install": "node scripts/install-hooks.js",
     "privacy:build": "node scripts/build-privacy.js"
   },
-  "version": "1.102.0"
+  "version": "1.104.0"
 }

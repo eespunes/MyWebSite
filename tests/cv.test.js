@@ -1,4 +1,4 @@
-// Build v1.102 · 2026-10-14
+// Build v1.104 · 2026-10-22
 /* Renders cv.html (Spine v3) and asserts the printable CV carries exactly what
    CONTENT.md says — same values, same categories, nothing extra. */
 const test = require("node:test");

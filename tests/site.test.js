@@ -1,4 +1,4 @@
-// Build v1.102 · 2026-10-14
+// Build v1.104 · 2026-10-22
 /* Renders index.html in a real browser and asserts the page shows exactly what
    CONTENT.md says — same values, in the same categories, nothing extra. */
 const test = require("node:test");
