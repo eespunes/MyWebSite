@@ -1,4 +1,4 @@
-// Build v1.104 · 2026-10-22
+// Build v1.106 · 2026-10-27
 /* Loads CONTENT.md through the very parser the pages use. */
 const fs = require("node:fs");
 const path = require("node:path");
