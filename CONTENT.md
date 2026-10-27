@@ -224,7 +224,7 @@ sections above, only what the web page has no place for lives here.
 
 | Key | Value | Link | CV only |
 | --- | --- | --- | --- |
-| Address | Toarteldostrjitte 40, 9269 NG, Feanwâlden, The Netherlands | | |
+| Location | Feanwâlden, The Netherlands | | |
 | Email | erik.espunyes7@outlook.com | mailto:erik.espunyes7@outlook.com | |
 | Phone | +31 6 2559 2282 | tel:+31625592282 | |
 | Website | erikespunesjubero.com | https://erikespunesjubero.com/ | yes |
