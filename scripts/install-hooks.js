@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.106 · 2026-10-27
+// Build v1.109 · 2026-10-27
 /* Installs a pre-commit hook that refreshes version.json and stages it, so the
    version bumps with every commit without anyone remembering to do it. */
 const fs = require("node:fs");

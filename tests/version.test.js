@@ -1,4 +1,4 @@
-// Build v1.106 · 2026-10-27
+// Build v1.109 · 2026-10-27
 /* The build stamp: derived from git, identical on both surfaces. */
 const test = require("node:test");
 const assert = require("node:assert/strict");
