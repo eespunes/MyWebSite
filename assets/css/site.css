@@ -1,4 +1,4 @@
-/* Build v1.133 · 2026-11-06 */
+/* Build v1.134 · 2026-11-06 */
 /* ==========================================================================
    Erik Espuñes Jubero — portfolio
    Palette: #121212 ink · #EDEDED paper · #00BF63 accent
@@ -1003,7 +1003,15 @@ a:hover {
 }
 
 .project-demo {
+  display: inline-block;
   margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.project-demo:hover {
+  color: var(--accent-soft);
 }
 
 /* ------------------------------------------------------------------ games */
