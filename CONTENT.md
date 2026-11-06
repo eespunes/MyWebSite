@@ -1,4 +1,4 @@
-<!-- Build v1.146 · 2026-11-06 -->
+<!-- Build v1.147 · 2026-11-06 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -157,7 +157,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | --- | --- | --- | --- | --- | --- | --- |
 | 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for standard and half-unit pens. Works fully offline; signing in adds cloud sync, sharing with carers, and insulin reminders. | Flutter · Dart · Firebase · Android · Medical | | projects/smartbolus/ |
 | 02 | Thrive | | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members on Android. Access is enforced by Firestore security rules tested against the emulator in CI, with a small set of Cloud Functions for admin-only actions like kid logins. | Flutter · Dart · Firebase · Android | | projects/thrive/ |
-| 03 | Logpose | | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | | projects/logpose/ |
+| 03 | Logpose | | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Node.js · React · Ollama · Claude · git worktrees · GitHub API | | projects/logpose/ |
 
 ## Games
 

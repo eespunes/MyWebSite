@@ -34,7 +34,7 @@
           "statusLive": "live · interacting",
           "statusMissing": "demo not deployed",
           "missingTitle": "Demo coming soon",
-          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "missingBody": "The web build isn't deployed yet.",
           "footer": "Demo & architecture"
         },
 
@@ -113,16 +113,93 @@
             "note": "IOB: insulin on board, from a 4-hour decay curve. Every value comes from the user's configuration. Shown to explain the app, not as dosing advice."
           },
           {
+            "id": "example",
+            "title": "One dose, drawn",
+            "kind": "chart",
+            "lead": "The same calculation for *a weekday lunch*, with the demo patient's protocol.",
+            "charts": [
+              {
+                "type": "waterfall",
+                "title": "Lunch dose · units",
+                "alt": "Carb cover 6.67 U, plus 1 U correction, minus 0.5 U insulin on board, gives 7.17 U, rounded to a 7 U pen dose.",
+                "steps": [
+                  { "label": "Carbs", "value": 6.67, "detail": "40 g ÷ 6" },
+                  { "label": "Correction", "value": 1.0, "detail": "11.4 mmol/L" },
+                  { "label": "On board", "value": -0.5, "detail": "90 min ago" },
+                  { "label": "Raw", "total": true, "detail": "= 7.17" },
+                  { "label": "Pen dose", "value": 7.0, "final": true, "detail": "0.5 U step" }
+                ],
+                "caption": "Insulin on board only eats into the correction; the carbs stay fully covered. The total is then rounded to what a half-unit pen can deliver."
+              },
+              {
+                "type": "line",
+                "title": "Insulin on board · 5 U dose",
+                "alt": "A 5 U dose decays along a convex curve to zero over four hours, with 2.3 U left at 90 minutes.",
+                "x": [
+                  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
+                  180, 190, 200, 210, 220, 230, 240
+                ],
+                "y": [
+                  5.0, 4.661, 4.331, 4.011, 3.701, 3.401, 3.11, 2.83, 2.561, 2.302, 2.055, 1.818,
+                  1.593, 1.38, 1.179, 0.991, 0.816, 0.655, 0.508, 0.376, 0.26, 0.162, 0.083, 0.026,
+                  0.0
+                ],
+                "xTicks": [
+                  { "at": 0, "label": "0" },
+                  { "at": 60, "label": "1 h" },
+                  { "at": 120, "label": "2 h" },
+                  { "at": 180, "label": "3 h" },
+                  { "at": 240, "label": "4 h" }
+                ],
+                "xLabel": "time since dose",
+                "marker": { "x": 90, "y": 2.3, "label": "2.3 U at 90 min" },
+                "caption": "Remaining = dose × (1 − t / 4 h)^1.65, so the tail lingers like a rapid-acting analogue."
+              }
+            ],
+            "note": "Weekday lunch ratio 6 g/U, +1 U for 10–12 mmol/L, a half-unit pen, and a 1 U correction 90 minutes earlier: the defaults the demo above starts with. Illustration only, not dosing advice."
+          },
+          {
             "id": "architecture",
             "title": "Architecture",
-            "kind": "layers",
+            "kind": "flow",
             "lead": "One Flutter codebase, *local-first*, with managed Firebase services and no custom server.",
-            "items": [
-              { "label": "Client", "tags": ["Flutter", "Dart", "Material 3"], "body": "The calculator and insulin-on-board engine are pure Dart on the device, so dosing and local reminders never need the network." },
-              { "label": "Storage", "tags": ["SharedPreferences", "Cloud Firestore"], "body": "Screens ask a repository provider for storage: local when signed out, Firestore when a care team shares an account. Local data migrates on first cloud sign-in." },
-              { "label": "Identity & rules", "tags": ["Firebase Auth", "App Check", "Security rules"], "body": "Email and Google sign-in. A four-role model (owner, manager, editor, viewer) is enforced in Firestore rules and tested against the emulator in CI." },
-              { "label": "Messaging", "tags": ["Cloud Functions", "Cloud Tasks", "FCM"], "body": "Seven Node functions push dose-logged alerts, slow-carb follow-ups, join requests and settings changes to caregivers' phones." }
-            ]
+            "tiers": [
+              {
+                "label": "Patient",
+                "nodes": [
+                  {
+                    "title": "Patient's phone",
+                    "body": "Calculator and insulin-on-board engine in pure Dart. Works signed out and offline on local storage.",
+                    "tags": ["Flutter", "Material 3"]
+                  }
+                ]
+              },
+              {
+                "label": "Firebase",
+                "nodes": [
+                  { "title": "Auth + App Check", "body": "Email and Google sign-in." },
+                  { "title": "Firestore + rules", "tone": "accent", "body": "Owner, manager, editor and viewer roles, enforced in the rules and tested on the emulator in CI." }
+                ]
+              },
+              {
+                "label": "Server",
+                "nodes": [
+                  { "title": "7 Cloud Functions", "body": "Triggered by Firestore writes, with Cloud Tasks for timed follow-ups and reminders." }
+                ]
+              },
+              {
+                "label": "Care team",
+                "nodes": [
+                  { "title": "Caregivers' phones", "body": "Joined with an invite code and a role." }
+                ]
+              }
+            ],
+            "links": [
+              { "label": "syncs once signed in" },
+              { "label": "dose logged, settings changed" },
+              { "label": "push, no glucose values or names" }
+            ],
+            "note": "Screens ask one repository provider for storage, so the same code runs on local storage or Firestore, and local data migrates on first cloud sign-in."
           },
           {
             "id": "decisions",
