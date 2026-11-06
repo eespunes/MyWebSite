@@ -51,6 +51,7 @@ const stamp = `${info.version} · ${info.date}`;
    stamping third-party or minified code would be churn, not information. */
 const OWNED = [
   "index.html",
+  "404.html",
   "cv.html",
   "CONTENT.md",
   "assets/js/parse.js",

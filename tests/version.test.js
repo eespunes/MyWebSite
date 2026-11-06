@@ -46,6 +46,7 @@ test("every owned source file carries the current version stamp", () => {
      assets are deliberately excluded. */
   const owned = [
     "index.html",
+    "404.html",
     "cv.html",
     "CONTENT.md",
     "assets/js/parse.js",
