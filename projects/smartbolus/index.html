@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SmartBolus · Erik Espuñes Jubero</title>
+    <meta name="description" content="SmartBolus case study." />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ededed" media="(prefers-color-scheme: light)" />
+    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+    <!-- Apply a saved theme before first paint so there's no flash. -->
+    <script>
+      try {
+        var t = localStorage.getItem("cs-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../case-study.css" />
+  </head>
+
+  <body>
+    <!-- The page is built from the JSON below by ../case-study.js.
+         To make another case study, copy this folder and edit only the data. -->
+    <div id="case-study"></div>
+
+    <script type="application/json" id="project-data">
+      {
+        "site": {
+          "name": "Erik Espuñes Jubero",
+          "homeHref": "../../",
+          "backHref": "../../#s-projects",
+          "backLabel": "← Projects"
+        },
+        "labels": {
+          "github": "View on GitHub",
+          "demo": "Open demo full screen",
+          "glance": "At a glance",
+          "activate": "▶ Tap to interact",
+          "statusLoading": "loading…",
+          "statusLive": "live · interacting",
+          "statusMissing": "demo not deployed",
+          "missingTitle": "Demo coming soon",
+          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "next": "Next project",
+          "footer": "Case study"
+        },
+
+        "number": "01",
+        "kicker": "Personal project",
+        "title": "SmartBolus",
+        "tagline": "A minimalist Flutter app that turns a meal and a glucose reading into a mealtime insulin dose *your pen can actually deliver*, and keeps caregivers in the loop.",
+        "stack": ["Flutter", "Dart", "Firebase", "Cloud Functions", "Android"],
+        "links": {
+          "github": "https://github.com/eespunes/SmartBolus"
+        },
+
+        "demo": {
+          "src": "/demos/smartbolus/",
+          "width": 390,
+          "height": 844,
+          "maxHeight": 560,
+          "caption": "Live web build in a 390 × 844 viewport. Login skipped, fictional patient, resets on reload. Not medical advice."
+        },
+
+        "summary": "Mealtime insulin maths is *repetitive, error-prone and done several times a day*. SmartBolus does it in a few taps from the patient's own protocol, and shares the result with the family.",
+        "facts": [
+          { "label": "Role", "value": "Solo: design → release" },
+          { "label": "Platform", "value": "Android · web demo" },
+          { "label": "Backend", "value": "Firebase · 7 Cloud Functions" },
+          { "label": "Quality", "value": "400+ tests · 95% coverage gate" }
+        ],
+        "highlights": [
+          "Per-meal carb ratios with *weekend overrides*, picked by time of day",
+          "Sliding-scale correction that *subtracts insulin still on board*",
+          "Rounding for both *half-unit and whole-unit pens*"
+        ],
+
+        "sections": [
+          {
+            "id": "problem",
+            "title": "The problem",
+            "kind": "prose",
+            "lead": "Every meal starts with arithmetic: *how many carbs, which ratio applies right now, and how far off target am I?*",
+            "body": [
+              "People who inject mealtime insulin do this calculation several times a day, often in a hurry and sometimes while their glucose is already off. Their protocol is not a single number: each meal has its own ratio, some change at the weekend, high readings add a correction by range, and the result has to be rounded to what an insulin pen can physically deliver.",
+              "SmartBolus keeps that protocol in one place and applies it the same way every time, so the user only enters what changes: the meal and the reading."
+            ]
+          },
+          {
+            "id": "how",
+            "title": "How it works",
+            "kind": "steps",
+            "lead": "Set up once, then *two inputs per meal*.",
+            "items": [
+              { "title": "Set the protocol", "body": "Meals with their own hour window and carb ratio (optionally a weekend ratio), correction ranges, snack rules, routines like a Friday gym session, and the pen step." },
+              { "title": "Enter the meal", "body": "Type the carbohydrates and the current glucose reading, in grams or exchanges and mmol/L or mg/dL. The meal for the current time of day is pre-selected." },
+              { "title": "Get a usable dose", "body": "Carb cover, correction and adjustments are combined, then rounded to the pen's step. Every result shows its breakdown, and slow-carb meals are split into now and later." },
+              { "title": "Share with caregivers", "body": "Caregivers join a patient account with an invite code and a role, and get a push when a dose is logged or a follow-up is due." }
+            ]
+          },
+          {
+            "id": "calculation",
+            "title": "The calculation",
+            "kind": "formula",
+            "lead": "A pure function, *the same every time*, that explains its own result.",
+            "codeLabel": "BolusCalculatorService · main meal",
+            "code": [
+              "// 1 · carb cover from the meal's ratio (weekend override if set)",
+              "meal       = carbs ÷ ratio[meal, weekday]",
+              "",
+              "// 2 · sliding-scale correction by glucose range",
+              "correction = tier(glucose).extraUnits      // e.g. 10–12 mmol/L → +1 U",
+              "",
+              "// 2b · insulin on board only offsets the correction",
+              "correction = max(0, correction − IOB(now))",
+              "",
+              "// 3 · slow-carb meal extra, minus active routines",
+              "total      = max(0, meal + correction + pMealExtra − routines)",
+              "",
+              "// 4 · safety ceiling, then round to the pen",
+              "dose       = total > 100 U ? error : round(total, step)   // step: 0.5 U or 1 U"
+            ],
+            "note": "IOB: insulin on board, from a 4-hour decay curve. Every value comes from the user's configuration. Shown to explain the app, not as dosing advice."
+          },
+          {
+            "id": "architecture",
+            "title": "Architecture",
+            "kind": "layers",
+            "lead": "One Flutter codebase, *local-first*, with managed Firebase services and no custom server.",
+            "items": [
+              { "label": "Client", "tags": ["Flutter", "Dart", "Material 3"], "body": "The calculator and insulin-on-board engine are pure Dart on the device, so dosing and local reminders never need the network." },
+              { "label": "Storage", "tags": ["SharedPreferences", "Cloud Firestore"], "body": "Screens ask a repository provider for storage: local when signed out, Firestore when a care team shares an account. Local data migrates on first cloud sign-in." },
+              { "label": "Identity & rules", "tags": ["Firebase Auth", "App Check", "Security rules"], "body": "Email and Google sign-in. A four-role model (owner, manager, editor, viewer) is enforced in Firestore rules and tested against the emulator in CI." },
+              { "label": "Messaging", "tags": ["Cloud Functions", "Cloud Tasks", "FCM"], "body": "Seven Node functions push dose-logged alerts, slow-carb follow-ups, join requests and settings changes to caregivers' phones." }
+            ]
+          },
+          {
+            "id": "decisions",
+            "title": "Decisions & trade-offs",
+            "kind": "decisions",
+            "items": [
+              {
+                "title": "Round to the pen, not to the decimal",
+                "why": "A dose of 3.37 U can't be injected. Rounding to the pen's step makes the output *directly actionable*.",
+                "tradeoff": "The displayed dose is less precise than the raw calculation, so the step is a visible, user-chosen setting."
+              },
+              {
+                "title": "Insulin on board only reduces the correction",
+                "why": "Subtracting active insulin from the correction *prevents stacking corrections*, while the carbs on the plate still get covered.",
+                "tradeoff": "The decay curve is a model, not a measurement, so the breakdown shows exactly how much IOB was applied."
+              },
+              {
+                "title": "Two storage backends behind one interface",
+                "why": "The app works signed out and offline, the code is easy to test, and the web demo runs with *no backend at all*.",
+                "tradeoff": "Every store has a local and a cloud implementation to keep in step, plus a one-time migration between them."
+              },
+              {
+                "title": "Managed backend over a custom API",
+                "why": "Firebase covers sign-in, storage and push with *no server to operate*, targeting under €1 a month for the whole project.",
+                "tradeoff": "Access control lives entirely in the security rules, so the rules have their own emulator test suite in CI."
+              }
+            ]
+          },
+          {
+            "id": "privacy",
+            "title": "Privacy",
+            "kind": "prose",
+            "lead": "Health data is *sensitive by default*, so the app treats it that way.",
+            "body": [
+              "No data is sold or used for advertising. Caregivers only see a patient's data when they've been given access to that patient's account, and only what their role allows. Push notifications never contain glucose values, units or names, and the app rechecks access before opening one.",
+              "Deletion is built into the app: it removes the user profile, notification tokens and memberships, along with patient groups the user owns and their records. A public request form covers anyone who no longer has the app installed."
+            ]
+          }
+        ],
+
+        "next": { "number": "02", "title": "Thrive", "href": "../thrive/" }
+      }
+    </script>
+
+    <script src="../case-study.js"></script>
+  </body>
+</html>
