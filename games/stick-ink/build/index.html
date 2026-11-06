@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stick Ink!</title>
+    <!-- Unity export, trimmed so the canvas fills the frame it is embedded in
+         (games/game.js sizes that frame from the Frame column in CONTENT.md). -->
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+      #gameContainer { width: 100%; height: 100%; }
+    </style>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Stick Ink! - Web.json");
+    </script>
+  </head>
+  <body>
+    <div id="gameContainer"></div>
+  </body>
+</html>
