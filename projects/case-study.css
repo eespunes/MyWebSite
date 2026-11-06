@@ -286,9 +286,15 @@ a:hover {
   background: var(--text-faint);
 }
 
-.demo-window[data-state="ready"] .demo-status-dot {
+.demo-window[data-state="ready"] .demo-status-dot,
+.demo-window[data-state="live"] .demo-status-dot {
   background: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* Nothing to reload before a tap-to-start demo has started. */
+.demo-window[data-state="poster"] [data-reload] {
+  visibility: hidden;
 }
 
 .demo-window[data-state="missing"] .demo-status-dot {
@@ -388,6 +394,19 @@ a:hover {
   transform-origin: 0 0;
 }
 
+.phone-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.phone-poster[hidden] {
+  display: none;
+}
+
 .phone-screen iframe {
   display: block;
   width: 100%;
@@ -464,6 +483,15 @@ a:hover {
 
 /* "Tap to interact" — keeps page scrolling from being swallowed by the demo. */
 
+/* Over a poster, the boot spinner lets the screenshot show through. */
+.phone-screen:has(.phone-poster:not([hidden])) ~ .layer-loading {
+  background: rgba(13, 13, 13, 0.62);
+}
+
+.layer-start .activate-pill {
+  font-size: 12px;
+}
+
 .layer-activate {
   background: linear-gradient(
     to top,
@@ -476,6 +504,12 @@ a:hover {
   border: 0;
   width: 100%;
   cursor: pointer;
+}
+
+.layer-start {
+  justify-content: center;
+  padding-bottom: 20px;
+  background: rgba(10, 10, 10, 0.38);
 }
 
 .activate-pill {
