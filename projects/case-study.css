@@ -777,6 +777,489 @@ a:hover {
   font-weight: 300;
 }
 
+/* Flow — architecture and pipeline diagrams: boxes in tiers, joined by
+   labelled arrows. data-dir is set by the script from the column width. */
+
+.flow {
+  margin-top: 30px;
+  display: flex;
+}
+
+.flow[data-dir="row"] {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.flow[data-dir="col"] {
+  flex-direction: column;
+  max-width: 640px;
+}
+
+.flow-tier {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flow-tier-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.flow-nodes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.flow[data-dir="col"] .flow-nodes {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flow[data-dir="col"] .flow-node {
+  flex: 1 1 200px;
+}
+
+.flow-node {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  padding: 14px 16px;
+  min-width: 0;
+}
+
+.flow-node.is-accent {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(0, 191, 99, 0.18);
+}
+
+.flow-node.is-mute {
+  background: transparent;
+  border-style: dashed;
+}
+
+.flow-node h3 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--heading);
+}
+
+.flow-node p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  font-weight: 300;
+}
+
+.flow-node .tags {
+  margin-top: 10px;
+}
+
+.flow-link {
+  flex: none;
+  display: flex;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+}
+
+.flow-link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flow-link-label {
+  color: var(--text-dim);
+}
+
+.flow-loop {
+  color: #e8c35a;
+}
+
+.flow-arrow {
+  position: relative;
+  flex: none;
+  background: var(--accent);
+}
+
+.flow-arrow::after {
+  content: "";
+  position: absolute;
+  border: 4.5px solid transparent;
+}
+
+/* Left to right: a horizontal arrow with its label above. */
+.flow[data-dir="row"] .flow-link {
+  width: 84px;
+  padding: 0 8px;
+  flex-direction: column-reverse;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.flow[data-dir="row"] .flow-tier-label + .flow-nodes {
+  margin-top: 0;
+}
+
+.flow[data-dir="row"] .flow-arrow {
+  height: 1px;
+  width: 100%;
+}
+
+.flow[data-dir="row"] .flow-arrow::after {
+  right: -2px;
+  top: -4px;
+  border-left: 7px solid var(--accent);
+  border-right-width: 0;
+}
+
+.flow[data-dir="row"] .is-back .flow-arrow::after {
+  right: auto;
+  left: -2px;
+  border-left-width: 0;
+  border-right: 7px solid var(--accent);
+}
+
+/* Top to bottom: a vertical arrow with its label beside it. */
+.flow[data-dir="col"] .flow-link {
+  min-height: 52px;
+  padding: 0 0 0 22px;
+  align-items: center;
+  gap: 16px;
+}
+
+.flow[data-dir="col"] .flow-arrow {
+  width: 1px;
+  align-self: stretch;
+  margin: 6px 0;
+}
+
+.flow[data-dir="col"] .flow-arrow::after {
+  bottom: -2px;
+  left: -4px;
+  border-top: 7px solid var(--accent);
+  border-bottom-width: 0;
+}
+
+.flow[data-dir="col"] .is-back .flow-arrow::after {
+  bottom: auto;
+  top: -2px;
+  border-top-width: 0;
+  border-bottom: 7px solid var(--accent);
+}
+
+.flow[data-dir="col"] .flow-tier + .flow-link + .flow-tier .flow-tier-label {
+  margin-top: 4px;
+}
+
+/* Sequence — lanes with lifelines and the messages between them */
+
+.seq {
+  margin-top: 30px;
+  max-width: 760px;
+  container-type: inline-size;
+}
+
+.seq-head,
+.seq-row {
+  display: grid;
+  grid-template-columns: repeat(var(--lanes), minmax(0, 1fr));
+}
+
+.seq-lane {
+  margin: 0 6px;
+  padding: 10px 8px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--heading);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.seq-body {
+  position: relative;
+  padding: 10px 0 18px;
+}
+
+.seq-life {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed var(--line-strong);
+}
+
+.seq-row {
+  position: relative;
+  padding: 9px 0;
+}
+
+.seq-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.seq-label {
+  position: relative;
+  padding: 0 8px;
+  background: var(--bg); /* hides the lifelines behind the text */
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+.seq-label code,
+.seq-note code {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #9fe8c1;
+}
+
+/* The arrow runs from lane centre to lane centre: half a column in from
+   each edge of the span. */
+.seq-arrow {
+  position: relative;
+  align-self: stretch;
+  height: 1px;
+  margin: 0 calc(100% / (var(--span) * 2));
+  background: var(--accent);
+}
+
+.seq-arrow::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -1px;
+  border: 4.5px solid transparent;
+  border-left: 7px solid var(--accent);
+  border-right-width: 0;
+}
+
+.seq-msg.is-left .seq-arrow::after {
+  right: auto;
+  left: -1px;
+  border-left-width: 0;
+  border-right: 7px solid var(--accent);
+}
+
+.seq-note {
+  position: relative;
+  margin: 0 6px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  font-weight: 300;
+  background: var(--bg-deep);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+
+.seq-note.is-accent {
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
+.seq-note-lane {
+  display: none;
+  margin-bottom: 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Narrow: notes take the whole row and name their lane instead. */
+@container (max-width: 520px) {
+  .seq-note {
+    grid-column: 1 / -1 !important;
+  }
+
+  .seq-note-lane {
+    display: block;
+  }
+
+  .seq-lane {
+    margin: 0 3px;
+    padding: 8px 4px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Charts — inline SVG, coloured from the palette */
+
+.charts {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 520px);
+  gap: 16px;
+}
+
+.charts.is-pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+  .charts.is-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.chart {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 18px 18px 14px;
+}
+
+.chart-title {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  overflow: visible;
+}
+
+.chart-caption {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  font-weight: 300;
+}
+
+.ch-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.ch-key i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
+  vertical-align: -1px;
+  background: #4a4a4a;
+}
+
+.ch-key i.is-accent {
+  background: var(--accent);
+}
+
+.ch-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.ch-tick,
+.ch-detail {
+  font-family: var(--mono);
+  font-size: 10px;
+  fill: var(--text-faint);
+}
+
+.ch-detail {
+  font-size: 9px;
+}
+
+.ch-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  fill: var(--text-dim);
+}
+
+.ch-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--heading);
+}
+
+.ch-val.is-accent {
+  fill: var(--accent);
+}
+
+.ch-up {
+  fill: #2f6f4e;
+}
+
+.ch-mute {
+  fill: #4a4a4a;
+}
+
+.ch-neg {
+  fill: none;
+  stroke: #e8c35a;
+  stroke-width: 1.2;
+  stroke-dasharray: 3 2;
+}
+
+.ch-accent {
+  fill: var(--accent);
+}
+
+.ch-link {
+  stroke: var(--text-faint);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.ch-area {
+  fill: rgba(0, 191, 99, 0.12);
+}
+
+.ch-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.ch-dot {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
 /* Decisions — the engagement cards from Experience */
 
 .decisions {

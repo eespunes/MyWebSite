@@ -6,6 +6,7 @@
 
    Inline text supports the same shorthand as CONTENT.md:
      *text*   → accent green      **text** → bold
+     `text`   → code
    ========================================================================== */
 (function () {
   "use strict";
@@ -23,7 +24,8 @@
   function inline(s) {
     return esc(s)
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.+?)\*/g, '<em class="accent">$1</em>');
+      .replace(/\*(.+?)\*/g, '<em class="accent">$1</em>')
+      .replace(/`(.+?)`/g, "<code>$1</code>");
   }
 
   function pad(n) {
@@ -48,6 +50,155 @@
         return "<p>" + inline(p) + "</p>";
       })
       .join("");
+  }
+
+  function num(n) {
+    return String(Math.round(n * 100) / 100);
+  }
+
+  /* -------------------------------------------------------------- charts */
+
+  // Charts are inline SVG on a fixed 400 × 260 canvas that scales with its
+  // column; colours come from CSS classes so they follow the page palette.
+  var CW = 400;
+  var CH = 260;
+  var PLOT = { left: 40, right: 388, top: 18, bottom: 204 };
+
+  function scale(v, max) {
+    return PLOT.bottom - (v / max) * (PLOT.bottom - PLOT.top);
+  }
+
+  // A tidy axis maximum and tick step for values up to `max`.
+  function axis(max) {
+    var step = Math.pow(10, Math.floor(Math.log(max) / Math.LN10));
+    if (max / step > 5) step *= 2;
+    else if (max / step <= 2) step /= 2;
+    return { max: Math.ceil(max / step) * step, step: step };
+  }
+
+  function grid(ax) {
+    var out = "";
+    for (var v = 0; v <= ax.max + 1e-9; v += ax.step) {
+      var y = scale(v, ax.max).toFixed(1);
+      out +=
+        '<line class="ch-grid" x1="' + PLOT.left + '" x2="' + PLOT.right + '" y1="' + y + '" y2="' + y + '"/>' +
+        '<text class="ch-tick" x="' + (PLOT.left - 8) + '" y="' + y + '" dy="3.5" text-anchor="end">' +
+        num(v) + "</text>";
+    }
+    return out;
+  }
+
+  var CHART = {
+    // Running total: each step adds (or removes) from the previous level;
+    // "total" bars show the level so far, "final" bars an explicit value.
+    waterfall: function (c) {
+      var level = 0;
+      var bars = (c.steps || []).map(function (st) {
+        var from = level;
+        var to;
+        if (st.final) to = st.value;
+        else if (st.total) to = level;
+        else to = level + st.value;
+        if (!st.final) level = to;
+        return { st: st, lo: st.total || st.final ? 0 : Math.min(from, to), hi: st.total || st.final ? to : Math.max(from, to), to: to };
+      });
+      var ax = axis(Math.max.apply(null, bars.map(function (b) { return b.hi; })) * 1.12);
+      var slot = (PLOT.right - PLOT.left) / bars.length;
+      var bw = Math.min(46, slot * 0.62);
+      var out = grid(ax);
+      bars.forEach(function (b, i) {
+        var st = b.st;
+        var x = PLOT.left + slot * i + (slot - bw) / 2;
+        var y1 = scale(b.hi, ax.max);
+        var y0 = scale(b.lo, ax.max);
+        var cls = st.final ? "ch-accent" : st.value < 0 ? "ch-neg" : st.total ? "ch-mute" : "ch-up";
+        out += '<rect class="' + cls + '" x="' + x.toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) +
+          '" height="' + Math.max(1, y0 - y1).toFixed(1) + '"/>';
+        // Connector to the next bar at the running level.
+        if (i < bars.length - 1 && !st.final) {
+          var ly = scale(b.to, ax.max).toFixed(1);
+          out += '<line class="ch-link" x1="' + (x + bw).toFixed(1) + '" x2="' + (x + slot).toFixed(1) + '" y1="' + ly + '" y2="' + ly + '"/>';
+        }
+        var val = st.final || st.total ? num(b.to) : (st.value > 0 ? "+" : "−") + num(Math.abs(st.value));
+        out += '<text class="ch-val' + (st.final ? " is-accent" : "") + '" x="' + (x + bw / 2).toFixed(1) + '" y="' + (y1 - 6).toFixed(1) +
+          '" text-anchor="middle">' + esc(val) + "</text>";
+        out += '<text class="ch-label" x="' + (x + bw / 2).toFixed(1) + '" y="' + (PLOT.bottom + 18) + '" text-anchor="middle">' + esc(st.label) + "</text>";
+        if (st.detail)
+          out += '<text class="ch-detail" x="' + (x + bw / 2).toFixed(1) + '" y="' + (PLOT.bottom + 33) + '" text-anchor="middle">' + esc(st.detail) + "</text>";
+      });
+      return out;
+    },
+
+    line: function (c) {
+      var xs = c.x || [];
+      var ys = c.y || [];
+      var xmax = xs[xs.length - 1] || 1;
+      var ax = axis(Math.max.apply(null, ys) * 1.1);
+      var px = function (v) { return PLOT.left + (v / xmax) * (PLOT.right - PLOT.left); };
+      var pts = xs.map(function (v, i) { return px(v).toFixed(1) + "," + scale(ys[i], ax.max).toFixed(1); });
+      var out = grid(ax);
+      out += '<polygon class="ch-area" points="' + px(0).toFixed(1) + "," + PLOT.bottom + " " + pts.join(" ") + " " + px(xmax).toFixed(1) + "," + PLOT.bottom + '"/>';
+      out += '<polyline class="ch-line" points="' + pts.join(" ") + '"/>';
+      (c.xTicks || []).forEach(function (t) {
+        out += '<text class="ch-label" x="' + px(t.at).toFixed(1) + '" y="' + (PLOT.bottom + 18) + '" text-anchor="middle">' + esc(t.label) + "</text>";
+      });
+      if (c.xLabel) out += '<text class="ch-detail" x="' + PLOT.right + '" y="' + (PLOT.bottom + 36) + '" text-anchor="end">' + esc(c.xLabel) + "</text>";
+      if (c.marker) {
+        var mx = px(c.marker.x);
+        var my = scale(c.marker.y, ax.max);
+        out += '<line class="ch-link" x1="' + mx.toFixed(1) + '" x2="' + mx.toFixed(1) + '" y1="' + my.toFixed(1) + '" y2="' + PLOT.bottom + '"/>' +
+          '<circle class="ch-dot" cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="4"/>' +
+          '<text class="ch-val is-accent" x="' + (mx + 9).toFixed(1) + '" y="' + (my - 8).toFixed(1) + '">' + esc(c.marker.label) + "</text>";
+      }
+      return out;
+    },
+
+    // Stacked bars, one series on top of the other, with a legend above.
+    bars: function (c) {
+      var cats = c.categories || [];
+      var series = c.series || [];
+      var totals = cats.map(function (_, i) {
+        return series.reduce(function (t, s) { return t + (s.values[i] || 0); }, 0);
+      });
+      var ax = axis(Math.max.apply(null, totals) * 1.1);
+      var slot = (PLOT.right - PLOT.left) / cats.length;
+      var bw = Math.min(30, slot * 0.66);
+      var out = grid(ax);
+      cats.forEach(function (cat, i) {
+        var x = PLOT.left + slot * i + (slot - bw) / 2;
+        var base = 0;
+        series.forEach(function (s) {
+          var v = s.values[i] || 0;
+          if (!v) return;
+          var y1 = scale(base + v, ax.max);
+          var y0 = scale(base, ax.max);
+          out += '<rect class="' + (s.tone === "accent" ? "ch-accent" : "ch-mute") + '" x="' + x.toFixed(1) + '" y="' + y1.toFixed(1) +
+            '" width="' + bw.toFixed(1) + '" height="' + (y0 - y1).toFixed(1) + '"/>';
+          base += v;
+        });
+        out += '<text class="ch-label" x="' + (x + bw / 2).toFixed(1) + '" y="' + (PLOT.bottom + 18) + '" text-anchor="middle">' + esc(cat) + "</text>";
+      });
+      if (c.xLabel) out += '<text class="ch-detail" x="' + PLOT.right + '" y="' + (PLOT.bottom + 36) + '" text-anchor="end">' + esc(c.xLabel) + "</text>";
+      return out;
+    }
+  };
+
+  function chart(c) {
+    var legend = (c.series || [])
+      .map(function (s) {
+        return '<span class="ch-key"><i class="' + (s.tone === "accent" ? "is-accent" : "") + '"></i>' + esc(s.name) + "</span>";
+      })
+      .join("");
+    return (
+      '<figure class="chart">' +
+      (c.title ? '<figcaption class="chart-title">' + esc(c.title) + "</figcaption>" : "") +
+      (legend ? '<div class="ch-legend">' + legend + "</div>" : "") +
+      '<svg viewBox="0 0 ' + CW + " " + CH + '" role="img" aria-label="' + esc(c.alt || c.title) + '">' +
+      (CHART[c.type] ? CHART[c.type](c) : "") +
+      "</svg>" +
+      (c.caption ? '<p class="chart-caption">' + inline(c.caption) + "</p>" : "") +
+      "</figure>"
+    );
   }
 
   /* ------------------------------------------------------------ sections */
@@ -109,6 +260,88 @@
           })
           .join("") +
         "</div>"
+      );
+    },
+
+    chart: function (s) {
+      var list = s.charts || [];
+      return (
+        SECTION.prose(s) +
+        '<div class="charts' + (list.length > 1 ? " is-pair" : "") + '">' + list.map(chart).join("") + "</div>" +
+        (s.note ? '<p class="note">' + inline(s.note) + "</p>" : "")
+      );
+    },
+
+    // Boxes in tiers joined by labelled arrows. Laid out left to right when
+    // every tier gets enough width, otherwise top to bottom (see wireFlows).
+    flow: function (s) {
+      var tiers = s.tiers || [];
+      var links = s.links || [];
+      var out = "";
+      tiers.forEach(function (t, i) {
+        out +=
+          '<div class="flow-tier">' +
+          (t.label ? '<div class="flow-tier-label">' + esc(t.label) + "</div>" : "") +
+          '<div class="flow-nodes">' +
+          (t.nodes || [])
+            .map(function (n) {
+              return (
+                '<div class="flow-node' + (n.tone ? " is-" + esc(n.tone) : "") + '"><h3>' + esc(n.title) + "</h3>" +
+                (n.body ? "<p>" + inline(n.body) + "</p>" : "") +
+                (n.tags ? tags(n.tags) : "") + "</div>"
+              );
+            })
+            .join("") +
+          "</div></div>";
+        var l = links[i];
+        if (i < tiers.length - 1) {
+          l = l || {};
+          out +=
+            '<div class="flow-link' + (l.dir === "back" ? " is-back" : "") + '">' +
+            '<span class="flow-arrow" aria-hidden="true"></span>' +
+            '<span class="flow-link-text">' + (l.label ? '<span class="flow-link-label">' + inline(l.label) + "</span>" : "") +
+            (l.back ? '<span class="flow-loop">↺ ' + inline(l.back) + "</span>" : "") + "</span></div>";
+        }
+      });
+      return (
+        SECTION.prose(s) +
+        '<div class="flow" data-tiers="' + tiers.length + '" data-min="' + (s.minTierWidth || 170) + '" data-dir="col">' + out + "</div>" +
+        (s.note ? '<p class="note">' + inline(s.note) + "</p>" : "")
+      );
+    },
+
+    // Lanes with lifelines; each step is a message between two lanes or a
+    // note on one lane.
+    sequence: function (s) {
+      var lanes = s.lanes || [];
+      var n = lanes.length;
+      var lines = lanes
+        .map(function (_, i) {
+          return '<span class="seq-life" style="left:' + ((i + 0.5) * 100 / n).toFixed(3) + '%"></span>';
+        })
+        .join("");
+      var rows = (s.steps || [])
+        .map(function (st) {
+          if (st.at != null) {
+            return (
+              '<div class="seq-row"><div class="seq-note' + (st.tone ? " is-" + esc(st.tone) : "") + '" style="grid-column:' + (st.at + 1) + '">' +
+              '<span class="seq-note-lane">' + esc(lanes[st.at]) + "</span>" + inline(st.text) + "</div></div>"
+            );
+          }
+          var a = Math.min(st.from, st.to);
+          var b = Math.max(st.from, st.to);
+          return (
+            '<div class="seq-row"><div class="seq-msg' + (st.to < st.from ? " is-left" : "") + '" style="grid-column:' + (a + 1) + " / " + (b + 2) +
+            ";--span:" + (b - a + 1) + '"><span class="seq-label">' + inline(st.text) + '</span><span class="seq-arrow"></span></div></div>'
+          );
+        })
+        .join("");
+      return (
+        SECTION.prose(s) +
+        '<div class="seq" style="--lanes:' + n + '">' +
+        '<div class="seq-head">' + lanes.map(function (l) { return '<div class="seq-lane">' + esc(l) + "</div>"; }).join("") + "</div>" +
+        '<div class="seq-body">' + lines + rows + "</div></div>" +
+        (s.note ? '<p class="note">' + inline(s.note) + "</p>" : "")
       );
     },
 
@@ -218,6 +451,28 @@
       esc(site.name) + "</span><span>" + esc(d.title) + " · " + esc(d.labels.footer) + "</span></div></footer>";
 
     wireDemo(root.querySelector(".demo-window"), demo, d.labels);
+    wireFlows(root);
+  }
+
+  /* --------------------------------------------------------------- flows */
+
+  function wireFlows(root) {
+    var flows = Array.prototype.slice.call(root.querySelectorAll(".flow"));
+    function layout() {
+      flows.forEach(function (f) {
+        // Measure the column, not the flow (the stacked layout caps its
+        // width), and leave room for the 84px arrows between tiers.
+        var n = Number(f.getAttribute("data-tiers"));
+        var per = (f.parentElement.clientWidth - (n - 1) * 84) / n;
+        f.setAttribute("data-dir", per >= Number(f.getAttribute("data-min")) ? "row" : "col");
+      });
+    }
+    layout();
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(layout);
+      flows.forEach(function (f) { ro.observe(f.parentElement); });
+    }
+    window.addEventListener("resize", layout);
   }
 
   /* ---------------------------------------------------------------- demo */

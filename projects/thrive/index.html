@@ -34,7 +34,7 @@
           "statusLive": "live · interacting",
           "statusMissing": "demo not deployed",
           "missingTitle": "Demo coming soon",
-          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "missingBody": "The web build isn't deployed yet.",
           "footer": "Demo & architecture"
         },
 
@@ -42,7 +42,7 @@
         "kicker": "Personal project",
         "title": "Thrive",
         "tagline": "A family app for the budget, the calendar, lists, the weekly meal plan and a kitchen wall dashboard, *shared in real time* between everyone in the house.",
-        "stack": ["Flutter", "Dart", "Firebase", "Android", "iOS"],
+        "stack": ["Flutter", "Dart", "Firebase", "Android"],
 
         "demo": {
           "src": "/demos/thrive/",
@@ -55,8 +55,8 @@
         "summary": "A family's logistics are spread across *a spreadsheet, a group chat and a fridge door*. Thrive puts the money, the plans and the chores in one place that every member sees update live.",
         "facts": [
           { "label": "Role", "value": "Solo: design → release" },
-          { "label": "Platform", "value": "Android · iOS · web demo" },
-          { "label": "Backend", "value": "Firestore · 8 Cloud Functions" },
+          { "label": "Platform", "value": "Android · web demo" },
+          { "label": "Backend", "value": "Firestore · 9 Cloud Functions" },
           { "label": "Quality", "value": "990+ tests · 95% coverage gate" }
         ],
         "highlights": [
@@ -91,36 +91,56 @@
           {
             "id": "joining",
             "title": "Joining a family",
-            "kind": "formula",
+            "kind": "sequence",
             "lead": "The join password is checked *by the database rules*, not by a server.",
-            "codeLabel": "Family join · client + Firestore rules",
-            "code": [
-              "// owner: store a slow, salted hash on the family (members-only)",
-              "salt     = random()                       // public, on the handle doc",
-              "joinHash = sha256^30000(salt + password)  // min. 8 characters",
-              "",
-              "// joiner: prove the password without sending it",
-              "joinProof = sha256^30000(salt + typed)",
-              "update(family, { joinProof, memberUids: [...memberUids, myUid] })",
-              "",
-              "// rules: accept only a matching proof that adds only yourself",
-              "allow update: if joinProof == joinHash",
-              "             && added(memberUids) == [request.auth.uid]"
+            "lanes": ["Owner's phone", "Firestore rules", "Joiner's phone"],
+            "steps": [
+              { "at": 0, "text": "Picks a family password, at least 8 characters." },
+              { "from": 0, "to": 1, "text": "Stores a random salt on the public handle, and `joinHash` = 30,000 rounds of SHA-256 over salt + password, readable by members only" },
+              { "from": 1, "to": 2, "text": "Looks up the family handle and reads its salt" },
+              { "at": 2, "text": "Computes `joinProof` the same way from the typed password." },
+              { "from": 2, "to": 1, "text": "Updates the family: `joinProof`, plus its own uid in `memberUids`" },
+              { "at": 1, "tone": "accent", "text": "Allows the write only if `joinProof == joinHash` and the only uid added is the caller's." },
+              { "from": 1, "to": 2, "text": "Member: the family's data is now readable" }
             ],
             "note": "The plaintext password is never stored, on the server or on the device. The rules are tested against the Firestore emulator in CI."
           },
           {
             "id": "architecture",
             "title": "Architecture",
-            "kind": "layers",
+            "kind": "flow",
             "lead": "One Flutter codebase, *client-direct* to Firestore, with a server only where the Admin SDK is required.",
-            "items": [
-              { "label": "Client", "tags": ["Flutter", "Dart", "Android", "iOS"], "body": "~57k lines of Dart. Local mode on SharedPreferences works without an account; signing in moves the family to the cloud." },
-              { "label": "Data", "tags": ["Cloud Firestore", "Collection groups"], "body": "One document per record under families/{id}, loaded with one collection-group query per collection. Only changed fields of changed records are uploaded." },
-              { "label": "Identity & rules", "tags": ["Firebase Auth", "App Check", "Security rules"], "body": "Email and Google sign-in. Owner, admins, members and kids are enforced in the rules, with 110 emulator tests in CI." },
-              { "label": "Server", "tags": ["Cloud Functions", "europe-west1"], "body": "Eight callables manage kids' logins, the one job that needs the Admin SDK. Everything else is written straight from the app." },
-              { "label": "Device", "tags": ["Home widgets", "Notifications", "Calendar sync"], "body": "Android home-screen widgets, event reminders, an optional mirror into the phone's calendar, and barcode/QR scanning for loyalty cards." }
-            ]
+            "tiers": [
+              {
+                "label": "Devices",
+                "nodes": [
+                  {
+                    "title": "Family phones",
+                    "body": "~57k lines of Dart. Local mode works without an account; signing in moves the family to the cloud.",
+                    "tags": ["Widgets", "Reminders", "Calendar sync"]
+                  },
+                  { "title": "Kitchen tablet", "body": "The wall dashboard: the week, today's chores and each kid's stars." }
+                ]
+              },
+              {
+                "label": "Firebase",
+                "nodes": [
+                  { "title": "Auth + App Check", "body": "Email and Google sign-in." },
+                  { "title": "Firestore + rules", "tone": "accent", "body": "One document per record under families/{id}. Owner, admins, members and kids enforced in the rules, with 110 emulator tests in CI." }
+                ]
+              },
+              {
+                "label": "Server",
+                "nodes": [
+                  { "title": "9 Cloud Functions", "tone": "mute", "body": "Callables for kids' logins, the one job that needs the Admin SDK. Called by family admins from the app." }
+                ]
+              }
+            ],
+            "links": [
+              { "label": "read & write directly, live listeners" },
+              { "label": "Admin SDK writes, kid logins only", "dir": "back" }
+            ],
+            "note": "Only changed fields of changed records are uploaded, and screens share live listeners instead of reloading."
           },
           {
             "id": "decisions",
