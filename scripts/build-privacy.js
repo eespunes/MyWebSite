@@ -1,4 +1,4 @@
-// Build v1.159 · 2026-11-06
+// Build v1.161 · 2026-11-06
 /* Generates static, readable-without-JavaScript privacy pages. */
 const fs = require('node:fs');
 const path = require('node:path');

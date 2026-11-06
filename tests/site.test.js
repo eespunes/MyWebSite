@@ -1,4 +1,4 @@
-// Build v1.159 · 2026-11-06
+// Build v1.161 · 2026-11-06
 /* Renders index.html in a real browser and asserts the page shows exactly what
    CONTENT.md says — same values, in the same categories, nothing extra. */
 const test = require("node:test");
@@ -55,7 +55,11 @@ const SCRAPE = `JSON.stringify({
     description: p.querySelector('p').textContent.replace(/\\s+/g,' ').trim(),
     stack: p.querySelector('.project-stack')?.textContent.trim() || '',
     link: p.querySelector('a.inline-link')?.getAttribute('href') || '',
-    demo: p.querySelector('a.project-demo')?.getAttribute('href') || '' })),
+    demo: p.querySelector('a.project-demo')?.getAttribute('href') || '',
+    featured: p.classList.contains('is-featured'),
+    star: p.querySelector('.project-star')?.textContent.trim() || '',
+    soon: p.querySelector('.project-soon')?.textContent.trim() || '',
+    first: getComputedStyle(p).order === '-1' })),
   games: Array.from(document.querySelectorAll('.game-card')).map(c => ({
     num: c.querySelector('.game-num').textContent.trim(),
     name: c.querySelector('.game-name').textContent.trim(),
@@ -217,8 +221,17 @@ browserTest("project cards match Projects", () => {
       stack: plain(r.stack),
       link: r.link || "",
       demo: r.demo || "",
+      featured: /^yes$/i.test(r.featured || ""),
+      star: /^yes$/i.test(r.featured || "") ? "★ " + plain(sections.projects.fields["featured label"]) : "",
+      soon: !r.status && !r.demo ? plain(sections.projects.fields["soon label"]) : "",
+      first: /^yes$/i.test(r.featured || ""),
     }))
   );
+});
+
+test("at most one project is the featured one", () => {
+  const stars = sections.projects.tables[0].filter((r) => /^yes$/i.test(r.featured || ""));
+  assert.ok(stars.length <= 1, `${stars.length} projects are marked Featured: yes`);
 });
 
 browserTest("game cards match Games, in order", () => {

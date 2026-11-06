@@ -1,4 +1,4 @@
-/* Build v1.159 · 2026-11-06 */
+/* Build v1.161 · 2026-11-06 */
 /* ==========================================================================
    Erik Espuñes Jubero — portfolio
    Palette: #121212 ink · #EDEDED paper · #00BF63 accent
@@ -927,32 +927,52 @@ a:hover {
 
 /* -------------------------------------------------------- personal projects */
 
+/* A grid of compact cards; the star project (Featured: yes in CONTENT.md)
+   spans the full width and is moved first with `order`, so the DOM keeps the
+   table's order. Cards carry their own borders, so an odd count leaves no
+   filled gap. */
+
 .projects {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .project {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   background: var(--surface);
-  padding: 22px 24px;
-  border-left: 2px solid transparent;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--line);
+  border-radius: 2px;
+  padding: 20px 22px;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.project:hover {
+/* Only rows with their own page react to hover: the whole card is the link. */
+.project.has-page {
+  cursor: pointer;
+}
+
+.project.has-page:hover,
+.project.has-page:focus-within {
   background: #1c1c1c;
+  border-color: #333;
   border-left-color: var(--accent);
+}
+
+.project.has-page:focus-within {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
 }
 
 .project-head {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .project-num {
@@ -962,37 +982,80 @@ a:hover {
 }
 
 .project-head h3 {
-  margin: 8px 0 0;
-  font-size: 19px;
+  margin: 6px 0 0;
+  font-size: 17px;
   font-weight: 600;
   color: #fff;
+  line-height: 1.3;
 }
 
-.project-status {
+.project-head h3 a {
+  color: inherit;
+}
+
+/* Stretched link: the title's anchor covers the whole card. */
+.project-demo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.project-demo:focus-visible {
+  outline: none;
+}
+
+.project-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.project-status,
+.project-soon,
+.project-star {
   font-size: 9.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #9a9a9a;
-  border: 1px solid #2f2f2f;
   border-radius: 999px;
   padding: 4px 11px;
   white-space: nowrap;
 }
 
+.project-status {
+  color: #9a9a9a;
+  border: 1px solid #2f2f2f;
+}
+
+/* A project without a page yet: one step quieter than a status. */
+.project-soon {
+  color: #8f8f8f;
+  border: 1px dashed #333;
+}
+
+.project-star {
+  color: #0b0b0b;
+  background: var(--accent);
+  font-weight: 500;
+}
+
 .project > p {
-  margin: 12px 0 0;
-  font-size: 14px;
-  line-height: 1.65;
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
   color: var(--text-dim);
   font-weight: 300;
   max-width: 680px;
 }
 
-.project .inline-link {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
+/* Compact cards keep to three lines; the full text is on the project page. */
+.project.is-compact > p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
 }
 
 .project-stack {
@@ -1002,16 +1065,92 @@ a:hover {
   color: #8f8f8f;
 }
 
-.project-demo {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+/* CTA and GitHub link sit at the bottom so card rows line up. */
+.project-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
-.project-demo:hover {
+.project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+.project-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.project.has-page:hover .project-cta {
   color: var(--accent-soft);
+}
+
+.project.has-page:hover .project-arrow {
+  transform: translateX(4px);
+}
+
+/* Other links in a linked card (e.g. GitHub) sit above the overlay. */
+.project .inline-link {
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+/* ★ The star project */
+
+.project.is-featured {
+  grid-column: 1 / -1;
+  order: -1;
+  padding: 26px 30px 24px;
+  border-color: #1f3a2c;
+  border-left-color: var(--accent);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(0, 191, 99, 0.10), transparent 55%),
+    var(--surface);
+}
+
+.project.is-featured.has-page:hover,
+.project.is-featured.has-page:focus-within {
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(0, 191, 99, 0.16), transparent 55%),
+    #1a1a1a;
+  border-color: #275238;
+  border-left-color: var(--accent);
+}
+
+.project.is-featured .project-head h3 {
+  margin-top: 8px;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 700;
+}
+
+.project.is-featured > p {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.project.is-featured .project-stack {
+  margin-top: 14px;
+}
+
+.project.is-featured .project-foot {
+  padding-top: 16px;
+}
+
+.project.is-featured .project-cta {
+  font-size: 11.5px;
 }
 
 /* ------------------------------------------------------------------ games */
@@ -1325,6 +1464,10 @@ a:hover {
 
   .dots {
     display: none;
+  }
+
+  .projects {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .home-grid,
