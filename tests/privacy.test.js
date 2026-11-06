@@ -1,4 +1,4 @@
-// Build v1.109 · 2026-10-27
+// Build v1.112 · 2026-11-06
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');

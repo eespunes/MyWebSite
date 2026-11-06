@@ -1,4 +1,4 @@
-// Build v1.109 · 2026-10-27
+// Build v1.112 · 2026-11-06
 /* Builds the printable CV (Spine v3) from CONTENT.md — the same file the site
    renders from — then offers it to the browser's PDF printer. */
 (function () {
