@@ -54,7 +54,8 @@ const SCRAPE = `JSON.stringify({
     status: p.querySelector('.project-status')?.textContent.trim() || '',
     description: p.querySelector('p').textContent.replace(/\\s+/g,' ').trim(),
     stack: p.querySelector('.project-stack')?.textContent.trim() || '',
-    link: p.querySelector('a')?.getAttribute('href') || '' })),
+    link: p.querySelector('a.inline-link')?.getAttribute('href') || '',
+    demo: p.querySelector('a.project-demo')?.getAttribute('href') || '' })),
   games: Array.from(document.querySelectorAll('.game-card')).map(c => ({
     num: c.querySelector('.game-num').textContent.trim(),
     name: c.querySelector('.game-name').textContent.trim(),
@@ -215,6 +216,7 @@ browserTest("project cards match Projects", () => {
       description: plain(r.description),
       stack: plain(r.stack),
       link: r.link || "",
+      demo: r.demo || "",
     }))
   );
 });

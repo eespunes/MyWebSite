@@ -1002,6 +1002,10 @@ a:hover {
   color: #8f8f8f;
 }
 
+.project-demo {
+  margin-top: 16px;
+}
+
 /* ------------------------------------------------------------------ games */
 
 .section-games {
