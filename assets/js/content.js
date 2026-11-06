@@ -1,4 +1,4 @@
-// Build v1.133 · 2026-11-06
+// Build v1.134 · 2026-11-06
 /* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
    every string on screen comes from the Markdown. */
 (function () {
@@ -470,7 +470,7 @@
       card.appendChild(el("p", null, inline(row.description)));
       if (row.stack) card.appendChild(el("div", "project-stack mono", inline(row.stack)));
       if (row.demo && section.fields["demo label"]) {
-        var demo = el("a", "btn btn-primary btn-sm project-demo", inline(section.fields["demo label"]) + " →");
+        var demo = el("a", "project-demo mono", inline(section.fields["demo label"]) + " →");
         demo.href = row.demo;
         card.appendChild(demo);
       }
