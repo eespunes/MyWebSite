@@ -41,6 +41,19 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
+  <script>
+    // The demo skips sign-in, but the google_sign_in_web plugin appends
+    // Google's SDK (accounts.google.com/gsi/client) as soon as it registers.
+    // Nothing in the demo waits for it, so drop that one script. Keep this
+    // block when replacing the build.
+    (function () {
+      var append = Node.prototype.appendChild;
+      Node.prototype.appendChild = function (node) {
+        if (node && node.tagName === "SCRIPT" && /accounts\.google\.com\/gsi\//.test(node.src)) return node;
+        return append.call(this, node);
+      };
+    })();
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

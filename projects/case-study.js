@@ -409,10 +409,14 @@
       '<div class="phone' + (desktop ? " is-desktop" : "") + '" style="--w:' + (demo.width || 390) + "px;--h:" + (demo.height || 844) + 'px">' +
       '<div class="phone-viewport">' +
       '<div class="phone-screen"><iframe title="' + esc(d.title) + ' live demo" loading="lazy" ' +
-      'sandbox="allow-scripts allow-same-origin allow-forms" tabindex="-1"></iframe></div>' +
+      'sandbox="allow-scripts allow-same-origin allow-forms" tabindex="-1"></iframe>' +
+      (demo.poster ? '<img class="phone-poster" src="' + esc(demo.poster) + '" alt="" decoding="async">' : "") +
+      "</div>" +
       '<div class="phone-layer layer-loading" data-layer="loading"><span class="loader"></span>Booting demo…</div>' +
       '<div class="phone-layer layer-missing" data-layer="missing" hidden><strong>' + esc(d.labels.missingTitle) +
       "</strong><span>" + esc(d.labels.missingBody) + "</span></div>" +
+      '<button class="phone-layer layer-activate layer-start" type="button" data-layer="start" hidden>' +
+      '<span class="activate-pill">' + esc(d.labels.start || "▶ Start demo") + "</span></button>" +
       '<button class="phone-layer layer-activate" type="button" data-layer="activate" hidden>' +
       '<span class="activate-pill">' + esc(d.labels.activate) + "</span></button>" +
       "</div></div>" +
@@ -482,11 +486,16 @@
     var phone = win.querySelector(".phone");
     var iframe = win.querySelector("iframe");
     var status = win.querySelector("[data-status]");
+    var poster = win.querySelector(".phone-poster");
     var layer = {
       loading: win.querySelector('[data-layer="loading"]'),
       missing: win.querySelector('[data-layer="missing"]'),
+      start: win.querySelector('[data-layer="start"]'),
       activate: win.querySelector('[data-layer="activate"]')
     };
+    // A demo with a poster waits for a tap: booting it shares the page's main
+    // thread and would freeze scrolling for a second or more.
+    var started = !poster;
     var w = demo.width || 390;
     var h = demo.height || 844;
 
@@ -495,7 +504,10 @@
       layer.loading.hidden = state !== "loading";
       layer.missing.hidden = state !== "missing";
       layer.activate.hidden = state !== "ready";
+      layer.start.hidden = state !== "poster";
+      if (poster) poster.hidden = state === "ready" || state === "live";
       status.textContent =
+        state === "poster" ? labels.statusPoster || demo.src :
         state === "missing" ? labels.statusMissing :
         state === "loading" ? labels.statusLoading :
         state === "live" ? labels.statusLive : demo.src;
@@ -530,24 +542,39 @@
       });
     }
 
+    function activate() {
+      setState("live");
+      iframe.removeAttribute("tabindex");
+      try { iframe.focus(); } catch (e) {}
+    }
+
     iframe.addEventListener("load", function () {
       if (!iframe.getAttribute("src")) return;
-      setState("ready");
+      // The visitor already tapped Start, so don't ask for a second tap.
+      if (poster) activate();
+      else setState("ready");
     });
 
-    layer.activate.addEventListener("click", function () {
-      layer.activate.hidden = true;
-      iframe.removeAttribute("tabindex");
-      win.setAttribute("data-state", "ready");
-      status.textContent = labels.statusLive;
-      try { iframe.focus(); } catch (e) {}
+    layer.activate.addEventListener("click", activate);
+
+    layer.start.addEventListener("click", function () {
+      started = true;
+      load();
     });
 
-    win.querySelector("[data-reload]").addEventListener("click", load);
+    win.querySelector("[data-reload]").addEventListener("click", function () {
+      if (started) load();
+    });
 
     fit();
     if (window.ResizeObserver) new ResizeObserver(fit).observe(win.parentElement);
     window.addEventListener("resize", fit);
+
+    if (poster) {
+      setState("poster");
+      prefetch(demo.prefetch);
+      return;
+    }
 
     // Only start the iframe once the hero is near the viewport.
     if ("IntersectionObserver" in window) {
@@ -561,6 +588,28 @@
     } else {
       load();
     }
+  }
+
+  // Warm the HTTP cache for a tap-to-start demo once the page is idle, so the
+  // tap only waits for the boot. Downloading doesn't block the main thread.
+  function prefetch(urls) {
+    if (!urls || !urls.length) return;
+    var conn = navigator.connection;
+    if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+    function go() {
+      urls.forEach(function (u) {
+        var l = document.createElement("link");
+        l.rel = "prefetch";
+        l.href = u;
+        document.head.appendChild(l);
+      });
+    }
+    function idle() {
+      if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 4000 });
+      else setTimeout(go, 1500);
+    }
+    if (document.readyState === "complete") idle();
+    else window.addEventListener("load", idle);
   }
 
   /* ---------------------------------------------------------------- boot */
