@@ -1,4 +1,4 @@
-<!-- Build v1.145 · 2026-11-06 -->
+<!-- Build v1.146 · 2026-11-06 -->
 # Tests
 
     npm test
@@ -12,6 +12,7 @@ shows exactly what `CONTENT.md` says, and the site and the CV agree.**
 | `site.test.js` | yes | every category on `index.html` against the Markdown, value by value |
 | `cv.test.js` | yes | every category on `cv.html`, plus page numbering, A4 overflow and that the street address stays off the CV |
 | `parity.test.js` | yes | the two rendered surfaces against **each other** |
+| `games.test.js` | partly | every game has a generated page, builds, details and a description; a rendered game page shows the itch.io fallback, the featured download and its cards |
 | `version.test.js` | partly | `version.json` tracks the commit count, and both footers show the same build stamp |
 
 Browser tests render the real pages in headless Chrome over a temporary local

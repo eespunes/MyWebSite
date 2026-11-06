@@ -1,0 +1,17 @@
+{
+"companyName": "DefaultCompany",
+"productName": "TEST",
+"productVersion": "0.1",
+"dataUrl": "Stick Ink! - Web.data.unityweb",
+"wasmCodeUrl": "Stick Ink! - Web.wasm.code.unityweb",
+"wasmFrameworkUrl": "Stick Ink! - Web.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "Stick Ink! - Web.jpg",
+"splashScreenStyle": "Light",
+"backgroundColor": "#FFFFFF",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": true,
+"multithreading": false,
+"unityVersion": "2019.3.5f1"
+}

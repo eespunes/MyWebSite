@@ -1,4 +1,4 @@
-// Build v1.145 · 2026-11-06
+// Build v1.146 · 2026-11-06
 /* Serves the project over HTTP and renders a page in headless Chrome, so the
    tests see exactly what a browser builds from CONTENT.md. */
 const http = require("node:http");
@@ -107,10 +107,15 @@ async function evaluateOn(page, expression) {
     await send("Page.navigate", { url: `http://127.0.0.1:${port}/${page}` });
 
     /* Wait for the renderer to finish rather than guessing a delay. */
+    const marker = page.startsWith("cv")
+      ? ".cv-page"
+      : page.startsWith("games/")
+        ? ".cs-title, .load-error"
+        : "section[data-snap]";
     const deadline = Date.now() + 15000;
     for (;;) {
       const ready = await send("Runtime.evaluate", {
-        expression: `!!document.querySelector('${page.startsWith("cv") ? ".cv-page" : "section[data-snap]"}')`,
+        expression: `!!document.querySelector('${marker}')`,
         returnByValue: true,
       });
       if (ready.result?.result?.value) break;

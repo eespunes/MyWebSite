@@ -7,7 +7,8 @@
     "serve": "python3 -m http.server 8000",
     "version:write": "node scripts/version.js",
     "hooks:install": "node scripts/install-hooks.js",
-    "privacy:build": "node scripts/build-privacy.js"
+    "privacy:build": "node scripts/build-privacy.js",
+    "games:build": "node scripts/build-games.js"
   },
-  "version": "1.145.0"
+  "version": "1.146.0"
 }

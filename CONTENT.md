@@ -1,4 +1,4 @@
-<!-- Build v1.145 · 2026-11-06 -->
+<!-- Build v1.146 · 2026-11-06 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -183,6 +183,177 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | 11 | Arkanoid | University Project | Unity | 2017 | arkanoid.png | https://eespunes.itch.io/arkanoid |  |
 | 12 | Pong | University Project | Unity | 2017 | pong.png | https://eespunes.itch.io/pong |  |
 | 13 | Animal Instinct | My first game | Unity · Android | 2016 | animal-instinct.png | https://eespunes.itch.io/animal-instinct |  |
+
+### Game page
+
+- Back label: ← All games
+- About label: About the game
+- Downloads label: Downloads
+- Other builds label: Other builds
+- Controls label: Controls
+- More label: More games
+- Made for label: Made for
+- Engine label: Engine
+- Year label: Year
+- Platforms label: Platforms
+- Source label: Source code
+- Itch label: itch.io page
+- Play label: Play in browser
+- Play itch label: Play on itch.io
+- Play itch note: Plays on itch.io for now
+- Download label: Download
+- Download itch label: Download on itch.io
+- Download itch note: Hosted on itch.io for now
+- Restart label: Restart
+- Fullscreen label: Fullscreen
+- New tab label: New tab
+
+### Game builds
+
+A build is served from this site when its Source exists: for Web, a folder holding the web build's index.html; for downloads, a file URL such as a GitHub Release asset. Without one it is offered from the game's itch.io page.
+
+| Game | Platform | Label | File | Size | Source |
+| --- | --- | --- | --- | --- | --- |
+| kart-online | Windows | | Build Cliente.zip | 801 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Kart-Online-Client.zip |
+| gun-goal-tournament | Windows | Optimised build | Windows - Mejor optimización | 221 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Gun-Goal-Tournament-Windows-Optimised.zip |
+| gun-goal-tournament | Windows | Full build | Windows | 560 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Gun-Goal-Tournament-Windows.zip |
+| stick-ink | Web | | | | games/stick-ink/build/ |
+| stick-ink | Windows | | Stick Ink! - Windows.zip | 43 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Stick-Ink-Windows.zip |
+| stick-ink | macOS | | Stick Ink! - macOS.zip | 48 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Stick-Ink-macOS.zip |
+| stick-ink | Linux | | Stick Ink! - Linux.zip | 49 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Stick-Ink-Linux.zip |
+| space-out | Web | | | | games/space-out/build/ |
+| space-out | Windows | | Space Out.rar | 17 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Space-Out.rar |
+| portal | Web | | | | games/portal/build/ |
+| portal | Windows | | Portal.zip | 47 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Portal.zip |
+| mario-64 | Windows | | Mario.64.rar | 22 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Mario-64.rar |
+| first-person-shooter | Windows | | FPS.rar | 110 MB | https://github.com/eespunes/MyWebSite/releases/download/games/FPS.rar |
+| one-piece-tower-defense | Web | | | | games/one-piece-tower-defense/build/ |
+| one-piece-tower-defense | Windows | | One Piece Tower Defense.rar | 19 MB | https://github.com/eespunes/MyWebSite/releases/download/games/One-Piece-Tower-Defense.rar |
+| simpsons-pacman | Web | | | | games/simpsons-pacman/build/ |
+| simpsons-pacman | Windows | | Simpsons Pacman.rar | 12 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Simpsons-Pacman.rar |
+| angry-birds | Web | | | | games/angry-birds/build/ |
+| angry-birds | Windows | | Angry Birds.zip | 18 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Angry-Birds.zip |
+| arkanoid | Web | | | | games/arkanoid/build/ |
+| arkanoid | Windows | | Arkanoid.rar | 12 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Arkanoid.rar |
+| pong | Web | | | | games/pong/build/ |
+| pong | Windows | | Pong.rar | 12 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Pong.rar |
+| animal-instinct | Android | | Animal Instinct.apk | 119 MB | https://github.com/eespunes/MyWebSite/releases/download/games/Animal-Instinct.apk |
+
+### Game details
+
+Controls are `Keys: action` pairs separated by ` · `; alternative keys are separated by ` / `. Frame is the web build's width x height, used for the player's aspect ratio (16:9 when empty).
+
+| Game | Repo | Controls | Frame |
+| --- | --- | --- | --- |
+| kart-online | https://github.com/eespunes/Kart-Online | W: Accelerate · S: Brake · A: Turn left · D: Turn right · Left click: Use object · Right click: Drift | |
+| gun-goal-tournament | https://github.com/eespunes/Gun-Goal-Tournament | WASD: Move · Mouse: Camera · Left click: Shoot · Right click: Aim · Space: Jump · R: Reload | |
+| stick-ink | https://github.com/eespunes/Stick-Ink | A / D: Move · Space: Jump · Left click: Attack · W / S: Climb ladders | 960x540 |
+| space-out | https://github.com/eespunes/Space-Out | Mouse / Space: Play | 960x540 |
+| portal | https://github.com/eespunes/Portal | WASD: Move · Left click: Blue portal · Right click: Orange portal · Scroll: Portal size | 960x540 |
+| mario-64 | https://github.com/eespunes/Mario-64 | WASD: Move · Space: Jump · Left click: Punch | |
+| first-person-shooter | https://github.com/eespunes/FPS | WASD: Move · Left click: Shoot · Right click: Aim · Space: Jump | |
+| one-piece-tower-defense | https://github.com/eespunes/One-Piece-Tower-Defense | Mouse: Play | 960x540 |
+| simpsons-pacman | https://github.com/eespunes/Simpsons-Pacman | ← / ↑ / → / ↓: Move | 960x540 |
+| angry-birds | https://github.com/eespunes/Angry-Birds | Click and drag: Aim and launch | 960x600 |
+| arkanoid | https://github.com/eespunes/Arkanoid | ← / →: Move · Space: Launch ball | 960x540 |
+| pong | https://github.com/eespunes/Pong | W / S: Left paddle · ↑ / ↓: Right paddle | 960x540 |
+| animal-instinct | https://github.com/eespunes/Animal-Instinct | Swipe up: Jump · Swipe down: Slide · Swipe left / right: Change lane | |
+
+### Install steps
+
+#### Windows
+
+* Download the build.
+* Unzip it anywhere on your computer; a **.rar** opens with 7-Zip or WinRAR.
+* Run the game's **.exe**. If Windows warns about an unrecognised app, choose `More info → Run anyway`.
+
+#### macOS
+
+* Download the build.
+* Unzip it anywhere on your Mac.
+* Right-click the app and choose `Open` the first time, as it isn't notarised.
+
+#### Linux
+
+* Download the build.
+* Unzip it anywhere on your computer.
+* Mark the game's binary as executable (`chmod +x`) and run it.
+
+#### Android
+
+* Download the **.apk** on your phone.
+* Allow your browser to install apps if Android asks.
+* Open the file to install. Not on Google Play.
+
+### Game descriptions
+
+The first paragraph of each game is the lead; *text* is shown in the accent colour.
+
+#### kart-online
+
+My final bachelor project: an *online multiplayer kart racer* built in Unreal Engine.
+
+Players race each other over the network, pick up items on the track and use them against their rivals, and drift through the corners to keep their speed.
+
+#### gun-goal-tournament
+
+Welcome to the Gun Goal Tournament, *the one place on Earth where firearms are still allowed*.
+
+Years after a worldwide ban on guns, someone asked what would happen if we made a sport for the people who still want to use them. So football was reinvented, with one difference: you move the ball by shooting it. Two players, five minutes, and whoever has scored more wins. Every surface is part of the pitch, and ammo dispensers on the floor refill over time.
+
+Made by MadGames Studio for the Indie Dev Day 2020 game jam, whose theme was mixing two genres that shouldn't go together. Play solo with keyboard and mouse, or add a controller for split screen. Sofian Ben Ayata (design), Erik Espuñes (programming) and Walid Serroukh (art).
+
+#### stick-ink
+
+A stickman whose whole existence is fading, and *keeping him alive is in your hands*.
+
+Fight the enemies trying to wipe him off the world and solve the puzzles that open each level. Luckily the ink gods are smiling on him, as divine ink pots hidden in the levels buy him more time. Made for Ludum Dare 46, whose theme was "Keep it alive".
+
+#### space-out
+
+A Ludum Dare 42 entry, *played with the mouse and the space bar*.
+
+The jam's theme was "Running out of space".
+
+#### portal
+
+A Unity prototype of *Portal's portal gun*, built for a university course.
+
+Left click places the blue portal, right click the orange one, and the scroll wheel changes their size.
+
+#### mario-64
+
+A *Super Mario 64-style 3D platformer* prototype, built in Unity for a university course.
+
+Run, jump and punch your way around the level.
+
+#### first-person-shooter
+
+A *first-person shooter* prototype built in Unity for a university course, with aiming, shooting and jumping.
+
+#### one-piece-tower-defense
+
+A *One Piece tower defense* game built in Unity for a university course, played entirely with the mouse.
+
+#### simpsons-pacman
+
+*Pac-Man with a Simpsons theme*, built in Unity for a university course and played with the arrow keys.
+
+#### angry-birds
+
+A Unity recreation of *Angry Birds' slingshot physics*, built for a university course. Click and drag to aim, then let go to launch.
+
+#### arkanoid
+
+A Unity remake of the *Arkanoid brick breaker*, built for a university course. Move the paddle with the arrow keys and launch the ball with space.
+
+#### pong
+
+*Pong* rebuilt in Unity for a university course, for two players on one keyboard. W and S move the left paddle, the arrow keys move the right one.
+
+#### animal-instinct
+
+My first game, for Android: *swipe up to jump*, down to slide, and left or right to change lanes.
 
 ## CV
 

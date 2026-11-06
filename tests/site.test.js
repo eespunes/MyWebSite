@@ -1,4 +1,4 @@
-// Build v1.145 · 2026-11-06
+// Build v1.146 · 2026-11-06
 /* Renders index.html in a real browser and asserts the page shows exactly what
    CONTENT.md says — same values, in the same categories, nothing extra. */
 const test = require("node:test");
@@ -231,7 +231,7 @@ browserTest("game cards match Games, in order", () => {
       tech: plain(r.tech),
       year: plain(r.year),
       image: "assets/images/" + r.image,
-      link: r.link,
+      link: "games/" + r.link.replace(/\/+$/, "").split("/").pop() + "/",
       featured: (r.featured || "").toLowerCase() === "yes",
     }))
   );

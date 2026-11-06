@@ -1,4 +1,4 @@
-// Build v1.145 · 2026-11-06
+// Build v1.146 · 2026-11-06
 /* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
    every string on screen comes from the Markdown. */
 (function () {
@@ -507,8 +507,10 @@
     var track = el("div", "game-track");
     var games = section.tables[0] || [];
     games.forEach(function (row) {
+      /* Each game has its own page, games/<slug>/, <slug> being the end of
+         its itch.io link (see scripts/build-games.js). */
       var card = el("a", "game-card");
-      externalAttrs(card, row.link);
+      card.href = "games/" + String(row.link || "").replace(/\/+$/, "").split("/").pop() + "/";
 
       var cover = el("span", "game-cover");
       var img = el("img");
