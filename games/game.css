@@ -4,8 +4,6 @@
    Built by games/game.js.
    ========================================================================== */
 
-:root { --itch: #e8a33d; }
-
 .g-header .cs-title { margin-top: 18px; }
 
 /* ----------------------------------------------------------------- pills */
@@ -124,7 +122,6 @@
 
 .player[data-state="playing"] + .player-bar .dot { background: var(--accent); }
 
-.player-status.is-itch .dot { background: var(--itch); }
 
 .player-tools { display: flex; gap: 6px; }
 
@@ -177,7 +174,6 @@
 .g-btn-ghost { border-color: var(--line-strong); color: var(--heading); padding: 10px 14px; font-size: 11px; }
 .g-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-.dl-note { margin: 9px 0 0; font-size: 10px; letter-spacing: 0.06em; color: var(--text-faint); }
 
 /* -------------------------------------------------------------- sections */
 

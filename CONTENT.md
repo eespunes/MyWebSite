@@ -1,4 +1,4 @@
-<!-- Build v1.156 · 2026-11-06 -->
+<!-- Build v1.157 · 2026-11-06 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -164,25 +164,24 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 - Nav label: Games
 - Title: My Games
 - Side note: Where the engineering began, the game-development half of a double degree, sharpened in game jams.
-- Link: All on itch.io → https://eespunes.itch.io
 - Hint: ← Scroll sideways · {count} titles
 - Featured label: Featured
 
 | # | Game | Subtitle | Tech | Year | Image | Link | Featured |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 01 | Kart Online | Final Bachelor Project | Unreal · Multiplayer | 2021 | kart-online.png | https://eespunes.itch.io/kart-online | yes |
-| 02 | Gun Goal Tournament | Indie Dev Day Jam 2020 | Unity · Jam | 2020 | gun-goal-tournament.png | https://eespunes.itch.io/gun-goal-tournament |  |
-| 03 | Stick Ink | Ludum Dare 46 | Unity · Jam | 2020 | stick-ink.png | https://eespunes.itch.io/stick-ink |  |
-| 04 | Space Out | Ludum Dare 42 | Unity · Jam | 2018 | space-out.png | https://eespunes.itch.io/space-out |  |
-| 05 | Portal Prototype | University Project | Unity | 2018 | portal.png | https://eespunes.itch.io/portal |  |
-| 06 | Mario 64 | University Project | Unity | 2018 | mario-64.png | https://eespunes.itch.io/mario-64 |  |
-| 07 | First Person Shooter Prototype | University Project | Unity · Windows | 2018 | fps.png | https://eespunes.itch.io/first-person-shooter |  |
-| 08 | One Piece Tower Defense | University Project | Unity | 2017 | one-piece-tower-defense.png | https://eespunes.itch.io/one-piece-tower-defense |  |
-| 09 | Simpson's Pacman | University Project | Unity | 2017 | simpson-pacman.png | https://eespunes.itch.io/simpsons-pacman |  |
-| 10 | Angry Birds | University Project | Unity | 2017 | angry-birds.png | https://eespunes.itch.io/angry-birds |  |
-| 11 | Arkanoid | University Project | Unity | 2017 | arkanoid.png | https://eespunes.itch.io/arkanoid |  |
-| 12 | Pong | University Project | Unity | 2017 | pong.png | https://eespunes.itch.io/pong |  |
-| 13 | Animal Instinct | My first game | Unity · Android | 2016 | animal-instinct.png | https://eespunes.itch.io/animal-instinct |  |
+| 01 | Kart Online | Final Bachelor Project | Unreal · Multiplayer | 2021 | kart-online.webp | games/kart-online/ | yes |
+| 02 | Gun Goal Tournament | Indie Dev Day Jam 2020 | Unity · Jam | 2020 | gun-goal-tournament.webp | games/gun-goal-tournament/ |  |
+| 03 | Stick Ink | Ludum Dare 46 | Unity · Jam | 2020 | stick-ink.webp | games/stick-ink/ |  |
+| 04 | Space Out | Ludum Dare 42 | Unity · Jam | 2018 | space-out.webp | games/space-out/ |  |
+| 05 | Portal Prototype | University Project | Unity | 2018 | portal.webp | games/portal/ |  |
+| 06 | Mario 64 | University Project | Unity | 2018 | mario-64.webp | games/mario-64/ |  |
+| 07 | First Person Shooter Prototype | University Project | Unity · Windows | 2018 | fps.webp | games/first-person-shooter/ |  |
+| 08 | One Piece Tower Defense | University Project | Unity | 2017 | one-piece-tower-defense.webp | games/one-piece-tower-defense/ |  |
+| 09 | Simpson's Pacman | University Project | Unity | 2017 | simpson-pacman.webp | games/simpsons-pacman/ |  |
+| 10 | Angry Birds | University Project | Unity | 2017 | angry-birds.webp | games/angry-birds/ |  |
+| 11 | Arkanoid | University Project | Unity | 2017 | arkanoid.webp | games/arkanoid/ |  |
+| 12 | Pong | University Project | Unity | 2017 | pong.webp | games/pong/ |  |
+| 13 | Animal Instinct | My first game | Unity · Android | 2016 | animal-instinct.webp | games/animal-instinct/ |  |
 
 ### Game page
 
@@ -197,20 +196,15 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 - Year label: Year
 - Platforms label: Platforms
 - Source label: Source code
-- Itch label: itch.io page
 - Play label: Play in browser
-- Play itch label: Play on itch.io
-- Play itch note: Plays on itch.io for now
 - Download label: Download
-- Download itch label: Download on itch.io
-- Download itch note: Hosted on itch.io for now
 - Restart label: Restart
 - Fullscreen label: Fullscreen
 - New tab label: New tab
 
 ### Game builds
 
-A build is served from this site when its Source exists: for Web, a folder holding the web build's index.html; for downloads, a file URL such as a GitHub Release asset. Without one it is offered from the game's itch.io page.
+Every build is served from this site: for Web, Source is the folder holding the web build's index.html; for downloads, a file URL such as a GitHub Release asset. A build without a Source isn't listed.
 
 | Game | Platform | Label | File | Size | Source |
 | --- | --- | --- | --- | --- | --- |

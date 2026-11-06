@@ -1,4 +1,4 @@
-// Build v1.156 · 2026-11-06
+// Build v1.157 · 2026-11-06
 /* The game pages: every game in CONTENT.md has a page, its builds, details
    and description, and the page shows what CONTENT.md says. */
 const test = require("node:test");
@@ -47,7 +47,7 @@ test("builds name a known platform, with install steps for every download", () =
       assert.equal(b.source, `games/${b.game}/build/`, `${b.game}: web builds live in games/<slug>/build/`);
     } else {
       assert.ok(b.file && b.size, `${b.game}: download needs a file and a size`);
-      assert.ok(!b.source || /^https:\/\//.test(b.source), `${b.game}: download Source must be an https URL`);
+      assert.match(b.source || "", /^https:\/\//, `${b.game}: download Source must be an https URL`);
       assert.ok(steps.some((s) => s.title === b.platform && s.bullets.length), `no install steps for ${b.platform}`);
     }
   }

@@ -3,10 +3,9 @@
    Reads CONTENT.md (## Games and its subs) with the same parser as the home
    page and builds one game's page from it.
 
-   One rule for every build: it is served from this site when its Source
-   exists, and offered from the game's itch.io page otherwise. For a Web
-   build that means games/<slug>/build/index.html is present, so dropping a
-   build into that folder is enough to switch the game to the on-site player.
+   Every build is served from this site; a row without a Source isn't
+   listed. A Web build plays in the page once games/<slug>/build/index.html
+   is present; until then the game features its first download instead.
    ========================================================================== */
 (function () {
   "use strict";
@@ -107,56 +106,43 @@
     return b.label || b.file || b.platform;
   }
 
-  function downloadCard(b, game, L) {
-    var hosted = !!b.source;
+  function downloadCard(b, L) {
     var platform = b.platform.toLowerCase();
     return (
       '<div class="dl-card">' +
       '<div class="dl-head">' + pill(platform, b.platform) + '<span class="dl-size mono">' + esc(b.size) + "</span></div>" +
       '<h3 class="dl-name">' + esc(buildName(b)) + "</h3>" +
-      (hosted
-        ? '<a class="g-btn g-btn-ghost" href="' + esc(href(b.source)) + '" download>' + esc(L["download label"]) + "</a>"
-        : external(game.link, L["download itch label"], "g-btn g-btn-ghost") +
-          '<p class="dl-note mono">' + esc(L["download itch note"]) + "</p>") +
+      '<a class="g-btn g-btn-ghost" href="' + esc(href(b.source)) + '" download>' + esc(L["download label"]) + "</a>" +
       "</div>"
     );
   }
 
-  function player(web, hosted, game, frame, L) {
+  function player(web, game, frame, L) {
     var cover = ROOT + "assets/images/" + game.image;
     var src = href(web.source).replace(/\/?$/, "/");
     var size = String(frame || "").match(/(\d+)\s*[x×]\s*(\d+)/);
     var ratio = size ? Number(size[1]) / Number(size[2]) : 16 / 9;
-    var start = hosted
-      ? '<button class="player-start" type="button" data-start>'
-      : '<a class="player-start" href="' + esc(game.link) + '" target="_blank" rel="noopener noreferrer">';
-    var label = hosted
-      ? esc(L["play label"])
-      : esc(L["play itch label"]) + ' <span aria-hidden="true">↗</span>';
     return (
       '<div class="player" data-state="idle" style="--r:' + ratio.toFixed(4) + '">' +
       '<div class="player-backdrop" style="background-image:url(\'' + esc(cover) + '\')" aria-hidden="true"></div>' +
       '<img class="player-cover" src="' + esc(cover) + '" alt="" />' +
-      start +
+      '<button class="player-start" type="button" data-start>' +
       '<span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg></span>' +
-      '<span class="play-label mono">' + label + "</span>" +
-      (hosted ? "</button>" : "</a>") +
+      '<span class="play-label mono">' + esc(L["play label"]) + "</span>" +
+      "</button>" +
       "</div>" +
       '<div class="player-bar mono">' +
-      (hosted
-        ? '<span class="player-status"><span class="dot"></span>' + esc("/" + String(web.source).replace(/^\/+/, "")) + "</span>" +
-          '<span class="player-tools">' +
-          '<button class="icon-btn" type="button" data-restart disabled>↻ ' + esc(L["restart label"]) + "</button>" +
-          '<button class="icon-btn" type="button" data-fullscreen disabled>⤢ ' + esc(L["fullscreen label"]) + "</button>" +
-          '<a class="icon-btn" href="' + esc(src) + 'index.html" target="_blank" rel="noopener">↗ ' + esc(L["new tab label"]) + "</a>" +
-          "</span>"
-        : '<span class="player-status is-itch"><span class="dot"></span>' + esc(L["play itch note"]) + "</span>") +
+      '<span class="player-status"><span class="dot"></span>' + esc("/" + String(web.source).replace(/^\/+/, "")) + "</span>" +
+      '<span class="player-tools">' +
+      '<button class="icon-btn" type="button" data-restart disabled>↻ ' + esc(L["restart label"]) + "</button>" +
+      '<button class="icon-btn" type="button" data-fullscreen disabled>⤢ ' + esc(L["fullscreen label"]) + "</button>" +
+      '<a class="icon-btn" href="' + esc(src) + 'index.html" target="_blank" rel="noopener">↗ ' + esc(L["new tab label"]) + "</a>" +
+      "</span>" +
       "</div>"
     );
   }
 
   function featured(b, game, steps, L) {
-    var hosted = !!b.source;
     var platform = b.platform.toLowerCase();
     var list = (steps[platform] || [])
       .map(function (step, i) {
@@ -170,10 +156,7 @@
       '<div class="dl-head">' + pill(platform, b.platform) + '<span class="dl-size mono">' + esc(b.size) + "</span></div>" +
       '<h2 class="feature-name">' + esc(buildName(b)) + "</h2>" +
       (list ? '<ol class="steps">' + list + "</ol>" : "") +
-      (hosted
-        ? '<a class="g-btn g-btn-primary" href="' + esc(href(b.source)) + '" download>' + esc(L["download label"]) + "</a>"
-        : external(game.link, L["download itch label"], "g-btn g-btn-primary") +
-          '<p class="dl-note mono">' + esc(L["download itch note"]) + "</p>") +
+      '<a class="g-btn g-btn-primary" href="' + esc(href(b.source)) + '" download>' + esc(L["download label"]) + "</a>" +
       "</div></div>"
     );
   }
@@ -190,7 +173,7 @@
 
     var site = (by.nav && by.nav.fields.brand) || "Erik Espuñes Jubero";
     var L = sub(section, "Game page").fields;
-    var builds = (sub(section, "Game builds").tables[0] || []).filter(function (b) { return b.game === slug; });
+    var builds = (sub(section, "Game builds").tables[0] || []).filter(function (b) { return b.game === slug && b.source; });
     var details = (sub(section, "Game details").tables[0] || []).filter(function (d) { return d.game === slug; })[0] || {};
     var steps = {};
     sub(section, "Install steps").subs.forEach(function (s) { steps[s.title.toLowerCase()] = s.bullets; });
@@ -221,10 +204,11 @@
         tech.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("") +
         "</div></div></header>";
 
-      var hero = web
-        ? player(web, hosted, game, details.frame, L)
+      var playable = web && hosted;
+      var hero = playable
+        ? player(web, game, details.frame, L)
         : downloads.length ? featured(downloads[0], game, steps, L) : "";
-      var rest = web ? downloads : downloads.slice(1);
+      var rest = playable ? downloads : downloads.slice(1);
 
       var about = desc.paragraphs.length
         ? '<section class="g-sec">' + sectionHead(L["about label"]) +
@@ -234,8 +218,8 @@
         : "";
 
       var more = rest.length
-        ? '<section class="g-sec">' + sectionHead(web ? L["downloads label"] : L["other builds label"]) +
-          '<div class="dl-grid">' + rest.map(function (b) { return downloadCard(b, game, L); }).join("") + "</div></section>"
+        ? '<section class="g-sec">' + sectionHead(playable ? L["downloads label"] : L["other builds label"]) +
+          '<div class="dl-grid">' + rest.map(function (b) { return downloadCard(b, L); }).join("") + "</div></section>"
         : "";
 
       var keys = controls(details.controls);
@@ -254,10 +238,9 @@
           .filter(function (f) { return f[1]; })
           .map(function (f) { return '<div class="g-fact"><dt class="mono">' + esc(f[0]) + "</dt><dd>" + inline(f[1]) + "</dd></div>"; })
           .join("") +
-        '</dl><p class="g-links mono">' +
-        (details.repo ? external(details.repo, L["source label"], "g-link") : "") +
-        external(game.link, L["itch label"], "g-link") +
-        "</p></section>";
+        "</dl>" +
+        (details.repo ? '<p class="g-links mono">' + external(details.repo, L["source label"], "g-link") + "</p>" : "") +
+        "</section>";
 
       var others = [];
       for (var i = 1; i <= Math.min(4, rows.length - 1); i++) others.push(rows[(index + i) % rows.length]);
@@ -287,7 +270,7 @@
         '<footer class="footer"><div class="footer-inner"><span>© ' + new Date().getFullYear() + " " + esc(site) +
         "</span><span>" + esc(game.game) + " · " + esc(game.year) + "</span></div></footer>";
 
-      if (web && hosted) wirePlayer(root, href(web.source).replace(/\/?$/, "/") + "index.html", game);
+      if (playable) wirePlayer(root, href(web.source).replace(/\/?$/, "/") + "index.html", game);
     });
   }
 

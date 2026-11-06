@@ -1,4 +1,4 @@
-// Build v1.156 · 2026-11-06
+// Build v1.157 · 2026-11-06
 /* Full-page paging, scroll-spy dots, expandable entries and the hero typing line. */
 window.initSite = function () {
   "use strict";
@@ -149,6 +149,29 @@ window.initSite = function () {
     },
     { passive: true }
   );
+
+  /* ---------------------------------------------------- land on the #hash */
+  // The sections are built after the browser has looked for the hash target,
+  // so links from other pages (a game page's "All games" → /#s-games) would
+  // open at the top. Jump there without animating, and again as fonts and
+  // images settle the layout above it, until the visitor scrolls themselves.
+  var landing = location.hash && document.getElementById(location.hash.slice(1));
+  if (landing) {
+    var land = function () {
+      if (landing) root.scrollTop = landing.offsetTop;
+    };
+    var stop = function () {
+      landing = null;
+    };
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (type) {
+      root.addEventListener(type, stop, { once: true, passive: true });
+    });
+    land();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(land);
+    window.addEventListener("load", land);
+    setTimeout(land, 1200);
+    setTimeout(stop, 4000);
+  }
 
   /* ------------------------------------------------------ smooth nav links */
   root.addEventListener("click", function (ev) {
