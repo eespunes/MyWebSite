@@ -4,6 +4,8 @@
    renderers following, the page silently loses content. */
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const { sections, sub } = require("./helpers/content.js");
 
 const REQUIRED_SECTIONS = [
@@ -107,6 +109,15 @@ test("linked rows point at real targets", () => {
   assert.ok(rows.length, "no linked rows found");
   for (const row of rows) {
     assert.match(row.link, /^https?:\/\//, `${row.what} has a malformed link`);
+  }
+});
+
+test("project demo pages exist in the repo", () => {
+  const rows = sections.projects.tables[0].filter((r) => r.demo);
+  for (const row of rows) {
+    assert.doesNotMatch(row.demo, /^https?:\/\//, `project ${row.project} demo should be a local path`);
+    const file = path.join(__dirname, "..", row.demo, "index.html");
+    assert.ok(fs.existsSync(file), `project ${row.project} demo page not found: ${row.demo}`);
   }
 });
 

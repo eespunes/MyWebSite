@@ -469,6 +469,11 @@
       card.appendChild(head);
       card.appendChild(el("p", null, inline(row.description)));
       if (row.stack) card.appendChild(el("div", "project-stack mono", inline(row.stack)));
+      if (row.demo && section.fields["demo label"]) {
+        var demo = el("a", "btn btn-primary btn-sm project-demo", inline(section.fields["demo label"]) + " →");
+        demo.href = row.demo;
+        card.appendChild(demo);
+      }
       if (row.link && section.fields["link label"]) {
         var a = el("a", "inline-link mono", inline(section.fields["link label"]) + " →");
         externalAttrs(a, row.link);
