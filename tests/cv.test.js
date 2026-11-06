@@ -39,6 +39,9 @@ const SCRAPE = `JSON.stringify({
       when: n.querySelector('.cv-when')?.innerText.replace(/\\s+/g, ' ').trim() || '',
       title: n.querySelector('h3').textContent.trim(),
       place: n.querySelector('.cv-item-sub')?.textContent.trim() || '',
+      ref: n.querySelector('.cv-ref') ? {
+        label: n.querySelector('.cv-ref').textContent.trim(),
+        href: n.querySelector('.cv-ref').href } : null,
       engagements: Array.from(n.querySelectorAll('.cv-eng')).map(e => ({
         head: e.querySelector('h4').textContent.trim(),
         meta: e.querySelector('.cv-eng-head span').textContent.trim(),
@@ -180,6 +183,21 @@ browserTest("experience entries mirror CONTENT.md with dates split from place", 
       assert.equal(rendered.engagements[j].bullets, engagement.bullets.length);
     });
   });
+});
+
+browserTest("recommendation letters link to the live site", () => {
+  const site = sections.contact.tables[0].find((r) => r.key.toLowerCase() === "website").link;
+  sections.experience.subs
+    .filter((s) => s.depth === 3)
+    .forEach((entry, i) => {
+      const link = entry.fields.link;
+      if (!link) return assert.equal(cv.experience[i].ref, null);
+      const [label, href] = link.split("→").map((p) => p.trim());
+      assert.deepEqual(cv.experience[i].ref, {
+        label: `${label} →`,
+        href: new URL(href, site).href,
+      });
+    });
 });
 
 browserTest("every experience bullet reaches the CV", () => {

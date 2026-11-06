@@ -31,6 +31,23 @@
     }
   }
 
+  /* `Label → target`, as on the site. */
+  function linkField(value) {
+    var parts = String(value || "").split("→");
+    if (parts.length < 2 || !parts[1].trim()) return null;
+    return { label: parts[0].trim(), href: parts[1].trim() };
+  }
+
+  /* The saved PDF leaves the site behind, so relative links point at the
+     live site rather than wherever the CV happened to be printed from. */
+  function absoluteUrl(href, base) {
+    try {
+      return new URL(href, base || location.href).href;
+    } catch (err) {
+      return href;
+    }
+  }
+
   /* linkedin.com/in/eespunes rather than the bare handle. */
   function contactText(row) {
     var link = row.link || "";
@@ -149,6 +166,7 @@
     var contactRows = contact.tables[0] || [];
     var rowByKey = {};
     contactRows.forEach(function (row) { rowByKey[(row.key || "").toLowerCase()] = row; });
+    var siteUrl = rowByKey.website && rowByKey.website.link;
 
     var root = document.getElementById("cv-root");
     document.title = fullName + " — CV";
@@ -297,6 +315,12 @@
       if (meta.dates) item.appendChild(dateLine(meta.dates));
       item.appendChild(el("h3", null, inline(entry.title)));
       if (meta.place) item.appendChild(el("div", "cv-item-sub", inline(meta.place)));
+      var ref = linkField(entry.fields.link);
+      if (ref) {
+        var refLink = el("a", "cv-ref mono", inline(ref.label) + " →");
+        externalAttrs(refLink, absoluteUrl(ref.href, siteUrl));
+        item.appendChild(refLink);
+      }
       if (entry.fields.summary) item.appendChild(el("p", null, inline(entry.fields.summary)));
 
       entry.subs.forEach(function (engagement) {
