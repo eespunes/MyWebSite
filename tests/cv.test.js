@@ -1,4 +1,4 @@
-// Build v1.136 · 2026-11-06
+// Build v1.141 · 2026-11-06
 /* Renders cv.html (Spine v3) and asserts the printable CV carries exactly what
    CONTENT.md says — same values, same categories, nothing extra. */
 const test = require("node:test");
@@ -54,7 +54,8 @@ const SCRAPE = `JSON.stringify({
       status: n.querySelector('.cv-status')?.textContent.trim() || '',
       title: n.querySelector('.cv-item-title').childNodes[0].textContent.trim(),
       stack: n.querySelector('.cv-stack')?.textContent.trim() || '',
-      description: n.querySelector('p').textContent.replace(/\\s+/g, ' ').trim() })),
+      description: n.querySelector('p').textContent.replace(/\\s+/g, ' ').trim(),
+      demo: n.querySelector('.cv-ref')?.href || '' })),
   allBullets: Array.from(document.querySelectorAll('.cv-page--2 li')).map(li =>
     li.textContent.replace(/\\s+/g, ' ').trim()),
   versions: Array.from(document.querySelectorAll('.cv-version')).map(v => v.textContent.trim()),
@@ -210,6 +211,7 @@ browserTest("every experience bullet reaches the CV", () => {
 });
 
 browserTest("projects match the Projects table, status lowercased", () => {
+  const site = sections.contact.tables[0].find((r) => r.key.toLowerCase() === "website").link;
   assert.deepEqual(
     cv.projects,
     sections.projects.tables[0].map((r) => ({
@@ -217,6 +219,7 @@ browserTest("projects match the Projects table, status lowercased", () => {
       title: plain(r.project),
       stack: plain(r.stack),
       description: plain(r.description),
+      demo: r.demo ? new URL(r.demo, site).href : "",
     }))
   );
 });

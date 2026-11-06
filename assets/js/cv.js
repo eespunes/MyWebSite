@@ -1,4 +1,4 @@
-// Build v1.136 · 2026-11-06
+// Build v1.141 · 2026-11-06
 /* Builds the printable CV (Spine v3) from CONTENT.md — the same file the site
    renders from — then offers it to the browser's PDF printer. */
 (function () {
@@ -353,6 +353,13 @@
         if (row.stack) title.appendChild(el("span", "cv-stack mono", inline(row.stack)));
         item.appendChild(title);
         item.appendChild(el("p", null, inline(row.description)));
+        var demoLabel = projects.fields && projects.fields["demo label"];
+        if (row.demo && demoLabel) {
+          // Absolute, so the link still works in the saved PDF.
+          var demoLink = el("a", "cv-ref mono", inline(demoLabel) + " →");
+          externalAttrs(demoLink, absoluteUrl(row.demo, siteUrl));
+          item.appendChild(demoLink);
+        }
         spineItem(grid2, item, {
           first: i === 0,
           last: i === projectRows.length - 1,
