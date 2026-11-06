@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Build v1.119 · 2026-11-06
-/* Installs a pre-commit hook that refreshes version.json and stages it, so the
-   version bumps with every commit without anyone remembering to do it. */
+// Build v1.121 · 2026-11-06
+/* Installs a pre-commit hook that refreshes version.json and the file stamps
+   and stages them, so the version bumps with every commit without anyone
+   remembering to do it. */
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -14,8 +15,7 @@ if (!fs.existsSync(hooks)) {
 
 const hook = `#!/bin/sh
 # Managed by scripts/install-hooks.js — refresh the displayed version.
-node scripts/version.js --pending || exit 0
-git add version.json
+node scripts/version.js --pending --stage || exit 0
 `;
 
 const file = path.join(hooks, "pre-commit");

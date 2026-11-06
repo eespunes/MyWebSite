@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.119 · 2026-11-06
+// Build v1.121 · 2026-11-06
 /* Single source of the build number.
 
    Writes version.json and stamps the version into every source file, so the
@@ -14,6 +14,7 @@
    Flags:
      --pending  local pre-commit run; the commit being written has no sha yet
      --next     CI run that will itself commit the stamp, so count that commit
+     --stage    pre-commit hook: git add every file this run rewrote
 */
 const { execSync } = require("node:child_process");
 const fs = require("node:fs");
@@ -133,3 +134,10 @@ if (fs.existsSync(pkgFile)) {
 
 const changed = FILES.filter(stampFile);
 console.log(`${info.version} → version.json, package.json, ${changed.length}/${FILES.length} files stamped`);
+
+/* Stage only what was just rewritten, so the commit carries its own stamp and
+   unrelated unstaged edits stay out of it. */
+if (process.argv.includes("--stage")) {
+  const staged = ["version.json", ...(fs.existsSync(pkgFile) ? ["package.json"] : []), ...changed];
+  execSync(`git add -- ${staged.map((f) => JSON.stringify(f)).join(" ")}`, { cwd: ROOT });
+}
