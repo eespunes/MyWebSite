@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thrive · Erik Espuñes Jubero</title>
+    <meta name="description" content="Thrive: live demo and architecture." />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ededed" media="(prefers-color-scheme: light)" />
+    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+    <!-- Apply a saved theme before first paint so there's no flash. -->
+    <script>
+      try {
+        var t = localStorage.getItem("cs-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../case-study.css" />
+  </head>
+
+  <body>
+    <!-- The page is built from the JSON below by ../case-study.js.
+         To make another case study, copy this folder and edit only the data. -->
+    <div id="case-study"></div>
+
+    <script type="application/json" id="project-data">
+      {
+        "site": {
+          "name": "Erik Espuñes Jubero",
+          "homeHref": "../../",
+          "backHref": "../../#s-projects",
+          "backLabel": "← Projects"
+        },
+        "labels": {
+          "glance": "At a glance",
+          "activate": "▶ Tap to interact",
+          "statusLoading": "loading…",
+          "statusLive": "live · interacting",
+          "statusMissing": "demo not deployed",
+          "missingTitle": "Demo coming soon",
+          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "footer": "Demo & architecture"
+        },
+
+        "number": "02",
+        "kicker": "Personal project",
+        "title": "Thrive",
+        "tagline": "A family app for the budget, the calendar, lists, the weekly meal plan and a kitchen wall dashboard, *shared in real time* between everyone in the house.",
+        "stack": ["Flutter", "Dart", "Firebase", "Android", "iOS"],
+
+        "demo": {
+          "src": "/demos/thrive/",
+          "width": 390,
+          "height": 844,
+          "maxHeight": 560,
+          "caption": "Live web build in a 390 × 844 viewport. Login skipped, fictional family, resets on reload."
+        },
+
+        "summary": "A family's logistics are spread across *a spreadsheet, a group chat and a fridge door*. Thrive puts the money, the plans and the chores in one place that every member sees update live.",
+        "facts": [
+          { "label": "Role", "value": "Solo: design → release" },
+          { "label": "Platform", "value": "Android · iOS · web demo" },
+          { "label": "Backend", "value": "Firestore · 8 Cloud Functions" },
+          { "label": "Quality", "value": "990+ tests · 95% coverage gate" }
+        ],
+        "highlights": [
+          "Monthly budget in *envelopes*, with spending limits and recurring bills",
+          "Family calendar with layers, to-dos, birthdays and *.ics imports*",
+          "A kitchen *wall dashboard* with chores, stars and picture mode for kids"
+        ],
+
+        "sections": [
+          {
+            "id": "problem",
+            "title": "The problem",
+            "kind": "prose",
+            "lead": "Running a household is *a shared job with no shared tool*.",
+            "body": [
+              "The budget lives in one parent's spreadsheet, appointments in another's phone, the shopping list on the fridge and the chores nowhere at all. Everyone has a piece of the picture and nobody has all of it.",
+              "Thrive gives the whole family one workspace: money, calendar, lists and meals, synced live between phones, with a wall tablet in the kitchen for the kids."
+            ]
+          },
+          {
+            "id": "how",
+            "title": "How it works",
+            "kind": "steps",
+            "lead": "One family, *many screens*.",
+            "items": [
+              { "title": "Create or join a family", "body": "The owner creates the family and shares its username and password. Members join from their own phones; kids can get their own restricted login." },
+              { "title": "Plan the month", "body": "Income and bills sit in envelopes per category, with limits, recurring items and an account per person, so the app shows what is safe to spend." },
+              { "title": "Share the week", "body": "Calendar layers, to-dos, shopping lists, chores and the weekly meal plan, each tagged with who it's for and updated live for everyone." },
+              { "title": "Put it on the wall", "body": "A kitchen tablet shows the week, today's chores and each kid's stars, with a picture mode for children who can't read yet." }
+            ]
+          },
+          {
+            "id": "joining",
+            "title": "Joining a family",
+            "kind": "formula",
+            "lead": "The join password is checked *by the database rules*, not by a server.",
+            "codeLabel": "Family join · client + Firestore rules",
+            "code": [
+              "// owner: store a slow, salted hash on the family (members-only)",
+              "salt     = random()                       // public, on the handle doc",
+              "joinHash = sha256^30000(salt + password)  // min. 8 characters",
+              "",
+              "// joiner: prove the password without sending it",
+              "joinProof = sha256^30000(salt + typed)",
+              "update(family, { joinProof, memberUids: [...memberUids, myUid] })",
+              "",
+              "// rules: accept only a matching proof that adds only yourself",
+              "allow update: if joinProof == joinHash",
+              "             && added(memberUids) == [request.auth.uid]"
+            ],
+            "note": "The plaintext password is never stored, on the server or on the device. The rules are tested against the Firestore emulator in CI."
+          },
+          {
+            "id": "architecture",
+            "title": "Architecture",
+            "kind": "layers",
+            "lead": "One Flutter codebase, *client-direct* to Firestore, with a server only where the Admin SDK is required.",
+            "items": [
+              { "label": "Client", "tags": ["Flutter", "Dart", "Android", "iOS"], "body": "~57k lines of Dart. Local mode on SharedPreferences works without an account; signing in moves the family to the cloud." },
+              { "label": "Data", "tags": ["Cloud Firestore", "Collection groups"], "body": "One document per record under families/{id}, loaded with one collection-group query per collection. Only changed fields of changed records are uploaded." },
+              { "label": "Identity & rules", "tags": ["Firebase Auth", "App Check", "Security rules"], "body": "Email and Google sign-in. Owner, admins, members and kids are enforced in the rules, with 110 emulator tests in CI." },
+              { "label": "Server", "tags": ["Cloud Functions", "europe-west1"], "body": "Eight callables manage kids' logins, the one job that needs the Admin SDK. Everything else is written straight from the app." },
+              { "label": "Device", "tags": ["Home widgets", "Notifications", "Calendar sync"], "body": "Android home-screen widgets, event reminders, an optional mirror into the phone's calendar, and barcode/QR scanning for loyalty cards." }
+            ]
+          },
+          {
+            "id": "decisions",
+            "title": "Decisions & trade-offs",
+            "kind": "decisions",
+            "items": [
+              {
+                "title": "Rules instead of a backend",
+                "why": "Joining, roles and ownership changes are verified in Firestore rules, so there is *no API server to run or secure*.",
+                "tradeoff": "The rules carry real logic, so they get their own emulator test suite and are kept compatible with the previous app version."
+              },
+              {
+                "title": "One document per record",
+                "why": "Small documents mean edits by two family members rarely collide, and a save uploads *only what changed*.",
+                "tradeoff": "Many more documents to read, so screens reuse live listeners and skip reloads for 15 seconds."
+              },
+              {
+                "title": "No offline cache, an explicit journal",
+                "why": "Every screen shows what the server holds, so the family never sees *two different versions* of the budget.",
+                "tradeoff": "Edits that can't reach the server are journalled and offered back in Settings, to apply or discard, after a restart."
+              },
+              {
+                "title": "Local mode first",
+                "why": "The app is usable before anyone creates an account, and the same code path powers this demo with *no backend*.",
+                "tradeoff": "Two storage paths to keep in step, plus a one-time promotion of local data on first sign-in."
+              }
+            ]
+          },
+          {
+            "id": "privacy",
+            "title": "Privacy",
+            "kind": "prose",
+            "lead": "Family data is *only visible to the family*.",
+            "body": [
+              "Every family record is gated by membership in the security rules, and public family handles can be looked up but never listed. Data is not sold or used for advertising.",
+              "Deletion is built into the app: it removes the user's profile, deletes families they solely own with all their records, and deletes the sign-in account. A public request page covers anyone who no longer has the app."
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <script src="../case-study.js"></script>
+  </body>
+</html>
