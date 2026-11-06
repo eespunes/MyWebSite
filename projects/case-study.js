@@ -10,8 +10,6 @@
 (function () {
   "use strict";
 
-  var THEME_KEY = "cs-theme";
-
   /* ------------------------------------------------------------- helpers */
 
   function esc(s) {
@@ -50,65 +48,6 @@
         return "<p>" + inline(p) + "</p>";
       })
       .join("");
-  }
-
-  function storageGet(k) {
-    try {
-      return window.localStorage.getItem(k);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function storageSet(k, v) {
-    try {
-      if (v == null) window.localStorage.removeItem(k);
-      else window.localStorage.setItem(k, v);
-    } catch (e) {}
-  }
-
-  /* --------------------------------------------------------------- theme */
-
-  function systemTheme() {
-    return window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-  }
-
-  function applyTheme(t) {
-    if (t) document.documentElement.setAttribute("data-theme", t);
-    else document.documentElement.removeAttribute("data-theme");
-  }
-
-  function currentTheme() {
-    return document.documentElement.getAttribute("data-theme") || systemTheme();
-  }
-
-  applyTheme(storageGet(THEME_KEY));
-
-  function wireThemeToggle(btn) {
-    function label() {
-      // Name the theme you'd switch *to*.
-      btn.textContent = currentTheme() === "dark" ? "◐ Light" : "◑ Dark";
-      btn.setAttribute(
-        "aria-label",
-        "Switch to " + (currentTheme() === "dark" ? "light" : "dark") + " mode"
-      );
-    }
-    btn.addEventListener("click", function () {
-      var next = currentTheme() === "dark" ? "light" : "dark";
-      // Picking the system's own theme clears the override.
-      var value = next === systemTheme() ? null : next;
-      applyTheme(value);
-      storageSet(THEME_KEY, value);
-      label();
-    });
-    if (window.matchMedia) {
-      var mq = window.matchMedia("(prefers-color-scheme: light)");
-      (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(label);
-    }
-    label();
   }
 
   /* ------------------------------------------------------------ sections */
@@ -273,13 +212,11 @@
       '<div class="scanlines" aria-hidden="true"></div>' +
       '<div class="topbar"><div class="topbar-inner">' +
       '<a class="brand" href="' + esc(site.homeHref) + '">' + esc(site.name) + "</a>" +
-      '<button class="theme-toggle" type="button" data-theme-toggle></button>' +
       "</div></div>" +
       '<main id="main">' + header + hero + sections + "</main>" +
       '<footer class="footer"><div class="footer-inner"><span>© ' + new Date().getFullYear() + " " +
       esc(site.name) + "</span><span>" + esc(d.title) + " · " + esc(d.labels.footer) + "</span></div></footer>";
 
-    wireThemeToggle(root.querySelector("[data-theme-toggle]"));
     wireDemo(root.querySelector(".demo-window"), demo, d.labels);
   }
 
