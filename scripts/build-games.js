@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.154 · 2026-11-06
+// Build v1.156 · 2026-11-06
 /* Writes the thin per-game shells, games/<slug>/index.html, one per row of
    the Games table in CONTENT.md. <slug> is the end of the row's itch.io link.
    Everything on the page is built at load time by games/game.js from
