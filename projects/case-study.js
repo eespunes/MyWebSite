@@ -203,18 +203,6 @@
     var desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute("content", d.title + ": " + d.tagline);
 
-    var buttons =
-      '<div class="btn-row">' +
-      (d.links && d.links.github
-        ? '<a class="btn btn-primary" href="' + esc(d.links.github) +
-          '" target="_blank" rel="noopener">' + esc(d.labels.github) + " ↗</a>"
-        : "") +
-      (demo.src
-        ? '<a class="btn btn-ghost" href="' + esc(demo.src) +
-          '" target="_blank" rel="noopener">' + esc(d.labels.demo) + " ⤢</a>"
-        : "") +
-      "</div>";
-
     var header =
       '<header class="cs-header"><div class="wrap">' +
       '<a class="back-link" href="' + esc(site.backHref) + '">' + esc(site.backLabel) + "</a>" +
@@ -222,7 +210,7 @@
       '<span class="eyebrow-text">' + esc(d.number) + " · " + esc(d.kicker) + "</span></div>" +
       '<h1 class="cs-title">' + esc(d.title) + "</h1>" +
       '<p class="cs-tagline">' + inline(d.tagline) + "</p>" +
-      tags(d.stack) + buttons +
+      tags(d.stack) +
       "</div></header>";
 
     var facts = (d.facts || [])
@@ -276,14 +264,6 @@
       })
       .join("");
 
-    var next = d.next
-      ? '<nav class="cs-next" aria-label="Next project"><div class="wrap">' +
-        '<a class="next-link" href="' + esc(d.next.href) + '"><span>' +
-        '<span class="next-kicker">' + esc(d.labels.next) + "</span>" +
-        '<span class="next-title"><span>' + esc(d.next.number) + "</span>" + esc(d.next.title) + "</span>" +
-        '</span><span class="next-arrow" aria-hidden="true">→</span></a></div></nav>'
-      : "";
-
     var root = document.getElementById("case-study");
     root.innerHTML =
       '<a class="skip" href="#main">Skip to content</a>' +
@@ -292,7 +272,7 @@
       '<a class="brand" href="' + esc(site.homeHref) + '">' + esc(site.name) + "</a>" +
       '<button class="theme-toggle" type="button" data-theme-toggle></button>' +
       "</div></div>" +
-      '<main id="main">' + header + hero + sections + next + "</main>" +
+      '<main id="main">' + header + hero + sections + "</main>" +
       '<footer class="footer"><div class="footer-inner"><span>© ' + new Date().getFullYear() + " " +
       esc(site.name) + "</span><span>" + esc(d.title) + " · " + esc(d.labels.footer) + "</span></div></footer>";
 
