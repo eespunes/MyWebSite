@@ -470,7 +470,7 @@
       card.appendChild(el("p", null, inline(row.description)));
       if (row.stack) card.appendChild(el("div", "project-stack mono", inline(row.stack)));
       if (row.demo && section.fields["demo label"]) {
-        var demo = el("a", "btn btn-primary btn-sm project-demo", inline(section.fields["demo label"]) + " →");
+        var demo = el("a", "project-demo mono", inline(section.fields["demo label"]) + " →");
         demo.href = row.demo;
         card.appendChild(demo);
       }
