@@ -34,7 +34,7 @@
           "statusLive": "live · interacting",
           "statusMissing": "demo not deployed",
           "missingTitle": "Demo coming soon",
-          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "missingBody": "The prototype isn't deployed yet.",
           "footer": "Demo & architecture"
         },
 
@@ -53,7 +53,7 @@
           "caption": "Clickable prototype of *Sunny Deck*, the new UI design the crew is implementing now. Fictional repos and data."
         },
 
-        "summary": "Coding agents are cheap to start and *expensive to trust*. Logpose turns them into a team with a process: an organizer, developers, a reviewer and a tester, quality gates, budgets and a human who approves what merges.",
+        "summary": "Coding agents are cheap to start and *expensive to trust*. Logpose turns them into a team with a process: an organizer, developers, a reviewer and a tester, quality gates, budgets and a human, the captain, who approves what merges.",
         "facts": [
           { "label": "Role", "value": "Solo: design → engine → UI" },
           { "label": "Runs on", "value": "Localhost · CLI + web deck" },
@@ -63,7 +63,7 @@
         "highlights": [
           "One *git worktree per task*, so several agents can work one repo at once",
           "*Local-first* routing: free local models by default, the cloud only when it pays",
-          "The crew now *builds Logpose itself*: 57 of its merged PRs were opened by its own agents"
+          "The crew now *builds Logpose itself*: 59 of its merged PRs were opened by its own agents"
         ],
 
         "sections": [
@@ -80,13 +80,57 @@
           {
             "id": "how",
             "title": "How it works",
-            "kind": "steps",
+            "kind": "flow",
+            "minTierWidth": 180,
             "lead": "From a labelled issue to a merged PR, *with nobody at the keyboard*.",
-            "items": [
-              { "title": "Organize", "body": "The organizer rewrites vague issues with acceptance criteria, splits ones too big for one PR into linked stories, and ranks the queue." },
-              { "title": "Develop", "body": "A free developer takes the next task in a fresh worktree and works through a tool loop: read, search, edit, run the gates, finish. Then it opens the PR." },
-              { "title": "Review & test", "body": "Gates check tests, lint and diff size. A senior reviewer reads the full diff and approves on GitHub; a tester checks the feature end to end." },
-              { "title": "Merge or rework", "body": "Green work waits for the captain or auto-merges by policy. A failure goes back to the same developer, with the reason, on the same PR." }
+            "tiers": [
+              {
+                "nodes": [
+                  { "title": "GitHub issue", "body": "Labelled for the crew." }
+                ]
+              },
+              {
+                "label": "Organizer",
+                "nodes": [
+                  { "title": "Refine and rank", "body": "The organizer rewrites vague issues with acceptance criteria, splits ones too big for one PR into linked stories, and ranks the queue." }
+                ]
+              },
+              {
+                "label": "Developer",
+                "nodes": [
+                  {
+                    "title": "Build in a worktree",
+                    "body": "A free developer takes the next task in a fresh worktree and works a tool loop: read, search, edit, run the gates. Then it opens the PR.",
+                    "tags": ["git worktree", "local model first"]
+                  }
+                ]
+              },
+              {
+                "label": "Gates",
+                "nodes": [
+                  { "title": "Tests · lint · diff size", "tone": "accent", "body": "A change only reaches review when every gate passes." }
+                ]
+              },
+              {
+                "label": "Review & test",
+                "nodes": [
+                  { "title": "Senior reviewer", "body": "Reads the full diff and approves on GitHub." },
+                  { "title": "Tester", "body": "Checks the feature end to end." }
+                ]
+              },
+              {
+                "label": "Captain",
+                "nodes": [
+                  { "title": "Merge", "tone": "accent", "body": "The captain's click, or auto-merge by policy once the repo has earned it." }
+                ]
+              }
+            ],
+            "links": [
+              { "label": "queued" },
+              { "label": "next task" },
+              { "label": "pull request" },
+              { "label": "green", "back": "red: back to the same developer, with the reason" },
+              { "label": "approved", "back": "changes requested: rework on the same PR" }
             ]
           },
           {
@@ -98,7 +142,7 @@
             "code": [
               "// size the task before spending anything",
               "bucket   = classify(issue)            // trivial · standard · complex",
-              "estimate = median(similar past voyages)",
+              "estimate = median(similar past tasks)",
               "",
               "// local models are free per token: start there",
               "model = bucket <= localFirstMaxBucket ? local : cloud",
@@ -154,11 +198,32 @@
           {
             "id": "dogfooding",
             "title": "Building itself",
-            "kind": "prose",
+            "kind": "chart",
             "lead": "The best test of the crew is *its own repository*.",
             "body": [
-              "Logpose runs on its own issue board. The Sunny Deck redesign in the demo above is being implemented by the crew, issue by issue: 31 of its pull requests are merged so far, each with an audit of the provider, model and tokens it used.",
+              "Logpose runs on its own issue board. The Sunny Deck redesign in the demo above is being implemented by the crew, issue by issue: 32 of its pull requests are merged so far, each with an audit of the provider, model and tokens it used.",
               "Every change, human or agent, has to keep the engine and the deck above 95% line, branch and function coverage, across more than 2,200 tests."
+            ],
+            "charts": [
+              {
+                "type": "bars",
+                "title": "Merged PRs per day",
+                "alt": "Merged pull requests per day from 26 October to 6 November: a handful by hand, then 3, 34 and 22 by the crew from 4 November.",
+                "categories": ["26", "27", "28", "29", "30", "31", "1", "2", "3", "4", "5", "6"],
+                "series": [
+                  {
+                    "name": "By hand",
+                    "values": [1, 0, 1, 3, 1, 3, 0, 0, 5, 20, 4, 1]
+                  },
+                  {
+                    "name": "By the crew",
+                    "tone": "accent",
+                    "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 34, 22]
+                  }
+                ],
+                "xLabel": "26 Oct → 6 Nov 2026",
+                "caption": "The crew took over its own backlog on 4 November: *59 merged PRs in three days*."
+              }
             ]
           }
         ]
