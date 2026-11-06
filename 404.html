@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="version" content="v1.123" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found · Erik Espuñes Jubero</title>
+    <link rel="shortcut icon" href="/assets/images/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/site.css" />
+    <style>
+      /* GitHub Pages serves this file for any missing path, so every URL
+         here is absolute and nothing depends on CONTENT.md loading. */
+      .nf {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 40px 16px;
+      }
+      .nf-inner { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+      .nf-code {
+        margin: 0;
+        font-size: clamp(96px, 22vw, 220px);
+        line-height: 0.9;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+      .nf-code span { color: var(--accent); }
+      .nf-text {
+        max-width: 520px;
+        margin: 24px 0 0;
+        font-size: 16px;
+        line-height: 1.6;
+        font-weight: 300;
+        color: var(--text-dim);
+      }
+      .nf-path {
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--text-faint);
+        word-break: break-all;
+      }
+      @media (max-width: 600px) { .nf-inner { padding: 0; } }
+    </style>
+  </head>
+
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <main class="nf">
+      <div class="nf-inner">
+        <div class="eyebrow">
+          <span class="eyebrow-rule"></span>
+          <span class="eyebrow-text">Error · Not found</span>
+        </div>
+        <h1 class="nf-code">4<span>0</span>4</h1>
+        <p class="nf-text">
+          This page doesn't exist, or it has moved. The rest of the site is
+          still where you left it.
+        </p>
+        <p class="nf-path mono" id="nf-path"></p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/">Back to home</a>
+          <a class="btn btn-ghost" href="/cv.html">View CV</a>
+        </div>
+      </div>
+    </main>
+    <script>
+      document.getElementById("nf-path").textContent = location.pathname;
+    </script>
+  </body>
+</html>

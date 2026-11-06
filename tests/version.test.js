@@ -1,4 +1,4 @@
-// Build v1.120 · 2026-11-06
+// Build v1.123 · 2026-11-06
 /* The build stamp: derived from git, identical on both surfaces. */
 const test = require("node:test");
 const assert = require("node:assert/strict");
@@ -46,6 +46,7 @@ test("every owned source file carries the current version stamp", () => {
      assets are deliberately excluded. */
   const owned = [
     "index.html",
+    "404.html",
     "cv.html",
     "CONTENT.md",
     "assets/js/parse.js",
