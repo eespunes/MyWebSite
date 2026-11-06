@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logpose · Erik Espuñes Jubero</title>
+    <meta name="description" content="Logpose: design prototype and architecture." />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ededed" media="(prefers-color-scheme: light)" />
+    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+    <!-- Apply a saved theme before first paint so there's no flash. -->
+    <script>
+      try {
+        var t = localStorage.getItem("cs-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../case-study.css" />
+  </head>
+
+  <body>
+    <!-- The page is built from the JSON below by ../case-study.js.
+         To make another case study, copy this folder and edit only the data. -->
+    <div id="case-study"></div>
+
+    <script type="application/json" id="project-data">
+      {
+        "site": {
+          "name": "Erik Espuñes Jubero",
+          "homeHref": "../../",
+          "backHref": "../../#s-projects",
+          "backLabel": "← Projects"
+        },
+        "labels": {
+          "glance": "At a glance",
+          "activate": "▶ Tap to interact",
+          "statusLoading": "loading…",
+          "statusLive": "live · interacting",
+          "statusMissing": "demo not deployed",
+          "missingTitle": "Demo coming soon",
+          "missingBody": "The web build isn't deployed yet. The source is on GitHub.",
+          "footer": "Demo & architecture"
+        },
+
+        "number": "03",
+        "kicker": "Personal project",
+        "title": "Logpose",
+        "tagline": "A local workbench where a crew of AI coding agents picks up GitHub issues, works them in *isolated git worktrees* and ships pull requests, gated by checks before any output is trusted.",
+        "stack": ["Node.js", "React", "Vite", "Ollama", "Claude", "GitHub API"],
+
+        "demo": {
+          "src": "/demos/logpose/",
+          "device": "desktop",
+          "width": 1440,
+          "height": 1044,
+          "maxHeight": 680,
+          "caption": "Clickable prototype of *Sunny Deck*, the new UI design the crew is implementing now. Fictional repos and data."
+        },
+
+        "summary": "Coding agents are cheap to start and *expensive to trust*. Logpose turns them into a team with a process: an organizer, developers, a reviewer and a tester, quality gates, budgets and a human who approves what merges.",
+        "facts": [
+          { "label": "Role", "value": "Solo: design → engine → UI" },
+          { "label": "Runs on", "value": "Localhost · CLI + web deck" },
+          { "label": "Models", "value": "Ollama · Claude · OpenAI · Copilot" },
+          { "label": "Quality", "value": "2,200+ tests · 95% coverage gate" }
+        ],
+        "highlights": [
+          "One *git worktree per task*, so several agents can work one repo at once",
+          "*Local-first* routing: free local models by default, the cloud only when it pays",
+          "The crew now *builds Logpose itself*: 57 of its merged PRs were opened by its own agents"
+        ],
+
+        "sections": [
+          {
+            "id": "problem",
+            "title": "The problem",
+            "kind": "prose",
+            "lead": "An agent that writes code is easy. *An agent you can leave alone* is not.",
+            "body": [
+              "Left to itself, a coding agent produces plausible diffs of uneven quality, burns cloud tokens on work a local model could do, and needs someone watching every step. The bottleneck stops being the code and becomes the review.",
+              "Logpose wraps the agents in the process a good engineering team already has: issues are refined and ranked, every change goes through gates, review and testing on a real pull request, and spending is capped and visible."
+            ]
+          },
+          {
+            "id": "how",
+            "title": "How it works",
+            "kind": "steps",
+            "lead": "From a labelled issue to a merged PR, *with nobody at the keyboard*.",
+            "items": [
+              { "title": "Organize", "body": "The organizer rewrites vague issues with acceptance criteria, splits ones too big for one PR into linked stories, and ranks the queue." },
+              { "title": "Develop", "body": "A free developer takes the next task in a fresh worktree and works through a tool loop: read, search, edit, run the gates, finish. Then it opens the PR." },
+              { "title": "Review & test", "body": "Gates check tests, lint and diff size. A senior reviewer reads the full diff and approves on GitHub; a tester checks the feature end to end." },
+              { "title": "Merge or rework", "body": "Green work waits for the captain or auto-merges by policy. A failure goes back to the same developer, with the reason, on the same PR." }
+            ]
+          },
+          {
+            "id": "routing",
+            "title": "Choosing the model",
+            "kind": "formula",
+            "lead": "Every task gets *the cheapest model that can do it*, and climbs only on failure.",
+            "codeLabel": "Dispatch · local-first course",
+            "code": [
+              "// size the task before spending anything",
+              "bucket   = classify(issue)            // trivial · standard · complex",
+              "estimate = median(similar past voyages)",
+              "",
+              "// local models are free per token: start there",
+              "model = bucket <= localFirstMaxBucket ? local : cloud",
+              "",
+              "// a failed attempt climbs the ladder, with the failure as context",
+              "on fail: model = ladder.next(model)   // never past a local-only repo",
+              "",
+              "// every call is metered; with token limits on, caps apply",
+              "charge(task, tokens)                  // warn at 80 %, stop at the cap"
+            ],
+            "note": "Every cloud route records why it was taken. The router can propose new rules from the outcome ledger, but they only apply when the captain approves them."
+          },
+          {
+            "id": "architecture",
+            "title": "Architecture",
+            "kind": "layers",
+            "lead": "A Node engine that owns all state, and a React deck that only *shows and edits it*.",
+            "items": [
+              { "label": "Engine", "tags": ["Node.js", "CLI"], "body": "~24k lines. The logpose CLI owns the queue, scheduling, gates, budgets and merge policy, and runs unattended with logpose run --watch." },
+              { "label": "Agents", "tags": ["Tool loop", "4 roles"], "body": "Organizer, developer, reviewer and tester, each on its own provider. Reviewers and testers write lessons learned that later prompts reuse." },
+              { "label": "Workspaces", "tags": ["git worktrees"], "body": "Each attempt starts from a fresh origin branch in its own worktree, so parallel tasks in one repo never collide." },
+              { "label": "Providers", "tags": ["Ollama", "Claude API", "Claude Code", "OpenAI", "Copilot"], "body": "Swappable adapters behind one complete() interface, with quota-aware rotation when a plan runs out." },
+              { "label": "Deck", "tags": ["React", "Vite", "JSON API"], "body": "~6.7k lines. Polls the engine's local JSON API and sends every edit back through it; config and append-only usage ledgers live on disk." }
+            ]
+          },
+          {
+            "id": "decisions",
+            "title": "Decisions & trade-offs",
+            "kind": "decisions",
+            "items": [
+              {
+                "title": "Gates instead of trust",
+                "why": "A change only reaches review when tests, lint and the diff-size budget pass, so a reviewer *never reads a broken PR*.",
+                "tradeoff": "Repos need working local gates, and a strict diff budget can refuse a legitimately large change."
+              },
+              {
+                "title": "Local-first by default",
+                "why": "Local models cost nothing per token, so routine work stays on them and *cloud spend is a decision*, logged with its reason.",
+                "tradeoff": "Local models fail more often, so the escalation ladder and retries add wall time."
+              },
+              {
+                "title": "The PR is the unit of work",
+                "why": "Review comments, approvals, rework and the developer's handoff all live on a real GitHub pull request, *exactly like a human team*.",
+                "tradeoff": "GitHub refuses self-approval, so a real approval needs a second token for the reviewer."
+              },
+              {
+                "title": "Human in the loop, loosened over time",
+                "why": "Merges need the captain's click until a repo earns auto-merge, and router changes always wait for approval: *nothing changes policy silently*.",
+                "tradeoff": "Out of the box the crew is slower than it could be; autonomy is opt-in, setting by setting."
+              }
+            ]
+          },
+          {
+            "id": "dogfooding",
+            "title": "Building itself",
+            "kind": "prose",
+            "lead": "The best test of the crew is *its own repository*.",
+            "body": [
+              "Logpose runs on its own issue board. The Sunny Deck redesign in the demo above is being implemented by the crew, issue by issue: 31 of its pull requests are merged so far, each with an audit of the provider, model and tokens it used.",
+              "Every change, human or agent, has to keep the engine and the deck above 95% line, branch and function coverage, across more than 2,200 tests."
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <script src="../case-study.js"></script>
+  </body>
+</html>

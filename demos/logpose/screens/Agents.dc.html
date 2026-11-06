@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Logpose — Agents</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+.sd{font-family:"Nunito",ui-rounded,system-ui,sans-serif;color:#27303F;background:#F4EEDF;box-sizing:border-box;padding:0;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.sd *{box-sizing:border-box}
+.sd svg{display:block}
+.sd button{font:inherit;color:inherit;cursor:default}
+
+/* ---------- frame ---------- */
+.sd .frame{width:1440px;height:1000px;background:#FFFBF2;display:flex;overflow:hidden;border-radius:18px;box-shadow:0 1px 0 #EFE7D6}
+.sd .side{width:240px;flex:none;background:#FFFBF2;border-right:1px solid #EFE7D6;padding:20px 16px;display:flex;flex-direction:column}
+.sd .main{flex:1;min-width:0;padding:20px 28px 20px 28px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- brand ---------- */
+.sd .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 0 8px}
+.sd .mark{width:36px;height:36px;border-radius:12px;background:#F5B82E;display:flex;align-items:center;justify-content:center}
+.sd .brand b{font-size:18px;font-weight:800;display:block;line-height:1.1}
+.sd .brand span{font-size:12px;color:#6B7280;font-weight:600}
+
+/* ---------- nav ---------- */
+.sd .nav{margin-top:22px;display:flex;flex-direction:column;gap:4px}
+.sd .nav a{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border-radius:12px;font-weight:700;color:#27303F;text-decoration:none;font-size:14px}
+.sd .nav a svg{width:18px;height:18px;color:#6B7280}
+.sd .nav a.on{background:#F5B82E;color:#2B2208}
+.sd .nav a.on svg{color:#2B2208}
+.sd .nav .badge{margin-left:auto;background:#FFF;border:1px solid #EFE7D6;color:#27303F;border-radius:999px;font-size:12px;font-weight:800;min-width:24px;height:22px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+
+/* ---------- fleet card ---------- */
+.sd .fleet{margin-top:auto;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 14px;text-align:left;width:100%}
+.sd .fleet .row{display:flex;align-items:center;gap:8px}
+.sd .fleet .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd .fleet .st{font-weight:800;font-size:14px;color:#9A5B0B;display:flex;align-items:center;gap:7px}
+.sd .fleet .sub{color:#6B7280;font-size:12px;font-weight:600;margin-top:2px}
+.sd .fleet .chev{margin-left:auto;color:#6B7280}
+.sd .fleet .test{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#9CA3AF;border:1px dashed #E3DAC6;border-radius:999px;padding:3px 10px;background:#FFFDF8}
+
+/* ---------- dots ---------- */
+.sd .dot{width:8px;height:8px;border-radius:50%;background:#6B7280;flex:none}
+.sd .dot.ok{background:#2BA66B}.sd .dot.warn{background:#E08A1E}.sd .dot.danger{background:#DE4B48}.sd .dot.acc{background:#F5B82E}.sd .dot.idle{background:#C9C2B3}
+
+/* ---------- top bar ---------- */
+.sd .top{display:flex;align-items:center;gap:12px;height:44px}
+.sd .top h1{font-size:22px;font-weight:800;margin:0;line-height:1}
+.sd .top .sub{font-size:12px;color:#6B7280;font-weight:600;margin-left:-4px;padding-top:3px;white-space:nowrap}
+.sd .search svg{flex:none}.sd .search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;color:#6B7280;font-weight:600;width:176px;flex:none;white-space:nowrap;font-size:13px}
+.sd .search .k{margin-left:auto;font-size:11px;font-weight:800;border:1px solid #EFE7D6;border-radius:7px;padding:1px 6px;color:#6B7280;background:#FFFBF2}
+.sd .crew{display:flex;gap:6px;margin-left:auto}
+.sd .chip{display:flex;align-items:center;gap:6px;height:34px;padding:0 10px 0 9px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700;white-space:nowrap}
+.sd .chip .id{font-weight:800;color:#27303F}
+.sd .chip .m{color:#6B7280;font-weight:600}
+.sd .chip.fault{border-color:#F6D2D1;background:#FFF6F5}
+.sd .chip.fault .m{color:#B8322F}
+.sd .btn{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;font-weight:800;font-size:14px;color:#27303F}
+.sd .btn.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+/* ---------- stats ---------- */
+.sd .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sd .stat{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;min-height:60px}
+.sd .stat .n{font-size:22px;font-weight:800;line-height:1}
+.sd .stat .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .stat .t{font-size:12px;color:#6B7280;font-weight:700;margin-top:4px}
+.sd .stat .ic{width:36px;height:36px;border-radius:12px;background:#FFF6DD;display:flex;align-items:center;justify-content:center;color:#9A5B0B;flex:none}
+.sd .stat .ic.ok{background:#E6F6EC;color:#1F7F50}
+.sd .stat .ic.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .stat .right{margin-left:auto;text-align:right}
+.sd .spark{width:72px;height:26px;border-radius:8px;border:1px dashed #E3DAC6;background:#FFFDF8;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#9CA3AF}
+.sd .bar{height:8px;border-radius:999px;background:#F3EDE0;overflow:hidden}
+.sd .bar i{display:block;height:100%;border-radius:999px;background:#F5B82E}
+.sd .bar i.ok{background:#2BA66B}.sd .bar i.warn{background:#E08A1E}.sd .bar i.danger{background:#DE4B48}
+
+/* ---------- toolbar ---------- */
+.sd .tools{display:flex;align-items:center;gap:8px}
+.sd .tools .title{font-weight:800;font-size:15px;margin-right:6px}
+.sd .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700;color:#27303F}
+.sd .sel .c{color:#6B7280}
+.sd .tog{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700}
+.sd .tog .sw{width:30px;height:18px;border-radius:999px;background:#F5B82E;position:relative}
+.sd .tog .sw::after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#FFF}
+.sd .jobs{margin-left:auto;display:flex;align-items:center;gap:10px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700}
+.sd .jobs .m{color:#6B7280;font-weight:600}
+.sd .jobs .bar{width:70px}
+
+/* ---------- board ---------- */
+.sd .board{display:flex;gap:16px;flex:1;min-height:0}
+.sd .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.sd .col h2{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;padding:0 6px}
+.sd .col h2 .cnt{color:#6B7280;font-weight:800}
+.sd .col h2 .hint{margin-left:auto;font-size:12px;color:#6B7280;font-weight:600}
+.sd .cards{display:flex;flex-direction:column;gap:8px;background:#FAF4E4;border-radius:16px;padding:8px;flex:1}
+.sd .card{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:11px 13px 10px 13px;display:flex;flex-direction:column;gap:4px}
+.sd .card .l1{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.sd .card .l1 .num{color:#6B7280;font-weight:700}
+.sd .card .l1 .tag{margin-left:auto;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap}
+.sd .card .l1 .tag.rev{background:#FFF1C9;color:#7A4E00}
+.sd .card .l1 .tag.fail{background:#FDE4E3;color:#B8322F}
+.sd .card .l1 .tag.blk{background:#FDEFDD;color:#9A5B0B}
+.sd .card .l1 .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .card .l2{font-size:12px;color:#6B7280;font-weight:600;display:flex;align-items:center;gap:6px}
+.sd .card .l2 .sep{color:#C9C2B3}
+.sd .card .l3{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .card .l3 .bar{flex:1}
+.sd .card .l3 .st{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sd .card .l3 .st.warn{color:#9A5B0B}.sd .card .l3 .st.danger{color:#B8322F}.sd .card .l3 .st.ok{color:#1F7F50}
+.sd .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding-top:8px;border-top:1px dashed #EFE7D6}
+.sd .pill{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:999px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:12px;font-weight:800;color:#27303F;white-space:nowrap}
+.sd .pill.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8}
+.sd .ghost{border-style:dashed;background:transparent;color:#6B7280}
+.sd .ghost .l1{color:#6B7280}
+.sd .empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;font-weight:700;text-align:center;padding:12px}
+
+/* collapsed blocked column */
+.sd .colx{width:56px;flex:none;background:#FAF4E4;border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.sd .colx .vt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:800;color:#27303F;display:flex;align-items:center;gap:8px}
+.sd .colx .pip{width:30px;height:30px;border-radius:10px;background:#FFF;border:1px solid #EFE7D6;display:flex;align-items:center;justify-content:center;color:#6B7280}
+.sd .colx .cnt{width:26px;height:26px;border-radius:999px;background:#FDEFDD;color:#9A5B0B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ---------- shelf ---------- */
+.sd .shelf{display:grid;grid-template-columns:1fr 1.45fr;gap:16px}
+.sd .shelfc{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.sd .shelfc h3{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd .shelfc h3 .cnt{color:#6B7280}
+.sd .shelfc h3 .r{margin-left:auto;display:flex;gap:6px}
+.sd .landed{display:flex;gap:8px;flex-wrap:wrap}
+.sd .landed .lp{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#E6F6EC;color:#1F7F50;font-weight:800;font-size:12px}
+.sd .landed .lp .r{color:#4B5563;font-weight:600}
+.sd .bl{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.sd .bl label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;height:24px}
+.sd .bl label .num{color:#6B7280;font-weight:700}
+.sd .bl label .r{color:#6B7280;font-weight:600;font-size:12px;margin-left:auto}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+
+/* =====================================================================
+   Sunny Deck — additional components (shared by every screen)
+   Tokens: page #FFFBF2 · panel #FAF4E4 · surface #FFF · line #EFE7D6 · line-2 #E3DAC6
+   text #27303F · text-2 #4B5563 · muted #6B7280 · faint #9CA3AF
+   accent #F5B82E (ink #2B2208) · accent-soft #FFF6DD / #FFF1C9 (text #7A4E00)
+   ok #2BA66B (text #1F7F50, soft #E6F6EC) · warn #E08A1E (text #9A5B0B, soft #FDEFDD)
+   danger #DE4B48 (text #B8322F, soft #FDE4E3) · info #3B82C4 (text #1F5A8E, soft #E4F0FA)
+   radius: 14 cards · 16 panels · 999 pills/buttons · 10 inputs
+   ===================================================================== */
+.sd .frame{height:auto;min-height:1000px}
+.sd .main{gap:16px}
+.sd .frame.plain .main{padding:24px 28px}
+
+/* text helpers */
+.sd .muted{color:#6B7280}.sd .faint{color:#9CA3AF}.sd .t2{color:#4B5563}
+.sd .ok-t{color:#1F7F50}.sd .warn-t{color:#9A5B0B}.sd .danger-t{color:#B8322F}.sd .info-t{color:#1F5A8E}
+.sd .mono{font-variant-numeric:tabular-nums;font-family:"Nunito",ui-monospace,monospace}
+.sd .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.sd .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd h2.sec{margin:0;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd h2.sec .cnt{color:#6B7280}
+.sd h2.sec .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .hint{font-size:12px;color:#6B7280;font-weight:600}
+
+/* surfaces */
+.sd .panel{background:#FAF4E4;border-radius:16px;padding:8px}
+.sd .box{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:14px 16px}
+.sd .box.soft{background:#FFFDF8}
+.sd .box.warn{border-color:#F7D9B0;background:#FFF9F0}
+.sd .box.danger{border-color:#F6D2D1;background:#FFF6F5}
+.sd .box.ok{border-color:#BFE6CE;background:#F3FBF6}
+.sd .box.info{border-color:#C6DDF2;background:#F3F8FD}
+.sd .box.accent{border-color:#F5D98A;background:#FFF9E6}
+
+/* chips / status tags */
+.sd .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap;height:20px}
+.sd .tag.rev,.sd .tag.acc{background:#FFF1C9;color:#7A4E00}
+.sd .tag.fail,.sd .tag.danger{background:#FDE4E3;color:#B8322F}
+.sd .tag.blk,.sd .tag.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .tag.ok,.sd .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .tag.info{background:#E4F0FA;color:#1F5A8E}
+.sd .tag.solid-danger{background:#DE4B48;color:#FFF}
+.sd .tag.solid-warn{background:#E08A1E;color:#2B1D0E}
+.sd .tag.solid-ok{background:#2BA66B;color:#FFF}
+.sd .tag.solid-acc{background:#F5B82E;color:#2B2208}
+
+/* 7-state fleet pill (large) */
+.sd .fleetpill{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 10px;border-radius:999px;font-weight:800;font-size:13px;border:1px solid #EFE7D6;background:#FFF}
+.sd .fleetpill.offline{background:#F3EDE0;color:#4B5563}
+.sd .fleetpill.notset{background:#FDE4E3;color:#B8322F}
+.sd .fleetpill.cap{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.stopped{background:#F3EDE0;color:#27303F}
+.sd .fleetpill.degraded{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.sailing{background:#E6F6EC;color:#1F7F50}
+.sd .fleetpill.idle{background:#FFF;color:#6B7280}
+
+/* buttons (reuse .btn .pill from base) */
+.sd .btn.sm{height:32px;padding:0 12px;font-size:13px}
+.sd .btn.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .btn.ok{background:#2BA66B;border-color:#2BA66B;color:#FFF}
+.sd .btn.ghost{background:transparent;border-color:transparent;color:#4B5563}
+.sd .btn.dis,.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8;cursor:not-allowed}
+.sd .pill.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .pill.ok{background:#E6F6EC;border-color:#BFE6CE;color:#1F7F50}
+.sd .iconbtn{width:32px;height:32px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;display:inline-flex;align-items:center;justify-content:center;color:#4B5563}
+.sd .kbd{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:7px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:11px;font-weight:800;color:#6B7280}
+
+/* inputs & form controls */
+.sd .input{height:36px;padding:0 12px;border-radius:10px;border:1px solid #E3DAC6;background:#FFF;font:inherit;font-size:13px;font-weight:600;color:#27303F;width:100%}
+.sd .input::placeholder{color:#9CA3AF}
+.sd .input.err{border-color:#DE4B48}
+.sd .input[disabled]{background:#FFFDF8;color:#9CA3AF;border-style:dashed}
+.sd .field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:#6B7280}
+.sd .field .help{font-size:11px;font-weight:600;color:#9CA3AF}
+.sd .field .err{color:#B8322F;font-weight:700}
+.sd .toggle{width:34px;height:20px;border-radius:999px;background:#E3DAC6;position:relative;flex:none;display:inline-block}
+.sd .toggle::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#FFF}
+.sd .toggle.on{background:#F5B82E}.sd .toggle.on::after{left:auto;right:2px}
+.sd .seg{display:inline-flex;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;padding:3px;gap:2px}
+.sd .seg span{height:26px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12px;font-weight:800;color:#6B7280}
+.sd .seg span.on{background:#F5B82E;color:#2B2208}
+.sd .stepper{display:inline-flex;align-items:center;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;height:32px;overflow:hidden}
+.sd .stepper span{min-width:56px;text-align:center;font-weight:800;font-size:13px}
+.sd .stepper b{width:30px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#4B5563;font-size:16px}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .diffdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#F5B82E;margin-left:6px;vertical-align:middle}
+
+/* tabs */
+.sd .tabs{display:flex;gap:4px;border-bottom:1px solid #EFE7D6;padding:0 4px}
+.sd .tab{height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:#6B7280;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sd .tab.on{color:#27303F;border-bottom-color:#F5B82E}
+.sd .tab.dis{color:#9CA3AF}
+.sd .tab .cnt{font-size:11px;background:#F3EDE0;border-radius:999px;padding:1px 6px;color:#4B5563}
+
+/* lists & tables */
+.sd .list{display:flex;flex-direction:column}
+.sd .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #EFE7D6;font-size:13px;font-weight:600}
+.sd .row:last-child{border-bottom:0}
+.sd .row .ttl{font-weight:800;color:#27303F}
+.sd .row .num{color:#6B7280;font-weight:700}
+.sd .row .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .row.sel{background:#FFF9E6}
+.sd table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.sd table.tbl th{text-align:left;font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid #EFE7D6}
+.sd table.tbl td{padding:10px 12px;border-bottom:1px solid #F3EDE0;font-weight:600;vertical-align:middle}
+.sd table.tbl tr:last-child td{border-bottom:0}
+.sd table.tbl td.n,.sd table.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* KPI tiles & bars (reuse .stat .bar) */
+.sd .kpi{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.sd .kpi .n{font-size:26px;font-weight:800;line-height:1}
+.sd .kpi .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .kpi .t{font-size:12px;color:#6B7280;font-weight:700}
+.sd .kpi .d{font-size:12px;font-weight:700}
+.sd .bar.lg{height:12px}
+.sd .bar.sm{height:6px}
+.sd .bar i.acc{background:#F5B82E}.sd .bar i.info{background:#3B82C4}.sd .bar i.muted{background:#C9C2B3}
+
+/* gates */
+.sd .gates{display:inline-flex;gap:4px;align-items:center}
+.sd .gate{width:18px;height:18px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:#F3EDE0;color:#6B7280}
+.sd .gate.pass{background:#E6F6EC;color:#1F7F50}.sd .gate.fail{background:#FDE4E3;color:#B8322F}.sd .gate.run{background:#FFF1C9;color:#7A4E00}
+
+/* log lines */
+.sd .log{background:#FFFDF8;border:1px solid #EFE7D6;border-radius:12px;padding:8px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5}
+.sd .log .ln{display:grid;grid-template-columns:64px 64px 1fr;gap:10px;padding:3px 14px;color:#4B5563}
+.sd .log .ln .ts{color:#9CA3AF}
+.sd .log .ln .k{font-weight:800;color:#6B7280}
+.sd .log .ln.plan .k{color:#1F5A8E}.sd .log .ln.tool .k{color:#4B5563}.sd .log .ln.gate .k{color:#1F7F50}
+.sd .log .ln.error{background:#FDE4E3;color:#B8322F}.sd .log .ln.error .k{color:#B8322F}
+.sd .log .ln.cloud .k{color:#7A4E00}
+
+/* side panel (task detail) & overlays */
+.sd .scrim{position:absolute;inset:0;background:rgba(39,48,63,.28);border-radius:18px}
+.sd .sheet{position:absolute;top:0;right:0;bottom:0;width:680px;background:#FFFBF2;border-left:1px solid #EFE7D6;border-radius:0 18px 18px 0;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(39,48,63,.08)}
+.sd .pop{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;box-shadow:0 10px 30px rgba(39,48,63,.12)}
+.sd .toast{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 10px 0 16px;border-radius:999px;background:#27303F;color:#FFF;font-weight:700;font-size:13px}
+.sd .toast .pill{background:transparent;border-color:#4B5563;color:#F5B82E}
+.sd .banner{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700}
+.sd .banner.warn{background:#FDEFDD;color:#9A5B0B}.sd .banner.danger{background:#FDE4E3;color:#B8322F}.sd .banner.info{background:#E4F0FA;color:#1F5A8E}.sd .banner.ok{background:#E6F6EC;color:#1F7F50}
+.sd .skel{background:linear-gradient(90deg,#F3EDE0,#FAF4E4,#F3EDE0);border-radius:8px;height:12px}
+.sd .emptybox{border:1px dashed #E3DAC6;border-radius:14px;padding:28px;text-align:center;color:#6B7280;font-weight:700;font-size:13px;background:#FFFDF8}
+.sd .emptybox b{display:block;color:#27303F;font-size:15px;margin-bottom:4px}
+
+/* spark & charts (pure CSS) */
+.sd .bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.sd .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.sd .bars .b i{display:block;border-radius:4px 4px 0 0;background:#F5B82E}
+.sd .bars .b i.cloud{background:#3B82C4;border-radius:0}
+.sd .bars .b i.local{background:#F5B82E}
+.sd .legend{display:flex;gap:14px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+/* settings nav */
+.sd .subnav{display:flex;flex-direction:column;gap:2px;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:6px}
+.sd .subnav a{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:10px;font-size:13px;font-weight:800;color:#4B5563;text-decoration:none}
+.sd .subnav a.on{background:#FFF1C9;color:#7A4E00}
+.sd .subnav a .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .srow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #F3EDE0}
+.sd .srow:last-child{border-bottom:0}
+.sd .srow .k{font-weight:800;font-size:14px}
+.sd .srow .d{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.sd .srow .d code{font-family:ui-monospace,monospace;font-size:11px;background:#F3EDE0;border-radius:5px;padding:0 5px}
+
+/* agent card */
+.sd .agent{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sd .agent.fault{border-color:#F6D2D1}
+.sd .agent .hd{display:flex;align-items:center;gap:10px}
+.sd .agent .av{width:36px;height:36px;border-radius:12px;background:#FFF6DD;color:#7A4E00;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sd .agent.fault .av{background:#FDE4E3;color:#B8322F}
+.sd .agent .nm{font-weight:800;font-size:15px}
+.sd .agent .role{font-size:12px;color:#6B7280;font-weight:700}
+.sd .ladder{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#4B5563}
+.sd .ladder .arrow{color:#C9C2B3}
+.sd .ladder .m{border:1px solid #EFE7D6;border-radius:999px;padding:2px 9px;background:#FFFBF2}
+.sd .ladder .m.cur{background:#FFF1C9;border-color:#F5D98A;color:#7A4E00}
+
+/* top bar fit */
+.sd .top .search{width:220px}
+.sd .top .jobs{white-space:nowrap;flex:none}
+.sd .top .crew{margin-left:auto}
+
+</style>
+</helmet>
+<div class="sd" style="width: 1440px; min-height: 1000px;">
+<div class="frame" style="min-height:1000px;position:relative">
+  <aside class="side">
+    <div class="brand">
+      <div class="mark" aria-label="Logpose compass mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 5.2-5.2 2.2 2.2-5.2z" fill="#2B2208" stroke="none"/></svg></div>
+      <div><b>Logpose</b><span>agent workbench</span></div>
+    </div>
+    <nav class="nav" aria-label="Sections">
+      <a href="Main.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg>Board</a>
+      <a href="Inbox.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2.5-7h11L20 13v6H4z"/><path d="M4 13h5l1.5 2h3L15 13h5"/></svg>Inbox<span class="badge">4</span></a>
+      <a class="on" aria-current="page" href="Agents.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5c2.8 0 5 2 5 5"/></svg>Agents</a>
+      <a href="Spend.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h3.5a1.8 1.8 0 010 3.6H10a1.8 1.8 0 000 3.6h4.5"/></svg>Spend</a>
+      <a href="Routing.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 6h7M6 8.5V13a4 4 0 004 4h5.5"/></svg>Routing</a>
+      <a href="Settings.dc.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/></svg>Settings</a>
+      
+    </nav>
+    <button class="fleet" aria-label="Fleet status: Degraded, a3 fault, 2 working. Open status" title="Open fleet status">
+      <div class="lbl">Fleet</div>
+      <div class="row" style="margin-top:4px"><span class="st"><span class="dot warn"></span>Degraded</span><span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+      <div class="sub">a3 fault · 2 working</div>
+      <div class="sub" style="margin-top:6px;display:flex;gap:8px"><span>6 PRs</span><span>412k ₿</span><span>cap 82%</span></div>
+    </button>
+  </aside>
+  <section class="main">
+    <div class="top">
+      <h1>Agents</h1><span class="sub">the crew</span>
+      <div class="search" role="button" aria-label="Search or run a command"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>Search or jump to…<span class="k">⌘K</span></div>
+      <div class="crew" aria-label="Crew">
+        <div class="chip" title="a1 · qwen3:14b · developer · working on #161 · budget 85%"><span class="dot ok"></span><span class="id">a1</span><span class="m">#161</span></div>
+        <div class="chip" title="a2 · claude-sonnet · reviewer · idle · model locked"><span class="dot idle"></span><span class="id">a2</span><span class="m">idle</span></div>
+        <div class="chip fault" title="a3 · qwen2.5-coder:7b · developer · FAULT context overflow on #158 · suggested qwen3:14b"><span class="dot danger"></span><span class="id">a3</span><span class="m">fault</span></div>
+        <div class="chip" title="a4 · gpt-mini · tester · paused by daily cap"><span class="dot warn"></span><span class="id">a4</span><span class="m">paused</span></div>
+      </div>
+      <div class="jobs" style="margin-left:0" title="Jobs: 1 running — pulling qwen3:32b 64%"><span class="dot acc"></span><b>Jobs 1</b><span class="bar" aria-label="64 percent"><i style="width:64%"></i></span></div>
+      <button class="btn pri"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>Run once</button>
+    </div>
+<style>
+.sd .ag-head{display:flex;align-items:center;gap:10px;min-height:36px}
+.sd .ag-head .sum{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px}
+.sd .ag-head .sum .sep{color:#C9C2B3;font-weight:600}
+.sd .ag-head .sum .m{color:#6B7280;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.sd .ag-head .r{margin-left:auto;display:flex;gap:8px}
+.sd .ag-wrap{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+.sd .ag-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sd .ag-grid .agent{gap:0}
+.sd .ag-grid .agent .hd{padding-bottom:10px}
+.sd .ag-grid .agent .hd .nm{display:flex;align-items:center;gap:8px}
+.sd .ag-grid .agent .hd .st{margin-left:auto}
+.sd .ag-grid .agent .seg{padding:2px;gap:1px}
+.sd .ag-grid .agent .seg span{height:22px;padding:0 9px;font-size:11px}
+.sd .ag-k{display:grid;grid-template-columns:86px 1fr;gap:8px 10px;align-items:center;padding:10px 0;border-top:1px dashed #EFE7D6;font-size:13px}
+.sd .ag-k .lbl{letter-spacing:.03em}
+.sd .ag-k .v{display:flex;align-items:center;gap:8px;min-width:0}
+.sd .ag-k .sel{flex:1;min-width:0;height:32px;justify-content:space-between}
+.sd .ag-k .sel .m{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.sd .ag-k .sel .m small{color:#6B7280;font-weight:600;font-size:12px;margin-left:4px}
+.sd .ag-k .lock{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#4B5563;white-space:nowrap}
+.sd .ag-k .stepper{height:28px}
+.sd .ag-k .stepper span{min-width:40px}
+.sd .ag-k .stepper b{width:26px;font-size:15px}
+.sd .ag-k .bar{flex:1;height:8px}
+.sd .ag-k .pct{font-weight:800;font-size:12px;white-space:nowrap;min-width:72px}
+.sd .ag-k .pct.warn{color:#9A5B0B}.sd .ag-k .pct.ok{color:#1F7F50}
+.sd .ag-stats{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#4B5563;flex-wrap:wrap}
+.sd .ag-stats .sep{color:#C9C2B3}
+.sd .ag-stats b{color:#27303F;font-weight:800}
+.sd .ag-spark{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:8px;border:1px dashed #E3DAC6;background:#FFFDF8;font-size:11px;font-weight:800;color:#9CA3AF;white-space:nowrap}
+.sd .ag-foot{border-top:1px dashed #EFE7D6;padding-top:10px;margin-top:auto}
+.sd .ag-task .hint{white-space:nowrap;flex:none}
+.sd .ag-stats{padding-bottom:10px}
+.sd .ag-task{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;min-height:32px}
+.sd .ag-task .num{color:#6B7280}
+.sd .ag-task .ttl{font-weight:800;color:#27303F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd .ag-task .r{margin-left:auto;display:flex;gap:6px;flex:none}
+.sd .ag-task.quiet{color:#6B7280;font-weight:600}
+.sd .ag-box{padding:10px 12px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.sd .ag-box .t{display:flex;align-items:flex-start;gap:8px;font-size:13px;font-weight:700;line-height:1.35}
+.sd .ag-box .t svg{flex:none;margin-top:2px}
+.sd .ag-box.danger .t{color:#B8322F}.sd .ag-box.warn .t{color:#9A5B0B}
+.sd .ag-box .t .d{color:#4B5563;font-weight:600}
+.sd .ag-box .acts{margin:0;padding:0;border:0}
+.sd .ag-side{display:flex;flex-direction:column;gap:16px}
+.sd .ag-side .box{display:flex;flex-direction:column;gap:10px}
+.sd .ag-side h2.sec .sub{font-size:12px;color:#6B7280;font-weight:600;margin-left:2px}
+.sd .ag-side .field .sel{height:36px;border-radius:10px;justify-content:space-between;font-weight:700}
+.sd .ag-side .field .sel .m{color:#6B7280;font-weight:600;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sd .ag-side .seg{align-self:flex-start}
+.sd .ag-side .help{font-size:12px;color:#6B7280;font-weight:600;line-height:1.4}
+.sd .ag-rot{display:flex;flex-direction:column}
+.sd .ag-rot .rr{display:grid;grid-template-columns:40px 24px 1fr;gap:8px;align-items:start;padding:8px 0;border-bottom:1px solid #F3EDE0;font-size:12px;font-weight:600;color:#4B5563;line-height:1.35}
+.sd .ag-rot .rr:last-child{border-bottom:0;padding-bottom:0}
+.sd .ag-rot .rr .ts{color:#9CA3AF;font-weight:700;font-variant-numeric:tabular-nums}
+.sd .ag-rot .rr .who{font-weight:800;color:#27303F}
+.sd .ag-rot .rr .why{display:inline-flex;align-items:center;gap:5px;font-weight:800;white-space:nowrap}
+</style>
+
+<!-- header line -->
+<div class="ag-head">
+  <div class="sum">
+    <span>4 agents</span>
+    <span class="sep">·</span><span class="m"><span class="dot ok"></span>2 working</span>
+    <span class="sep">·</span><span class="m"><span class="dot danger"></span>1 fault</span>
+    <span class="sep">·</span><span class="m"><span class="dot warn"></span>1 paused</span>
+    <span class="sep">·</span><span class="m">machine capacity 3 · auto</span>
+  </div>
+  <div class="r">
+    <span class="btn sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5v14M15 5v14"/></svg>Pause all</span>
+    <span class="btn sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>Resume all</span>
+  </div>
+</div>
+
+<div class="ag-wrap">
+  <div class="ag-grid">
+
+    <!-- a1 — working -->
+    <article class="agent" aria-label="Agent a1, developer, working">
+      <div class="hd">
+        <div class="av">a1</div>
+        <div>
+          <div class="nm">a1 <span class="seg" role="radiogroup" aria-label="Role of a1"><span class="on">developer</span><span>reviewer</span><span>tester</span></span></div>
+          <div class="role">ollama · local · 128k ctx</div>
+        </div>
+        <span class="tag ok st"><span class="dot ok"></span>working</span>
+      </div>
+      <div class="ag-k">
+        <span class="lbl">Model</span>
+        <div class="v"><span class="sel" title="Change model"><span class="m">qwen3:14b<small>ollama</small></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span><span class="lock"><span class="toggle" role="switch" aria-checked="false" aria-label="Lock model"></span>Lock</span></div>
+        <span class="lbl">Fallback</span>
+        <div class="ladder" aria-label="Fallback ladder"><span class="m cur">qwen3:14b</span><span class="arrow">→</span><span class="m">claude-sonnet</span><span class="arrow">→</span><span class="m">gpt-mini</span></div>
+        <span class="lbl">Parallel</span>
+        <div class="v"><span class="stepper" aria-label="Concurrency 1"><b aria-label="Decrease">−</b><span>1</span><b aria-label="Increase">+</b></span><span class="hint">default 1 · effective 1</span></div>
+        <span class="lbl">Budget</span>
+        <div class="v"><span class="bar" aria-label="Budget 85 percent used"><i class="warn" style="width:85%"></i></span><span class="pct warn">85% · 51k / 60k</span></div>
+      </div>
+      <div class="ag-stats"><span class="hint">Today</span><b>3</b> tasks<span class="sep">·</span><b>120k</b> ₿<span class="sep">·</span><b>2</b> PRs<span class="ag-spark" title="needs backend #114">burn · soon</span></div>
+      <div class="ag-foot ag-task">
+        <span class="num">#161</span><span class="ttl">Add retry to webhook delivery</span><span class="hint">21 min</span>
+        <span class="r"><span class="pill pri">Pause</span><span class="pill">Open</span></span>
+      </div>
+    </article>
+
+    <!-- a2 — idle, locked -->
+    <article class="agent" aria-label="Agent a2, reviewer, idle">
+      <div class="hd">
+        <div class="av">a2</div>
+        <div>
+          <div class="nm">a2 <span class="seg" role="radiogroup" aria-label="Role of a2"><span>developer</span><span class="on">reviewer</span><span>tester</span></span></div>
+          <div class="role">claude · cloud · 200k ctx</div>
+        </div>
+        <span class="tag st"><span class="dot idle"></span>idle</span>
+      </div>
+      <div class="ag-k">
+        <span class="lbl">Model</span>
+        <div class="v"><span class="sel" title="Model locked"><span class="m">claude-sonnet</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span><span class="lock"><span class="toggle on" role="switch" aria-checked="true" aria-label="Lock model"></span>Lock</span></div>
+        <span class="lbl">Fallback</span>
+        <div class="ladder" aria-label="Fallback ladder"><span class="m cur">claude-sonnet</span><span class="hint">locked · no rotation</span></div>
+        <span class="lbl">Parallel</span>
+        <div class="v"><span class="stepper" aria-label="Concurrency 1"><b aria-label="Decrease">−</b><span>1</span><b aria-label="Increase">+</b></span><span class="hint">default 1 · effective 1</span></div>
+        <span class="lbl">Budget</span>
+        <div class="v"><span class="bar" aria-label="Budget 0 percent used"><i class="ok" style="width:0"></i></span><span class="pct ok">0% · 0 / 60k</span></div>
+      </div>
+      <div class="ag-stats"><span class="hint">Today</span><b>2</b> tasks<span class="sep">·</span><b>89k</b> ₿<span class="sep">·</span><b>2</b> PRs<span class="ag-spark" title="needs backend #114">burn · soon</span></div>
+      <div class="ag-foot ag-task quiet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+        Model locked · waiting for a review stage · next #174
+        <span class="r"><span class="pill">Pause</span></span>
+      </div>
+    </article>
+
+    <!-- a3 — fault -->
+    <article class="agent fault" aria-label="Agent a3, developer, fault">
+      <div class="hd">
+        <div class="av">a3</div>
+        <div>
+          <div class="nm">a3 <span class="seg" role="radiogroup" aria-label="Role of a3"><span class="on">developer</span><span>reviewer</span><span>tester</span></span></div>
+          <div class="role">ollama · local · 32k ctx</div>
+        </div>
+        <span class="tag danger st"><span class="dot danger"></span>fault</span>
+      </div>
+      <div class="ag-k">
+        <span class="lbl">Model</span>
+        <div class="v"><span class="sel" title="Change model"><span class="m">qwen2.5-coder:7b<small>ollama</small></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span><span class="lock"><span class="toggle" role="switch" aria-checked="false" aria-label="Lock model"></span>Lock</span></div>
+        <span class="lbl">Fallback</span>
+        <div class="ladder" aria-label="Fallback ladder"><span class="m cur">qwen2.5-coder:7b</span><span class="arrow">→</span><span class="m">qwen3:14b</span><span class="arrow">→</span><span class="m">claude-sonnet</span></div>
+        <span class="lbl">Parallel</span>
+        <div class="v"><span class="stepper" aria-label="Concurrency 1"><b aria-label="Decrease">−</b><span>1</span><b aria-label="Increase">+</b></span><span class="hint">default 1 · effective 0</span></div>
+        <span class="lbl">Budget</span>
+        <div class="v"><span class="bar" aria-label="Budget 100 percent used"><i class="danger" style="width:100%"></i></span><span class="pct" style="color:#B8322F">100% · 60k / 60k</span></div>
+      </div>
+      <div class="ag-stats"><span class="hint">Today</span><b>1</b> tasks<span class="sep">·</span><b>76k</b> ₿<span class="sep">·</span><b>1</b> PR<span class="sep">·</span><span class="danger-t">2 faults</span><span class="ag-spark" title="needs backend #114">burn · soon</span></div>
+      <div class="ag-foot">
+        <div class="box danger ag-box">
+          <div class="t"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Context overflow on #158 <span class="d">· 31k tokens reading loader.ts, window is 32k · suggested <b>qwen3:14b</b> (128k)</span></span></div>
+          <div class="acts"><span class="pill pri">Switch model</span><span class="pill">Retry on <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span><span class="pill dis" title="needs backend #112 #113" aria-disabled="true">Retry as is</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- a4 — paused by cap -->
+    <article class="agent" aria-label="Agent a4, tester, paused by daily cap">
+      <div class="hd">
+        <div class="av">a4</div>
+        <div>
+          <div class="nm">a4 <span class="seg" role="radiogroup" aria-label="Role of a4"><span>developer</span><span>reviewer</span><span class="on">tester</span></span></div>
+          <div class="role">openai · cloud · credential "work"</div>
+        </div>
+        <span class="tag warn st"><span class="dot warn"></span>paused</span>
+      </div>
+      <div class="ag-k">
+        <span class="lbl">Model</span>
+        <div class="v"><span class="sel" title="Change model"><span class="m">gpt-mini<small>openai</small></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span><span class="lock"><span class="toggle" role="switch" aria-checked="false" aria-label="Lock model"></span>Lock</span></div>
+        <span class="lbl">Fallback</span>
+        <div class="ladder" aria-label="Fallback ladder"><span class="m cur">gpt-mini</span><span class="arrow">→</span><span class="m">qwen3:14b</span><span class="arrow">→</span><span class="m">claude-sonnet</span></div>
+        <span class="lbl">Parallel</span>
+        <div class="v"><span class="stepper" aria-label="Concurrency 1"><b aria-label="Decrease">−</b><span>1</span><b aria-label="Increase">+</b></span><span class="hint">default 1 · effective 0</span></div>
+        <span class="lbl">Budget</span>
+        <div class="v"><span class="bar" aria-label="Budget 40 percent used"><i style="width:40%"></i></span><span class="pct">40% · 24k / 60k</span></div>
+      </div>
+      <div class="ag-stats"><span class="hint">Today</span><b>0</b> tasks<span class="sep">·</span><b>106k</b> ₿<span class="sep">·</span><b>0</b> PRs<span class="ag-spark" title="needs backend #114">burn · soon</span></div>
+      <div class="ag-foot">
+        <div class="box warn ag-box">
+          <div class="t"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5v14M15 5v14"/></svg><span>Paused by daily cap 82% <span class="d">· 412k / 500k ₿ · resumes 00:00 or when the cap is raised</span></span></div>
+          <div class="acts"><span class="pill pri">Raise cap</span><span class="pill">Open Spend</span><span class="pill dis" title="Paused by org daily cap — raise the cap first" aria-disabled="true">Resume</span></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- right column -->
+  <div class="ag-side">
+    <section class="box" aria-label="Hire a crew member">
+      <h2 class="sec">Hire a crew member <span class="sub">the tavern</span></h2>
+      <label class="field">Name<input class="input" value="a5" aria-label="Agent name"></label>
+      <div class="field">Provider<span class="sel" role="combobox" aria-label="Provider"><span>ollama</span><span class="m">connected · 3 models</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+      <div class="field">Model<span class="sel" role="combobox" aria-label="Model"><span>qwen3:14b</span><span class="m">128k · recommended</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
+      <div class="field">Role<span class="seg" role="radiogroup" aria-label="Role"><span class="on">developer</span><span>reviewer</span><span>tester</span></span></div>
+      <span class="btn pri" style="align-self:flex-start;margin-top:2px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Hire</span>
+      <div class="help">New hires use the default portrait. Firing is refused while an agent is working.</div>
+    </section>
+
+    <section class="box" aria-label="Rotation history">
+      <h2 class="sec">Rotation history <span class="cnt">3</span><span class="r"><span class="pill">Show all</span></span></h2>
+      <div class="ag-rot">
+        <div class="rr"><span class="ts">13:10</span><span class="who">a3</span><span>qwen2.5-coder:7b → held<br><span class="why danger-t"><span class="dot danger"></span>error</span> context overflow</span></div>
+        <div class="rr"><span class="ts">11:02</span><span class="who">a4</span><span>gpt-mini (work) → gpt-mini (personal)<br><span class="why warn-t"><span class="dot warn"></span>rate limit</span> on credential "work"</span></div>
+        <div class="rr"><span class="ts">09:31</span><span class="who">a2</span><span>claude-sonnet → claude-sonnet<br><span class="why muted"><span class="dot idle"></span>quota</span> pool rotated to "work"</span></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+  </section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

@@ -313,6 +313,13 @@ a:hover {
   align-items: start;
 }
 
+/* A desktop demo sits above the at-a-glance panel, full width. */
+
+.hero-grid.is-desktop {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+}
+
 /* The demo window: a toolbar strip above the phone, like a small app window. */
 
 .demo-window {
@@ -405,6 +412,19 @@ a:hover {
   border-radius: calc(46px * var(--scale) + var(--bezel-w));
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.phone.is-desktop {
+  --bezel-w: 6px;
+  border-radius: 10px;
+}
+
+.phone.is-desktop .phone-viewport {
+  border-radius: 6px;
+}
+
+.phone.is-desktop::before {
+  display: none;
 }
 
 .phone::before {

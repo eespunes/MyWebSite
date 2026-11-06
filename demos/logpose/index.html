@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logpose · Sunny Deck prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+    <!-- Clickable prototype of Logpose's "Sunny Deck" UI design.
+
+         screens/ holds the design's artboards, copied unchanged from
+         eespunes/logpose docs/design (branch docs/sunny-deck-canvas, 9fd821e)
+         except for the Claude Design runtime script tag. This page only
+         shows one artboard at a time, scaled to fit, and wires the links the
+         static artboards don't have (task cards, board tabs, the Deck view). -->
+    <style>
+      :root {
+        --page: #fffbf2;
+        --panel: #faf4e4;
+        --line: #efe7d6;
+        --text: #27303f;
+        --muted: #6b7280;
+        --accent: #f5b82e;
+        --accent-ink: #2b2208;
+        --bar: 44px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body {
+        background: #f4eedf;
+        color: var(--text);
+        font-family: "Nunito", ui-rounded, system-ui, sans-serif;
+        overflow: hidden;
+      }
+      .bar {
+        height: var(--bar);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 14px;
+        background: var(--page);
+        border-bottom: 1px solid var(--line);
+      }
+      .bar b { font-size: 14px; font-weight: 800; white-space: nowrap; }
+      .bar small { font-size: 12px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+      .screens {
+        display: flex;
+        gap: 6px;
+        margin-left: auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .screens::-webkit-scrollbar { display: none; }
+      .screens button {
+        font: inherit;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--text);
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        height: 28px;
+        padding: 0 11px;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .screens button[aria-current="true"] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--accent-ink);
+      }
+      .stage {
+        position: absolute;
+        top: var(--bar);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+      }
+      .sizer { position: relative; margin: 0 auto; }
+      .stage iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1440px;
+        border: 0;
+        transform-origin: 0 0;
+        background: var(--page);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <b>Logpose</b>
+      <small>Sunny Deck design · fictional data</small>
+      <nav class="screens" aria-label="Screens"></nav>
+    </header>
+    <main class="stage"><div class="sizer"><iframe title="Logpose screen"></iframe></div></main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var W = 1440;
+        var SCREENS = [
+          ["Main", "Board"],
+          ["Deck", "Deck"],
+          ["Inbox", "Inbox"],
+          ["TaskPanel", "Task"],
+          ["Agents", "Agents"],
+          ["Spend", "Spend"],
+          ["Routing", "Routing"],
+          ["Settings", "Settings"],
+          ["Lessons", "Ship's log"],
+          ["Setup", "Setup"],
+          ["Overlays", "Overlays"],
+          ["Theme", "Design system"],
+        ];
+        var NAMES = SCREENS.map(function (s) { return s[0]; }).concat(["BoardFocus"]);
+
+        var nav = document.querySelector(".screens");
+        var stage = document.querySelector(".stage");
+        var sizer = document.querySelector(".sizer");
+        var frame = document.querySelector("iframe");
+        var current = null;
+
+        SCREENS.forEach(function (s) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.textContent = s[1];
+          b.dataset.screen = s[0];
+          b.addEventListener("click", function () { go(s[0]); });
+          nav.appendChild(b);
+        });
+
+        function screenFromHash() {
+          var name = decodeURIComponent(location.hash.slice(1));
+          return NAMES.indexOf(name) >= 0 ? name : "Main";
+        }
+
+        function go(name) {
+          if (location.hash.slice(1) !== name) location.hash = name;
+          else show(name);
+        }
+
+        function show(name) {
+          if (name === current) return;
+          current = name;
+          var tab = name === "BoardFocus" ? "Main" : name;
+          Array.prototype.forEach.call(nav.children, function (b) {
+            b.setAttribute("aria-current", b.dataset.screen === tab ? "true" : "false");
+          });
+          frame.src = "screens/" + name + ".dc.html";
+        }
+
+        // Scale the 1440px artboard to the window width; taller boards scroll.
+        function fit() {
+          var doc = frame.contentDocument;
+          var h = doc && doc.documentElement ? doc.documentElement.scrollHeight : 1000;
+          var s = Math.min(1, stage.clientWidth / W);
+          frame.style.height = h + "px";
+          frame.style.transform = "scale(" + s + ")";
+          sizer.style.width = W * s + "px";
+          sizer.style.height = h * s + "px";
+        }
+
+        function textOf(el) { return (el.textContent || "").replace(/\s+/g, " ").trim(); }
+
+        function link(el, name) {
+          el.style.cursor = "pointer";
+          el.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            go(name);
+          });
+        }
+
+        // The artboards' own links (sidebar, task close, Ship's log) point at
+        // sibling .dc.html files; route them through the shell, and add the
+        // ones the static boards leave out.
+        function wire(doc) {
+          Array.prototype.forEach.call(doc.querySelectorAll('a[href$=".dc.html"]'), function (a) {
+            var name = a.getAttribute("href").replace(/\.dc\.html$/, "");
+            if (NAMES.indexOf(name) >= 0) link(a, name);
+          });
+          if (current === "Main" || current === "BoardFocus") {
+            Array.prototype.forEach.call(doc.querySelectorAll(".card"), function (c) { link(c, "TaskPanel"); });
+          }
+          Array.prototype.forEach.call(doc.querySelectorAll('[role="tab"]'), function (t) {
+            var label = textOf(t);
+            if (/^Blocked\b/.test(label)) link(t, "BoardFocus");
+            else if (/^All\b/.test(label)) link(t, "Main");
+          });
+          Array.prototype.forEach.call(doc.querySelectorAll(".vt"), function (v) {
+            if (textOf(v) === "Blocked") link(v.parentElement || v, "BoardFocus");
+          });
+          if (current === "TaskPanel") {
+            // Clicking the dimmed board around the sheet closes it.
+            doc.addEventListener("click", function (e) {
+              if (!e.target.closest(".sheet")) go("Main");
+            });
+          }
+          if (current === "Deck") {
+            Array.prototype.forEach.call(doc.querySelectorAll(".seg *"), function (el) {
+              if (el.children.length === 0 && textOf(el) === "Columns") link(el.closest("button, a, span, div") || el, "Main");
+            });
+          }
+          Array.prototype.forEach.call(doc.querySelectorAll("button, a, span"), function (b) {
+            if (b.children.length === 0 && textOf(b) === "Open task") link(b, "TaskPanel");
+          });
+        }
+
+        frame.addEventListener("load", function () {
+          try { wire(frame.contentDocument); } catch (e) {}
+          fit();
+          stage.scrollTop = 0;
+          // Web fonts can change the board's height once they arrive.
+          setTimeout(fit, 400);
+        });
+        window.addEventListener("resize", fit);
+        window.addEventListener("hashchange", function () { show(screenFromHash()); });
+        show(screenFromHash());
+      })();
+    </script>
+  </body>
+</html>

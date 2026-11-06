@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Logpose — Sunny Deck design system</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+.sd{font-family:"Nunito",ui-rounded,system-ui,sans-serif;color:#27303F;background:#F4EEDF;box-sizing:border-box;padding:0;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.sd *{box-sizing:border-box}
+.sd svg{display:block}
+.sd button{font:inherit;color:inherit;cursor:default}
+
+/* ---------- frame ---------- */
+.sd .frame{width:1440px;height:1000px;background:#FFFBF2;display:flex;overflow:hidden;border-radius:18px;box-shadow:0 1px 0 #EFE7D6}
+.sd .side{width:240px;flex:none;background:#FFFBF2;border-right:1px solid #EFE7D6;padding:20px 16px;display:flex;flex-direction:column}
+.sd .main{flex:1;min-width:0;padding:20px 28px 20px 28px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- brand ---------- */
+.sd .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 0 8px}
+.sd .mark{width:36px;height:36px;border-radius:12px;background:#F5B82E;display:flex;align-items:center;justify-content:center}
+.sd .brand b{font-size:18px;font-weight:800;display:block;line-height:1.1}
+.sd .brand span{font-size:12px;color:#6B7280;font-weight:600}
+
+/* ---------- nav ---------- */
+.sd .nav{margin-top:22px;display:flex;flex-direction:column;gap:4px}
+.sd .nav a{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border-radius:12px;font-weight:700;color:#27303F;text-decoration:none;font-size:14px}
+.sd .nav a svg{width:18px;height:18px;color:#6B7280}
+.sd .nav a.on{background:#F5B82E;color:#2B2208}
+.sd .nav a.on svg{color:#2B2208}
+.sd .nav .badge{margin-left:auto;background:#FFF;border:1px solid #EFE7D6;color:#27303F;border-radius:999px;font-size:12px;font-weight:800;min-width:24px;height:22px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+
+/* ---------- fleet card ---------- */
+.sd .fleet{margin-top:auto;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 14px;text-align:left;width:100%}
+.sd .fleet .row{display:flex;align-items:center;gap:8px}
+.sd .fleet .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd .fleet .st{font-weight:800;font-size:14px;color:#9A5B0B;display:flex;align-items:center;gap:7px}
+.sd .fleet .sub{color:#6B7280;font-size:12px;font-weight:600;margin-top:2px}
+.sd .fleet .chev{margin-left:auto;color:#6B7280}
+.sd .fleet .test{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#9CA3AF;border:1px dashed #E3DAC6;border-radius:999px;padding:3px 10px;background:#FFFDF8}
+
+/* ---------- dots ---------- */
+.sd .dot{width:8px;height:8px;border-radius:50%;background:#6B7280;flex:none}
+.sd .dot.ok{background:#2BA66B}.sd .dot.warn{background:#E08A1E}.sd .dot.danger{background:#DE4B48}.sd .dot.acc{background:#F5B82E}.sd .dot.idle{background:#C9C2B3}
+
+/* ---------- top bar ---------- */
+.sd .top{display:flex;align-items:center;gap:12px;height:44px}
+.sd .top h1{font-size:22px;font-weight:800;margin:0;line-height:1}
+.sd .top .sub{font-size:12px;color:#6B7280;font-weight:600;margin-left:-4px;padding-top:3px;white-space:nowrap}
+.sd .search svg{flex:none}.sd .search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;color:#6B7280;font-weight:600;width:176px;flex:none;white-space:nowrap;font-size:13px}
+.sd .search .k{margin-left:auto;font-size:11px;font-weight:800;border:1px solid #EFE7D6;border-radius:7px;padding:1px 6px;color:#6B7280;background:#FFFBF2}
+.sd .crew{display:flex;gap:6px;margin-left:auto}
+.sd .chip{display:flex;align-items:center;gap:6px;height:34px;padding:0 10px 0 9px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700;white-space:nowrap}
+.sd .chip .id{font-weight:800;color:#27303F}
+.sd .chip .m{color:#6B7280;font-weight:600}
+.sd .chip.fault{border-color:#F6D2D1;background:#FFF6F5}
+.sd .chip.fault .m{color:#B8322F}
+.sd .btn{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;font-weight:800;font-size:14px;color:#27303F}
+.sd .btn.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+/* ---------- stats ---------- */
+.sd .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sd .stat{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;min-height:60px}
+.sd .stat .n{font-size:22px;font-weight:800;line-height:1}
+.sd .stat .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .stat .t{font-size:12px;color:#6B7280;font-weight:700;margin-top:4px}
+.sd .stat .ic{width:36px;height:36px;border-radius:12px;background:#FFF6DD;display:flex;align-items:center;justify-content:center;color:#9A5B0B;flex:none}
+.sd .stat .ic.ok{background:#E6F6EC;color:#1F7F50}
+.sd .stat .ic.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .stat .right{margin-left:auto;text-align:right}
+.sd .spark{width:72px;height:26px;border-radius:8px;border:1px dashed #E3DAC6;background:#FFFDF8;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#9CA3AF}
+.sd .bar{height:8px;border-radius:999px;background:#F3EDE0;overflow:hidden}
+.sd .bar i{display:block;height:100%;border-radius:999px;background:#F5B82E}
+.sd .bar i.ok{background:#2BA66B}.sd .bar i.warn{background:#E08A1E}.sd .bar i.danger{background:#DE4B48}
+
+/* ---------- toolbar ---------- */
+.sd .tools{display:flex;align-items:center;gap:8px}
+.sd .tools .title{font-weight:800;font-size:15px;margin-right:6px}
+.sd .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700;color:#27303F}
+.sd .sel .c{color:#6B7280}
+.sd .tog{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700}
+.sd .tog .sw{width:30px;height:18px;border-radius:999px;background:#F5B82E;position:relative}
+.sd .tog .sw::after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#FFF}
+.sd .jobs{margin-left:auto;display:flex;align-items:center;gap:10px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700}
+.sd .jobs .m{color:#6B7280;font-weight:600}
+.sd .jobs .bar{width:70px}
+
+/* ---------- board ---------- */
+.sd .board{display:flex;gap:16px;flex:1;min-height:0}
+.sd .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.sd .col h2{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;padding:0 6px}
+.sd .col h2 .cnt{color:#6B7280;font-weight:800}
+.sd .col h2 .hint{margin-left:auto;font-size:12px;color:#6B7280;font-weight:600}
+.sd .cards{display:flex;flex-direction:column;gap:8px;background:#FAF4E4;border-radius:16px;padding:8px;flex:1}
+.sd .card{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:11px 13px 10px 13px;display:flex;flex-direction:column;gap:4px}
+.sd .card .l1{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.sd .card .l1 .num{color:#6B7280;font-weight:700}
+.sd .card .l1 .tag{margin-left:auto;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap}
+.sd .card .l1 .tag.rev{background:#FFF1C9;color:#7A4E00}
+.sd .card .l1 .tag.fail{background:#FDE4E3;color:#B8322F}
+.sd .card .l1 .tag.blk{background:#FDEFDD;color:#9A5B0B}
+.sd .card .l1 .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .card .l2{font-size:12px;color:#6B7280;font-weight:600;display:flex;align-items:center;gap:6px}
+.sd .card .l2 .sep{color:#C9C2B3}
+.sd .card .l3{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .card .l3 .bar{flex:1}
+.sd .card .l3 .st{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sd .card .l3 .st.warn{color:#9A5B0B}.sd .card .l3 .st.danger{color:#B8322F}.sd .card .l3 .st.ok{color:#1F7F50}
+.sd .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding-top:8px;border-top:1px dashed #EFE7D6}
+.sd .pill{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:999px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:12px;font-weight:800;color:#27303F;white-space:nowrap}
+.sd .pill.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8}
+.sd .ghost{border-style:dashed;background:transparent;color:#6B7280}
+.sd .ghost .l1{color:#6B7280}
+.sd .empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;font-weight:700;text-align:center;padding:12px}
+
+/* collapsed blocked column */
+.sd .colx{width:56px;flex:none;background:#FAF4E4;border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.sd .colx .vt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:800;color:#27303F;display:flex;align-items:center;gap:8px}
+.sd .colx .pip{width:30px;height:30px;border-radius:10px;background:#FFF;border:1px solid #EFE7D6;display:flex;align-items:center;justify-content:center;color:#6B7280}
+.sd .colx .cnt{width:26px;height:26px;border-radius:999px;background:#FDEFDD;color:#9A5B0B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ---------- shelf ---------- */
+.sd .shelf{display:grid;grid-template-columns:1fr 1.45fr;gap:16px}
+.sd .shelfc{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.sd .shelfc h3{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd .shelfc h3 .cnt{color:#6B7280}
+.sd .shelfc h3 .r{margin-left:auto;display:flex;gap:6px}
+.sd .landed{display:flex;gap:8px;flex-wrap:wrap}
+.sd .landed .lp{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#E6F6EC;color:#1F7F50;font-weight:800;font-size:12px}
+.sd .landed .lp .r{color:#4B5563;font-weight:600}
+.sd .bl{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.sd .bl label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;height:24px}
+.sd .bl label .num{color:#6B7280;font-weight:700}
+.sd .bl label .r{color:#6B7280;font-weight:600;font-size:12px;margin-left:auto}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+
+/* =====================================================================
+   Sunny Deck — additional components (shared by every screen)
+   Tokens: page #FFFBF2 · panel #FAF4E4 · surface #FFF · line #EFE7D6 · line-2 #E3DAC6
+   text #27303F · text-2 #4B5563 · muted #6B7280 · faint #9CA3AF
+   accent #F5B82E (ink #2B2208) · accent-soft #FFF6DD / #FFF1C9 (text #7A4E00)
+   ok #2BA66B (text #1F7F50, soft #E6F6EC) · warn #E08A1E (text #9A5B0B, soft #FDEFDD)
+   danger #DE4B48 (text #B8322F, soft #FDE4E3) · info #3B82C4 (text #1F5A8E, soft #E4F0FA)
+   radius: 14 cards · 16 panels · 999 pills/buttons · 10 inputs
+   ===================================================================== */
+.sd .frame{height:auto;min-height:1000px}
+.sd .main{gap:16px}
+.sd .frame.plain .main{padding:24px 28px}
+
+/* text helpers */
+.sd .muted{color:#6B7280}.sd .faint{color:#9CA3AF}.sd .t2{color:#4B5563}
+.sd .ok-t{color:#1F7F50}.sd .warn-t{color:#9A5B0B}.sd .danger-t{color:#B8322F}.sd .info-t{color:#1F5A8E}
+.sd .mono{font-variant-numeric:tabular-nums;font-family:"Nunito",ui-monospace,monospace}
+.sd .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.sd .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd h2.sec{margin:0;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd h2.sec .cnt{color:#6B7280}
+.sd h2.sec .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .hint{font-size:12px;color:#6B7280;font-weight:600}
+
+/* surfaces */
+.sd .panel{background:#FAF4E4;border-radius:16px;padding:8px}
+.sd .box{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:14px 16px}
+.sd .box.soft{background:#FFFDF8}
+.sd .box.warn{border-color:#F7D9B0;background:#FFF9F0}
+.sd .box.danger{border-color:#F6D2D1;background:#FFF6F5}
+.sd .box.ok{border-color:#BFE6CE;background:#F3FBF6}
+.sd .box.info{border-color:#C6DDF2;background:#F3F8FD}
+.sd .box.accent{border-color:#F5D98A;background:#FFF9E6}
+
+/* chips / status tags */
+.sd .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap;height:20px}
+.sd .tag.rev,.sd .tag.acc{background:#FFF1C9;color:#7A4E00}
+.sd .tag.fail,.sd .tag.danger{background:#FDE4E3;color:#B8322F}
+.sd .tag.blk,.sd .tag.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .tag.ok,.sd .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .tag.info{background:#E4F0FA;color:#1F5A8E}
+.sd .tag.solid-danger{background:#DE4B48;color:#FFF}
+.sd .tag.solid-warn{background:#E08A1E;color:#2B1D0E}
+.sd .tag.solid-ok{background:#2BA66B;color:#FFF}
+.sd .tag.solid-acc{background:#F5B82E;color:#2B2208}
+
+/* 7-state fleet pill (large) */
+.sd .fleetpill{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 10px;border-radius:999px;font-weight:800;font-size:13px;border:1px solid #EFE7D6;background:#FFF}
+.sd .fleetpill.offline{background:#F3EDE0;color:#4B5563}
+.sd .fleetpill.notset{background:#FDE4E3;color:#B8322F}
+.sd .fleetpill.cap{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.stopped{background:#F3EDE0;color:#27303F}
+.sd .fleetpill.degraded{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.sailing{background:#E6F6EC;color:#1F7F50}
+.sd .fleetpill.idle{background:#FFF;color:#6B7280}
+
+/* buttons (reuse .btn .pill from base) */
+.sd .btn.sm{height:32px;padding:0 12px;font-size:13px}
+.sd .btn.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .btn.ok{background:#2BA66B;border-color:#2BA66B;color:#FFF}
+.sd .btn.ghost{background:transparent;border-color:transparent;color:#4B5563}
+.sd .btn.dis,.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8;cursor:not-allowed}
+.sd .pill.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .pill.ok{background:#E6F6EC;border-color:#BFE6CE;color:#1F7F50}
+.sd .iconbtn{width:32px;height:32px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;display:inline-flex;align-items:center;justify-content:center;color:#4B5563}
+.sd .kbd{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:7px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:11px;font-weight:800;color:#6B7280}
+
+/* inputs & form controls */
+.sd .input{height:36px;padding:0 12px;border-radius:10px;border:1px solid #E3DAC6;background:#FFF;font:inherit;font-size:13px;font-weight:600;color:#27303F;width:100%}
+.sd .input::placeholder{color:#9CA3AF}
+.sd .input.err{border-color:#DE4B48}
+.sd .input[disabled]{background:#FFFDF8;color:#9CA3AF;border-style:dashed}
+.sd .field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:#6B7280}
+.sd .field .help{font-size:11px;font-weight:600;color:#9CA3AF}
+.sd .field .err{color:#B8322F;font-weight:700}
+.sd .toggle{width:34px;height:20px;border-radius:999px;background:#E3DAC6;position:relative;flex:none;display:inline-block}
+.sd .toggle::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#FFF}
+.sd .toggle.on{background:#F5B82E}.sd .toggle.on::after{left:auto;right:2px}
+.sd .seg{display:inline-flex;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;padding:3px;gap:2px}
+.sd .seg span{height:26px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12px;font-weight:800;color:#6B7280}
+.sd .seg span.on{background:#F5B82E;color:#2B2208}
+.sd .stepper{display:inline-flex;align-items:center;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;height:32px;overflow:hidden}
+.sd .stepper span{min-width:56px;text-align:center;font-weight:800;font-size:13px}
+.sd .stepper b{width:30px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#4B5563;font-size:16px}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .diffdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#F5B82E;margin-left:6px;vertical-align:middle}
+
+/* tabs */
+.sd .tabs{display:flex;gap:4px;border-bottom:1px solid #EFE7D6;padding:0 4px}
+.sd .tab{height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:#6B7280;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sd .tab.on{color:#27303F;border-bottom-color:#F5B82E}
+.sd .tab.dis{color:#9CA3AF}
+.sd .tab .cnt{font-size:11px;background:#F3EDE0;border-radius:999px;padding:1px 6px;color:#4B5563}
+
+/* lists & tables */
+.sd .list{display:flex;flex-direction:column}
+.sd .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #EFE7D6;font-size:13px;font-weight:600}
+.sd .row:last-child{border-bottom:0}
+.sd .row .ttl{font-weight:800;color:#27303F}
+.sd .row .num{color:#6B7280;font-weight:700}
+.sd .row .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .row.sel{background:#FFF9E6}
+.sd table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.sd table.tbl th{text-align:left;font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid #EFE7D6}
+.sd table.tbl td{padding:10px 12px;border-bottom:1px solid #F3EDE0;font-weight:600;vertical-align:middle}
+.sd table.tbl tr:last-child td{border-bottom:0}
+.sd table.tbl td.n,.sd table.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* KPI tiles & bars (reuse .stat .bar) */
+.sd .kpi{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.sd .kpi .n{font-size:26px;font-weight:800;line-height:1}
+.sd .kpi .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .kpi .t{font-size:12px;color:#6B7280;font-weight:700}
+.sd .kpi .d{font-size:12px;font-weight:700}
+.sd .bar.lg{height:12px}
+.sd .bar.sm{height:6px}
+.sd .bar i.acc{background:#F5B82E}.sd .bar i.info{background:#3B82C4}.sd .bar i.muted{background:#C9C2B3}
+
+/* gates */
+.sd .gates{display:inline-flex;gap:4px;align-items:center}
+.sd .gate{width:18px;height:18px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:#F3EDE0;color:#6B7280}
+.sd .gate.pass{background:#E6F6EC;color:#1F7F50}.sd .gate.fail{background:#FDE4E3;color:#B8322F}.sd .gate.run{background:#FFF1C9;color:#7A4E00}
+
+/* log lines */
+.sd .log{background:#FFFDF8;border:1px solid #EFE7D6;border-radius:12px;padding:8px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5}
+.sd .log .ln{display:grid;grid-template-columns:64px 64px 1fr;gap:10px;padding:3px 14px;color:#4B5563}
+.sd .log .ln .ts{color:#9CA3AF}
+.sd .log .ln .k{font-weight:800;color:#6B7280}
+.sd .log .ln.plan .k{color:#1F5A8E}.sd .log .ln.tool .k{color:#4B5563}.sd .log .ln.gate .k{color:#1F7F50}
+.sd .log .ln.error{background:#FDE4E3;color:#B8322F}.sd .log .ln.error .k{color:#B8322F}
+.sd .log .ln.cloud .k{color:#7A4E00}
+
+/* side panel (task detail) & overlays */
+.sd .scrim{position:absolute;inset:0;background:rgba(39,48,63,.28);border-radius:18px}
+.sd .sheet{position:absolute;top:0;right:0;bottom:0;width:680px;background:#FFFBF2;border-left:1px solid #EFE7D6;border-radius:0 18px 18px 0;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(39,48,63,.08)}
+.sd .pop{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;box-shadow:0 10px 30px rgba(39,48,63,.12)}
+.sd .toast{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 10px 0 16px;border-radius:999px;background:#27303F;color:#FFF;font-weight:700;font-size:13px}
+.sd .toast .pill{background:transparent;border-color:#4B5563;color:#F5B82E}
+.sd .banner{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700}
+.sd .banner.warn{background:#FDEFDD;color:#9A5B0B}.sd .banner.danger{background:#FDE4E3;color:#B8322F}.sd .banner.info{background:#E4F0FA;color:#1F5A8E}.sd .banner.ok{background:#E6F6EC;color:#1F7F50}
+.sd .skel{background:linear-gradient(90deg,#F3EDE0,#FAF4E4,#F3EDE0);border-radius:8px;height:12px}
+.sd .emptybox{border:1px dashed #E3DAC6;border-radius:14px;padding:28px;text-align:center;color:#6B7280;font-weight:700;font-size:13px;background:#FFFDF8}
+.sd .emptybox b{display:block;color:#27303F;font-size:15px;margin-bottom:4px}
+
+/* spark & charts (pure CSS) */
+.sd .bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.sd .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.sd .bars .b i{display:block;border-radius:4px 4px 0 0;background:#F5B82E}
+.sd .bars .b i.cloud{background:#3B82C4;border-radius:0}
+.sd .bars .b i.local{background:#F5B82E}
+.sd .legend{display:flex;gap:14px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+/* settings nav */
+.sd .subnav{display:flex;flex-direction:column;gap:2px;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:6px}
+.sd .subnav a{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:10px;font-size:13px;font-weight:800;color:#4B5563;text-decoration:none}
+.sd .subnav a.on{background:#FFF1C9;color:#7A4E00}
+.sd .subnav a .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .srow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #F3EDE0}
+.sd .srow:last-child{border-bottom:0}
+.sd .srow .k{font-weight:800;font-size:14px}
+.sd .srow .d{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.sd .srow .d code{font-family:ui-monospace,monospace;font-size:11px;background:#F3EDE0;border-radius:5px;padding:0 5px}
+
+/* agent card */
+.sd .agent{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sd .agent.fault{border-color:#F6D2D1}
+.sd .agent .hd{display:flex;align-items:center;gap:10px}
+.sd .agent .av{width:36px;height:36px;border-radius:12px;background:#FFF6DD;color:#7A4E00;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sd .agent.fault .av{background:#FDE4E3;color:#B8322F}
+.sd .agent .nm{font-weight:800;font-size:15px}
+.sd .agent .role{font-size:12px;color:#6B7280;font-weight:700}
+.sd .ladder{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#4B5563}
+.sd .ladder .arrow{color:#C9C2B3}
+.sd .ladder .m{border:1px solid #EFE7D6;border-radius:999px;padding:2px 9px;background:#FFFBF2}
+.sd .ladder .m.cur{background:#FFF1C9;border-color:#F5D98A;color:#7A4E00}
+
+/* top bar fit */
+.sd .top .search{width:220px}
+.sd .top .jobs{white-space:nowrap;flex:none}
+.sd .top .crew{margin-left:auto}
+
+</style>
+</helmet>
+<div class="sd" style="width: 1440px; min-height: 1457px;">
+<div class="frame plain" style="min-height:1457px;position:relative"><style>
+/* Theme sheet — page-specific, scoped under .sd .th- */
+.sd .th-sheet{flex:1;min-width:0;padding:28px;display:flex;flex-direction:column;gap:16px;background:#FFFBF2}
+.sd .th-head{display:flex;align-items:flex-end;gap:16px}
+.sd .th-head h1{margin:0;font-size:22px;font-weight:800;line-height:1.1;display:flex;align-items:center;gap:10px}
+.sd .th-head h1 .mark{width:32px;height:32px;border-radius:10px}
+.sd .th-head .pr{font-size:13px;color:#4B5563;font-weight:600;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.sd .th-head .pr i{font-style:normal;color:#C9C2B3}
+.sd .th-head .right{margin-left:auto;display:flex;gap:6px;align-items:center;flex:none}
+.sd .th-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.sd .th-s3{grid-column:span 3}.sd .th-s4{grid-column:span 4}.sd .th-s5{grid-column:span 5}.sd .th-s7{grid-column:span 7}.sd .th-s12{grid-column:span 12}
+.sd .th-sec{display:flex;flex-direction:column;gap:10px;padding:12px 16px 14px 16px}
+.sd .th-sec h2.sec .hint{font-weight:600}
+.sd .th-sub{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd .th-g{display:flex;flex-direction:column;gap:6px}
+.sd .th-wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* palette */
+.sd .th-sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px 10px}
+.sd .th-chip{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:#27303F;min-width:0;white-space:nowrap}
+.sd .th-chip .c{height:26px;border-radius:9px;border:1px solid #EFE7D6}
+.sd .th-chip .h{font-size:11px;color:#6B7280;font-weight:700;font-variant-numeric:tabular-nums}
+.sd .th-sem{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.sd .th-semc{border-radius:12px;border:1px solid #EFE7D6;padding:8px 10px;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:800;white-space:nowrap}
+.sd .th-semc .row{display:flex;align-items:center;gap:6px}
+.sd .th-semc .h{font-size:11px;color:#6B7280;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.45}
+.sd .th-semc .h b{color:#4B5563;font-weight:800}
+/* type */
+.sd .th-type{display:flex;flex-direction:column}
+.sd .th-type .r{display:grid;grid-template-columns:132px 1fr;gap:12px;align-items:baseline;padding:5px 0;border-bottom:1px solid #F3EDE0}
+.sd .th-type .r:last-child{border-bottom:0}
+.sd .th-type .r .k{font-size:12px;color:#6B7280;font-weight:700;font-variant-numeric:tabular-nums}
+.sd .th-type .r .v{font-weight:800;color:#27303F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* radius & spacing strip */
+.sd .th-strip{display:grid;grid-template-columns:auto auto 1fr;gap:40px;align-items:center}
+.sd .th-rad{display:flex;gap:10px;align-items:center}
+.sd .th-rad .shape{background:#FFF;border:1px solid #E3DAC6;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#6B7280;white-space:nowrap}
+.sd .th-ruler{display:flex;gap:4px;align-items:flex-end;height:28px}
+.sd .th-ruler i{display:block;width:8px;background:#F5B82E;border-radius:2px}
+.sd .th-ruler .g{display:block;width:16px;background:#FDEFDD;border-radius:2px}
+.sd .th-kv{display:flex;gap:6px 22px;flex-wrap:wrap;font-size:12px;font-weight:600;color:#4B5563}
+.sd .th-kv span b{color:#27303F;font-weight:800;font-variant-numeric:tabular-nums;margin-right:4px}
+/* status */
+.sd .th-dots{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#4B5563}
+.sd .th-dots span{display:inline-flex;align-items:center;gap:6px}
+/* anatomy */
+.sd .th-anat{position:relative;padding-left:24px}
+.sd .th-anat .n,.sd .th-leg .n{width:18px;height:18px;border-radius:999px;background:#27303F;color:#FFF;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.sd .th-anat .n{position:absolute;left:0}
+.sd .th-leg{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:#4B5563}
+.sd .th-leg div{display:flex;gap:7px;align-items:center;white-space:nowrap}
+.sd .th-leg b{color:#27303F;font-weight:800}
+/* controls */
+.sd .th-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sd .th-lab{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;white-space:nowrap}
+/* feedback */
+.sd .th-ban{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sd .th-ban .banner{white-space:nowrap;padding:9px 12px}
+/* vocabulary */
+.sd .th-vocab{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 28px;align-items:start}
+.sd .th-vocab table.tbl td{padding:6px 10px}
+.sd .th-vocab table.tbl th{padding:4px 10px;white-space:nowrap}
+.sd .th-vocab table.tbl td .sub{color:#6B7280;font-weight:600}
+.sd .th-vocab table.tbl td .where{color:#9CA3AF;font-size:12px}
+.sd .th-vocab table.tbl td:first-child{white-space:nowrap}
+</style>
+
+<div class="th-sheet">
+
+  <!-- header -->
+  <div class="th-head">
+    <div>
+      <h1><span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B2208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 5.2-5.2 2.2 2.2-5.2z" fill="#2B2208" stroke="none"/></svg></span>Sunny Deck <span class="muted" style="font-weight:700">· design system</span></h1>
+      <div class="pr">
+        <span>one accent</span><i>·</i><span>soft surfaces</span><i>·</i><span>status = dot + word</span><i>·</i><span>one primary per region</span><i>·</i><span>pirate words as subtitles only</span>
+      </div>
+    </div>
+    <div class="right">
+      <span class="tag">Nunito only</span><span class="tag">1 px lines</span><span class="tag">no shadows on cards</span><span class="tag">no artwork</span>
+    </div>
+  </div>
+
+  <div class="th-grid">
+
+    <!-- ========== Palette ========== -->
+    <div class="box th-sec th-s7">
+      <h2 class="sec">Palette <span class="hint">cream page · white surfaces · sand panels</span></h2>
+      <div class="th-sw">
+        <div class="th-chip"><div class="c" style="background:#FFFBF2"></div><span>page</span><span class="h">#FFFBF2</span></div>
+        <div class="th-chip"><div class="c" style="background:#FAF4E4"></div><span>panel</span><span class="h">#FAF4E4</span></div>
+        <div class="th-chip"><div class="c" style="background:#FFFFFF"></div><span>surface</span><span class="h">#FFFFFF</span></div>
+        <div class="th-chip"><div class="c" style="background:#EFE7D6"></div><span>line</span><span class="h">#EFE7D6</span></div>
+        <div class="th-chip"><div class="c" style="background:#E3DAC6"></div><span>line-2 · inputs</span><span class="h">#E3DAC6</span></div>
+        <div class="th-chip"><div class="c" style="background:#F3EDE0"></div><span>track · neutral tag</span><span class="h">#F3EDE0</span></div>
+        <div class="th-chip"><div class="c" style="background:#27303F"></div><span>text</span><span class="h">#27303F</span></div>
+        <div class="th-chip"><div class="c" style="background:#4B5563"></div><span>text-2</span><span class="h">#4B5563</span></div>
+        <div class="th-chip"><div class="c" style="background:#6B7280"></div><span>muted</span><span class="h">#6B7280</span></div>
+        <div class="th-chip"><div class="c" style="background:#9CA3AF"></div><span>faint · disabled</span><span class="h">#9CA3AF</span></div>
+        <div class="th-chip"><div class="c" style="background:#F5B82E;border-color:#F5B82E"></div><span>accent</span><span class="h">#F5B82E · ink #2B2208</span></div>
+        <div class="th-chip"><div class="c" style="background:linear-gradient(90deg,#FFF6DD 50%,#FFF1C9 50%)"></div><span>accent soft</span><span class="h">#FFF6DD · #FFF1C9<br>text #7A4E00</span></div>
+      </div>
+      <div class="th-sub">Semantic · solid for dots &amp; bars · text sibling on the soft tint</div>
+      <div class="th-sem">
+        <div class="th-semc" style="background:#E6F6EC;color:#1F7F50"><div class="row"><span class="dot ok"></span>ok</div><div class="h"><b>#2BA66B</b> solid<br>#1F7F50 text<br>#E6F6EC soft</div></div>
+        <div class="th-semc" style="background:#FDEFDD;color:#9A5B0B"><div class="row"><span class="dot warn"></span>warn</div><div class="h"><b>#E08A1E</b> solid<br>#9A5B0B text<br>#FDEFDD soft</div></div>
+        <div class="th-semc" style="background:#FDE4E3;color:#B8322F"><div class="row"><span class="dot danger"></span>danger</div><div class="h"><b>#DE4B48</b> solid<br>#B8322F text<br>#FDE4E3 soft</div></div>
+        <div class="th-semc" style="background:#E4F0FA;color:#1F5A8E"><div class="row"><span class="dot" style="background:#3B82C4"></span>info</div><div class="h"><b>#3B82C4</b> solid<br>#1F5A8E text<br>#E4F0FA soft</div></div>
+        <div class="th-semc" style="background:#FFF;color:#6B7280"><div class="row"><span class="dot idle"></span>idle · neutral</div><div class="h"><b>#C9C2B3</b> idle dot<br>#6B7280 default dot<br>#F3EDE0 neutral tag</div></div>
+      </div>
+    </div>
+
+    <!-- ========== Type scale ========== -->
+    <div class="box th-sec th-s5">
+      <h2 class="sec">Type scale <span class="hint">Nunito · 600–800 · line-height 1.4 · nothing under 11 px</span></h2>
+      <div class="th-type">
+        <div class="r"><span class="k">800 · 22 px · titles</span><span class="v" style="font-size:22px;line-height:1.1">Board <span class="muted" style="font-size:12px;font-weight:600">today's voyage</span></span></div>
+        <div class="r"><span class="k">800 · 15 px · section</span><span class="v" style="font-size:15px">Needs you <span class="muted">4</span></span></div>
+        <div class="r"><span class="k">600 · 14 px · body</span><span class="v" style="font-size:14px;font-weight:600">Agent stops and asks at this amount.</span></div>
+        <div class="r"><span class="k">800 · 13 px · controls</span><span class="v" style="font-size:13px"><span class="pill" style="height:24px">Retry on</span> <span class="sel" style="height:26px">Repo <span class="c">· all 3</span></span></span></div>
+        <div class="r"><span class="k">600 · 12 px · meta</span><span class="v" style="font-size:12px;font-weight:600;color:#6B7280">acme/billing-api · a1 qwen3:14b · 12 min</span></div>
+        <div class="r"><span class="k">800 · 11 px · labels</span><span class="v lbl">Fleet · uppercase · .04em tracking</span></div>
+        <div class="r"><span class="k">numbers</span><span class="v mono" style="font-size:22px;line-height:1">412k<small style="font-size:14px;color:#6B7280;font-weight:700;margin-left:3px">₿</small> <span style="font-size:12px;color:#6B7280;font-weight:600;margin-left:8px">tabular · acme/web-shop#161</span></span></div>
+      </div>
+      <div class="hint">Muted #6B7280 on cream is 5.4:1 · faint #9CA3AF is for disabled text only.</div>
+    </div>
+
+    <!-- ========== Radius & spacing strip ========== -->
+    <div class="box th-sec th-s12" style="padding-bottom:12px">
+      <div class="th-strip">
+        <div style="display:flex;align-items:center;gap:16px">
+          <h2 class="sec" style="white-space:nowrap">Radius &amp; spacing</h2>
+          <div class="th-rad">
+            <div class="shape" style="width:62px;height:40px;border-radius:14px">14 card</div>
+            <div class="shape" style="width:62px;height:40px;border-radius:16px;background:#FAF4E4;border-color:#FAF4E4">16 panel</div>
+            <div class="shape" style="width:60px;height:36px;border-radius:10px">10 input</div>
+            <div class="shape" style="width:66px;height:32px;border-radius:999px">999 pill</div>
+            <div class="shape" style="width:36px;height:36px;border-radius:12px;background:#FFF6DD;border-color:#FFF6DD;color:#9A5B0B">12 icon</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="th-sub">8-pt grid</span>
+          <div class="th-ruler" aria-label="Spacing steps 4, 8, 12, 16, 24, 28 and two 16 px gutters">
+            <i style="height:4px"></i><i style="height:8px"></i><i style="height:12px"></i><i style="height:16px"></i><i style="height:24px"></i><i style="height:28px"></i><span class="g" style="height:28px"></span><span class="g" style="height:28px"></span>
+          </div>
+        </div>
+        <div class="th-kv">
+          <span><b>16</b>gutters between regions &amp; cards</span>
+          <span><b>28</b>frame side padding · 20 top</span>
+          <span><b>8</b>inside a panel · card gap</span>
+          <span><b>14 · 16</b>box · agent card padding</span>
+          <span><b>38 · 32 · 26</b>button · small · pill heights</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Status ========== -->
+    <div class="box th-sec th-s7">
+      <h2 class="sec">Status <span class="hint">never colour alone — always dot or icon + word</span></h2>
+      <div class="th-g">
+        <div class="th-sub">Dots · 8 px</div>
+        <div class="th-dots">
+          <span><span class="dot ok"></span>ok</span><span><span class="dot warn"></span>warn</span><span><span class="dot danger"></span>danger</span><span><span class="dot acc"></span>accent · jobs</span><span><span class="dot idle"></span>idle</span><span><span class="dot"></span>default</span>
+          <span class="muted" style="font-weight:600">· 6 px <span class="diffdot" style="margin-left:0"></span> diffdot marks a changed setting</span>
+        </div>
+      </div>
+      <div class="th-g">
+        <div class="th-sub">Tags · 20 px · one per card title</div>
+        <div class="th-wrap">
+          <span class="tag info">To do</span><span class="tag acc">In development</span><span class="tag">Code review</span><span class="tag">Testing</span><span class="tag rev">Ready for merge</span><span class="tag blk">Blocked</span><span class="tag ok">Done</span> <span class="hint">· modifiers:</span> <span class="tag fail">Gate failed</span><span class="tag">Stale</span><span class="tag p1">p1</span>
+          <span class="muted" style="font-size:12px;font-weight:600;margin-left:6px">solid only for the one thing that needs you</span><span class="tag solid-danger">Needs you</span><span class="tag solid-warn">Cap hit</span>
+        </div>
+      </div>
+      <div class="th-g">
+        <div class="th-sub">Fleet pill · 7 states in priority order</div>
+        <div class="th-wrap">
+          <span class="fleetpill offline"><span class="dot"></span>Offline · reconnecting…</span>
+          <span class="fleetpill notset"><span class="dot danger"></span>Not set up · GitHub</span>
+          <span class="fleetpill cap"><span class="dot warn"></span>Cap hit · daily</span>
+          <span class="fleetpill stopped"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>Stopped</span>
+          <span class="fleetpill degraded"><span class="dot warn"></span>Degraded · a3 fault</span>
+          <span class="fleetpill sailing"><span class="dot ok"></span>Sailing · 2 working</span>
+          <span class="fleetpill idle"><span class="dot idle"></span>Idle · nothing queued</span>
+        </div>
+      </div>
+      <div class="th-g">
+        <div class="th-sub">Gates · 18 px squares · glyph + colour · order lint · test · build</div>
+        <div class="th-wrap" style="gap:14px;font-size:12px;font-weight:700;color:#4B5563">
+          <span class="gates"><span class="gate pass">✓</span><span class="gate pass">✓</span><span class="gate pass">✓</span></span><span>all pass</span>
+          <span class="gates"><span class="gate pass">✓</span><span class="gate run">…</span><span class="gate">·</span></span><span>running · not run</span>
+          <span class="gates"><span class="gate fail">✕</span><span class="gate pass">✓</span><span class="gate">·</span></span><span>lint failed</span>
+          <span class="bar" style="width:110px" aria-label="Budget 85 percent"><i class="warn" style="width:85%"></i></span><span class="muted" style="font-weight:600">bars share the same colours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== Buttons & pills ========== -->
+    <div class="box th-sec th-s5">
+      <h2 class="sec">Buttons &amp; pills <span class="hint">one yellow primary per region</span></h2>
+      <div class="th-wrap">
+        <button class="btn pri"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>Run once</button>
+        <button class="btn">Open PR</button>
+        <button class="btn danger">Abandon</button>
+        <button class="btn ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Approve &amp; merge</button>
+        <button class="btn ghost">Show all</button>
+        <button class="btn dis" title="needs backend #107" aria-disabled="true">Request changes</button>
+        <button class="iconbtn" aria-label="More actions" title="More actions"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+        <span class="kbd">⌘K</span><span class="kbd">g b</span><span class="kbd">?</span>
+      </div>
+      <div class="th-wrap">
+        <span class="lbl" style="width:104px">Small · 32</span>
+        <button class="btn pri sm">Queue selected (2)</button><button class="btn sm">Dispatch</button><button class="btn sm danger">Stop</button><button class="btn sm ghost">Reset</button>
+      </div>
+      <div class="th-wrap">
+        <span class="lbl" style="width:104px">Card pills · 26</span>
+        <span class="pill pri">Extend +32k</span><span class="pill">Set…</span><span class="pill ok">Approve</span><span class="pill danger">Abandon</span><span class="pill dis" title="needs backend #109" aria-disabled="true">Diff</span>
+      </div>
+      <div class="hint">Primary = yellow fill, ink text. Neutral = white pill, 1 px line. Dashed + faint = disabled until the backend lands; its tooltip names the ticket (“needs backend #109”).</div>
+    </div>
+
+    <!-- ========== Task card anatomy ========== -->
+    <div class="box th-sec th-s3">
+      <h2 class="sec">Task card anatomy</h2>
+      <div class="th-anat">
+        <span class="n" style="top:12px">1</span><span class="n" style="top:36px">2</span><span class="n" style="top:58px">3</span><span class="n" style="top:102px">4</span>
+        <div class="card">
+          <div class="l1"><span class="num">#152</span>Fix checkout e2e<span class="tag rev">Review</span></div>
+          <div class="l2">acme/web-shop <span class="sep">·</span> a2 reviewed <span class="sep">·</span> PR open</div>
+          <div class="l3"><span class="st ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>gates passed</span><span class="bar"><i class="ok" style="width:100%"></i></span></div>
+          <div class="acts"><span class="pill pri">Merge</span><span class="pill">Open PR</span><span class="pill dis" title="needs backend #109" aria-disabled="true">Diff</span></div>
+        </div>
+      </div>
+      <div class="th-leg">
+        <div><span class="n">1</span><span><b>.l1</b> #id muted · title · one tag right</span></div>
+        <div><span class="n">2</span><span><b>.l2</b> repo · agent · note, 12 px muted</span></div>
+        <div><span class="n">3</span><span><b>.l3</b> status word in its colour + bar</span></div>
+        <div><span class="n">4</span><span><b>.acts</b> dashed rule · one primary pill</span></div>
+      </div>
+      <div class="hint">Cards sit in a sand <b style="color:#27303F">.panel</b>, 8 px padding. White on sand on cream is the whole depth model.</div>
+    </div>
+
+    <!-- ========== Controls ========== -->
+    <div class="box th-sec th-s4">
+      <h2 class="sec">Controls <span class="hint">inputs 36 px · radius 10 · line-2 border</span></h2>
+      <div class="th-two">
+        <label class="field">Repository<input class="input" value="acme/billing-api" readonly><span class="help">owner/name, as on GitHub</span></label>
+        <label class="field">Per-task budget<input class="input err" value="0" readonly><span class="err">Must be at least 8k tokens</span></label>
+      </div>
+      <div class="th-wrap" style="gap:12px">
+        <span class="sel">Agent <span class="c">· any</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        <span class="th-lab"><span class="toggle on" aria-label="on"></span>Auto-dispatch</span>
+        <span class="th-lab"><span class="toggle" aria-label="off"></span><span class="muted">Needs me</span></span>
+      </div>
+      <div class="th-wrap" style="gap:12px">
+        <span class="seg"><span class="on">local-first</span><span>best-available</span><span>manual</span></span>
+        <span class="stepper"><b>−</b><span>64k</span><b>+</b></span>
+      </div>
+      <div class="th-wrap" style="gap:14px">
+        <span class="th-lab"><span class="cb on"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>#164 Export invoices</span>
+        <span class="th-lab"><span class="cb"></span>#166 Cache images</span>
+      </div>
+      <div class="tabs"><span class="tab on">Log</span><span class="tab">Gates <span class="cnt">3</span></span><span class="tab">Cost</span><span class="tab dis" title="needs backend #109">Diff</span></div>
+    </div>
+
+    <!-- ========== Feedback ========== -->
+    <div class="box th-sec th-s5">
+      <h2 class="sec">Feedback <span class="hint">banners inline · toast bottom-centre · skeleton while loading</span></h2>
+      <div class="th-ban">
+        <div class="banner warn"><span class="dot warn"></span>Cap at 82% · a4 paused<span class="pill" style="margin-left:auto">Raise cap</span></div>
+        <div class="banner danger"><span class="dot danger"></span>ollama offline · retry refused</div>
+        <div class="banner info"><span class="dot" style="background:#3B82C4"></span>Pulling qwen3:32b · 64%</div>
+        <div class="banner ok"><span class="dot ok"></span>Saved · auto-dispatch on</div>
+      </div>
+      <div class="th-wrap" style="gap:12px;align-items:stretch">
+        <span class="toast" style="flex:none"><span class="dot ok"></span>Queued #164, #165<span class="pill">Undo</span></span>
+        <div style="display:flex;flex-direction:column;gap:6px;width:120px;justify-content:center" aria-label="Loading"><span class="skel" style="width:100%"></span><span class="skel" style="width:70%"></span><span class="skel" style="width:85%"></span></div>
+        <div class="emptybox" style="padding:8px 12px;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center"><b style="margin-bottom:0;font-size:13px">Nothing queued</b><span style="font-size:12px;font-weight:600">Pick issues from the backlog.</span></div>
+      </div>
+    </div>
+
+    <!-- ========== Vocabulary ========== -->
+    <div class="box th-sec th-s12">
+      <h2 class="sec">Vocabulary <span class="hint">plain label leads · pirate subtitle follows in 12 px muted · never the other way round</span></h2>
+      <div class="th-vocab"><table class="tbl"><thead><tr><th>Plain label</th><th>Subtitle</th><th>Where</th></tr></thead><tbody><tr><td><b>Board</b></td><td class="sub">today's voyage</td><td class="where">top bar h1 · sidebar nav</td></tr><tr><td><b>Inbox</b></td><td class="sub">what needs you</td><td class="where">top bar h1 · badge count</td></tr><tr><td><b>Agents</b></td><td class="sub">the crew</td><td class="where">top bar h1 · crew chips</td></tr></tbody></table><table class="tbl"><thead><tr><th>Plain label</th><th>Subtitle</th><th>Where</th></tr></thead><tbody><tr><td><b>Spend</b></td><td class="sub">the ledger</td><td class="where">top bar h1 · tokens as ₿</td></tr><tr><td><b>Routing</b></td><td class="sub">charts &amp; triage</td><td class="where">top bar h1</td></tr><tr><td><b>Settings</b></td><td class="sub">rigging</td><td class="where">top bar h1 · subnav</td></tr></tbody></table><table class="tbl"><thead><tr><th>Plain label</th><th>Subtitle</th><th>Where</th></tr></thead><tbody><tr><td><b>Status</b></td><td class="sub">Sailing · Degraded · Stopped · Cap hit · Offline · Not set up · Idle</td><td class="where">fleet card · fleet pill</td></tr><tr><td><b>Columns</b></td><td class="sub">To do · In development · Code review · Testing · Ready for merge · Blocked · Done (plain, no pirate names)</td><td class="where">column hints · shelf</td></tr></tbody></table></div>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1457}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

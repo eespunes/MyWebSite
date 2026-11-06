@@ -197,6 +197,9 @@
   function render(d) {
     var site = d.site || {};
     var demo = d.demo || {};
+    // "device": "desktop" frames a wide app in a thin window above the
+    // at-a-glance panel instead of a phone beside it.
+    var desktop = demo.device === "desktop";
     var total = (d.sections || []).length;
 
     document.title = d.title + " · " + (site.name || "Case study");
@@ -226,12 +229,12 @@
       .join("");
 
     var hero =
-      '<section class="cs-hero" aria-label="Live demo"><div class="wrap"><div class="hero-grid">' +
+      '<section class="cs-hero" aria-label="Live demo"><div class="wrap"><div class="hero-grid' + (desktop ? " is-desktop" : "") + '">' +
       '<div class="demo-window" data-state="loading">' +
       '<div class="demo-bar"><span class="demo-status"><span class="demo-status-dot"></span>' +
       '<span class="demo-path" data-status>' + esc(demo.src) + "</span></span>" +
       '<span class="demo-tools"><button class="icon-btn" type="button" data-reload aria-label="Reload demo">↻ Reload</button></span></div>' +
-      '<div class="phone" style="--w:' + (demo.width || 390) + "px;--h:" + (demo.height || 844) + 'px">' +
+      '<div class="phone' + (desktop ? " is-desktop" : "") + '" style="--w:' + (demo.width || 390) + "px;--h:" + (demo.height || 844) + 'px">' +
       '<div class="phone-viewport">' +
       '<div class="phone-screen"><iframe title="' + esc(d.title) + ' live demo" loading="lazy" ' +
       'sandbox="allow-scripts allow-same-origin allow-forms" tabindex="-1"></iframe></div>' +
@@ -309,11 +312,12 @@
     // Fit the phone: never wider than the column, never taller than the
     // desktop cap; 1:1 only if there's room for it.
     function fit() {
-      var bezel = 22; // 2 × 10px bezel + 2 × 1px border
+      var desktop = demo.device === "desktop";
+      var bezel = desktop ? 14 : 22; // 2 × bezel + 2 × 1px border
       var avail = win.parentElement.clientWidth || w;
       var maxH = Math.min(demo.maxHeight || 560, window.innerHeight * 0.78);
       var s = Math.min(1, (avail - bezel) / w, (maxH - bezel) / h);
-      phone.style.setProperty("--scale", Math.max(0.4, s).toFixed(4));
+      phone.style.setProperty("--scale", Math.max(desktop ? 0.2 : 0.4, s).toFixed(4));
     }
 
     function load() {
