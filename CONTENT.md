@@ -1,4 +1,4 @@
-<!-- Build v1.136 · 2026-11-06 -->
+<!-- Build v1.141 · 2026-11-06 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -151,12 +151,13 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 - Side note: Self-directed products, built and shipped end to end, each chosen to master something that carries straight back into professional work.
 - Link label: View on GitHub
 - Demo label: Demo & architecture
+- Soon label: Case study soon
 
 | # | Project | Status | Description | Stack | Link | Demo |
 | --- | --- | --- | --- | --- | --- | --- |
 | 01 | SmartBolus | | A minimalist Flutter app that helps people with diabetes calculate mealtime insulin doses: time-banded carb-to-insulin ratios, glucose correction via a sensitivity factor, and rounding for both standard and half-unit pens. Medical settings never leave the device: local storage only, no cloud, no tracking. | Flutter · Dart · Firebase · Android · Medical | | projects/smartbolus/ |
 | 02 | Thrive | | A family management app: shared budget, calendar, lists, weekly meal plan and a kitchen wall dashboard, synced in real time between family members across Android and iOS. No Cloud Functions: persistence is client-direct, and joining a family is verified by Firestore security rules over a salted hash, tested against the Firestore emulator in CI. | Flutter · Dart · Firebase · Android | | projects/thrive/ |
-| 03 | logpose | | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | | |
+| 03 | Logpose | | A multi-agent orchestration platform where autonomous coding agents pick up GitHub issues, work in isolated git-worktree sandboxes, and ship pull requests, gated by automated quality checks before any agent output is trusted. | Claude Agent SDK · Ollama · git worktrees · GitHub API | | projects/logpose/ |
 
 ## Games
 

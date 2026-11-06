@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Logpose — Setup wizard</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+.sd{font-family:"Nunito",ui-rounded,system-ui,sans-serif;color:#27303F;background:#F4EEDF;box-sizing:border-box;padding:0;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.sd *{box-sizing:border-box}
+.sd svg{display:block}
+.sd button{font:inherit;color:inherit;cursor:default}
+
+/* ---------- frame ---------- */
+.sd .frame{width:1440px;height:1000px;background:#FFFBF2;display:flex;overflow:hidden;border-radius:18px;box-shadow:0 1px 0 #EFE7D6}
+.sd .side{width:240px;flex:none;background:#FFFBF2;border-right:1px solid #EFE7D6;padding:20px 16px;display:flex;flex-direction:column}
+.sd .main{flex:1;min-width:0;padding:20px 28px 20px 28px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- brand ---------- */
+.sd .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 0 8px}
+.sd .mark{width:36px;height:36px;border-radius:12px;background:#F5B82E;display:flex;align-items:center;justify-content:center}
+.sd .brand b{font-size:18px;font-weight:800;display:block;line-height:1.1}
+.sd .brand span{font-size:12px;color:#6B7280;font-weight:600}
+
+/* ---------- nav ---------- */
+.sd .nav{margin-top:22px;display:flex;flex-direction:column;gap:4px}
+.sd .nav a{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border-radius:12px;font-weight:700;color:#27303F;text-decoration:none;font-size:14px}
+.sd .nav a svg{width:18px;height:18px;color:#6B7280}
+.sd .nav a.on{background:#F5B82E;color:#2B2208}
+.sd .nav a.on svg{color:#2B2208}
+.sd .nav .badge{margin-left:auto;background:#FFF;border:1px solid #EFE7D6;color:#27303F;border-radius:999px;font-size:12px;font-weight:800;min-width:24px;height:22px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+
+/* ---------- fleet card ---------- */
+.sd .fleet{margin-top:auto;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 14px;text-align:left;width:100%}
+.sd .fleet .row{display:flex;align-items:center;gap:8px}
+.sd .fleet .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd .fleet .st{font-weight:800;font-size:14px;color:#9A5B0B;display:flex;align-items:center;gap:7px}
+.sd .fleet .sub{color:#6B7280;font-size:12px;font-weight:600;margin-top:2px}
+.sd .fleet .chev{margin-left:auto;color:#6B7280}
+.sd .fleet .test{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#9CA3AF;border:1px dashed #E3DAC6;border-radius:999px;padding:3px 10px;background:#FFFDF8}
+
+/* ---------- dots ---------- */
+.sd .dot{width:8px;height:8px;border-radius:50%;background:#6B7280;flex:none}
+.sd .dot.ok{background:#2BA66B}.sd .dot.warn{background:#E08A1E}.sd .dot.danger{background:#DE4B48}.sd .dot.acc{background:#F5B82E}.sd .dot.idle{background:#C9C2B3}
+
+/* ---------- top bar ---------- */
+.sd .top{display:flex;align-items:center;gap:12px;height:44px}
+.sd .top h1{font-size:22px;font-weight:800;margin:0;line-height:1}
+.sd .top .sub{font-size:12px;color:#6B7280;font-weight:600;margin-left:-4px;padding-top:3px;white-space:nowrap}
+.sd .search svg{flex:none}.sd .search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;color:#6B7280;font-weight:600;width:176px;flex:none;white-space:nowrap;font-size:13px}
+.sd .search .k{margin-left:auto;font-size:11px;font-weight:800;border:1px solid #EFE7D6;border-radius:7px;padding:1px 6px;color:#6B7280;background:#FFFBF2}
+.sd .crew{display:flex;gap:6px;margin-left:auto}
+.sd .chip{display:flex;align-items:center;gap:6px;height:34px;padding:0 10px 0 9px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700;white-space:nowrap}
+.sd .chip .id{font-weight:800;color:#27303F}
+.sd .chip .m{color:#6B7280;font-weight:600}
+.sd .chip.fault{border-color:#F6D2D1;background:#FFF6F5}
+.sd .chip.fault .m{color:#B8322F}
+.sd .btn{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;font-weight:800;font-size:14px;color:#27303F}
+.sd .btn.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+/* ---------- stats ---------- */
+.sd .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sd .stat{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;min-height:60px}
+.sd .stat .n{font-size:22px;font-weight:800;line-height:1}
+.sd .stat .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .stat .t{font-size:12px;color:#6B7280;font-weight:700;margin-top:4px}
+.sd .stat .ic{width:36px;height:36px;border-radius:12px;background:#FFF6DD;display:flex;align-items:center;justify-content:center;color:#9A5B0B;flex:none}
+.sd .stat .ic.ok{background:#E6F6EC;color:#1F7F50}
+.sd .stat .ic.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .stat .right{margin-left:auto;text-align:right}
+.sd .spark{width:72px;height:26px;border-radius:8px;border:1px dashed #E3DAC6;background:#FFFDF8;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#9CA3AF}
+.sd .bar{height:8px;border-radius:999px;background:#F3EDE0;overflow:hidden}
+.sd .bar i{display:block;height:100%;border-radius:999px;background:#F5B82E}
+.sd .bar i.ok{background:#2BA66B}.sd .bar i.warn{background:#E08A1E}.sd .bar i.danger{background:#DE4B48}
+
+/* ---------- toolbar ---------- */
+.sd .tools{display:flex;align-items:center;gap:8px}
+.sd .tools .title{font-weight:800;font-size:15px;margin-right:6px}
+.sd .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700;color:#27303F}
+.sd .sel .c{color:#6B7280}
+.sd .tog{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700}
+.sd .tog .sw{width:30px;height:18px;border-radius:999px;background:#F5B82E;position:relative}
+.sd .tog .sw::after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#FFF}
+.sd .jobs{margin-left:auto;display:flex;align-items:center;gap:10px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700}
+.sd .jobs .m{color:#6B7280;font-weight:600}
+.sd .jobs .bar{width:70px}
+
+/* ---------- board ---------- */
+.sd .board{display:flex;gap:16px;flex:1;min-height:0}
+.sd .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.sd .col h2{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;padding:0 6px}
+.sd .col h2 .cnt{color:#6B7280;font-weight:800}
+.sd .col h2 .hint{margin-left:auto;font-size:12px;color:#6B7280;font-weight:600}
+.sd .cards{display:flex;flex-direction:column;gap:8px;background:#FAF4E4;border-radius:16px;padding:8px;flex:1}
+.sd .card{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:11px 13px 10px 13px;display:flex;flex-direction:column;gap:4px}
+.sd .card .l1{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.sd .card .l1 .num{color:#6B7280;font-weight:700}
+.sd .card .l1 .tag{margin-left:auto;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap}
+.sd .card .l1 .tag.rev{background:#FFF1C9;color:#7A4E00}
+.sd .card .l1 .tag.fail{background:#FDE4E3;color:#B8322F}
+.sd .card .l1 .tag.blk{background:#FDEFDD;color:#9A5B0B}
+.sd .card .l1 .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .card .l2{font-size:12px;color:#6B7280;font-weight:600;display:flex;align-items:center;gap:6px}
+.sd .card .l2 .sep{color:#C9C2B3}
+.sd .card .l3{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .card .l3 .bar{flex:1}
+.sd .card .l3 .st{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sd .card .l3 .st.warn{color:#9A5B0B}.sd .card .l3 .st.danger{color:#B8322F}.sd .card .l3 .st.ok{color:#1F7F50}
+.sd .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding-top:8px;border-top:1px dashed #EFE7D6}
+.sd .pill{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:999px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:12px;font-weight:800;color:#27303F;white-space:nowrap}
+.sd .pill.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8}
+.sd .ghost{border-style:dashed;background:transparent;color:#6B7280}
+.sd .ghost .l1{color:#6B7280}
+.sd .empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;font-weight:700;text-align:center;padding:12px}
+
+/* collapsed blocked column */
+.sd .colx{width:56px;flex:none;background:#FAF4E4;border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.sd .colx .vt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:800;color:#27303F;display:flex;align-items:center;gap:8px}
+.sd .colx .pip{width:30px;height:30px;border-radius:10px;background:#FFF;border:1px solid #EFE7D6;display:flex;align-items:center;justify-content:center;color:#6B7280}
+.sd .colx .cnt{width:26px;height:26px;border-radius:999px;background:#FDEFDD;color:#9A5B0B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ---------- shelf ---------- */
+.sd .shelf{display:grid;grid-template-columns:1fr 1.45fr;gap:16px}
+.sd .shelfc{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.sd .shelfc h3{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd .shelfc h3 .cnt{color:#6B7280}
+.sd .shelfc h3 .r{margin-left:auto;display:flex;gap:6px}
+.sd .landed{display:flex;gap:8px;flex-wrap:wrap}
+.sd .landed .lp{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#E6F6EC;color:#1F7F50;font-weight:800;font-size:12px}
+.sd .landed .lp .r{color:#4B5563;font-weight:600}
+.sd .bl{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.sd .bl label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;height:24px}
+.sd .bl label .num{color:#6B7280;font-weight:700}
+.sd .bl label .r{color:#6B7280;font-weight:600;font-size:12px;margin-left:auto}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+
+/* =====================================================================
+   Sunny Deck — additional components (shared by every screen)
+   Tokens: page #FFFBF2 · panel #FAF4E4 · surface #FFF · line #EFE7D6 · line-2 #E3DAC6
+   text #27303F · text-2 #4B5563 · muted #6B7280 · faint #9CA3AF
+   accent #F5B82E (ink #2B2208) · accent-soft #FFF6DD / #FFF1C9 (text #7A4E00)
+   ok #2BA66B (text #1F7F50, soft #E6F6EC) · warn #E08A1E (text #9A5B0B, soft #FDEFDD)
+   danger #DE4B48 (text #B8322F, soft #FDE4E3) · info #3B82C4 (text #1F5A8E, soft #E4F0FA)
+   radius: 14 cards · 16 panels · 999 pills/buttons · 10 inputs
+   ===================================================================== */
+.sd .frame{height:auto;min-height:1000px}
+.sd .main{gap:16px}
+.sd .frame.plain .main{padding:24px 28px}
+
+/* text helpers */
+.sd .muted{color:#6B7280}.sd .faint{color:#9CA3AF}.sd .t2{color:#4B5563}
+.sd .ok-t{color:#1F7F50}.sd .warn-t{color:#9A5B0B}.sd .danger-t{color:#B8322F}.sd .info-t{color:#1F5A8E}
+.sd .mono{font-variant-numeric:tabular-nums;font-family:"Nunito",ui-monospace,monospace}
+.sd .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.sd .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd h2.sec{margin:0;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd h2.sec .cnt{color:#6B7280}
+.sd h2.sec .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .hint{font-size:12px;color:#6B7280;font-weight:600}
+
+/* surfaces */
+.sd .panel{background:#FAF4E4;border-radius:16px;padding:8px}
+.sd .box{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:14px 16px}
+.sd .box.soft{background:#FFFDF8}
+.sd .box.warn{border-color:#F7D9B0;background:#FFF9F0}
+.sd .box.danger{border-color:#F6D2D1;background:#FFF6F5}
+.sd .box.ok{border-color:#BFE6CE;background:#F3FBF6}
+.sd .box.info{border-color:#C6DDF2;background:#F3F8FD}
+.sd .box.accent{border-color:#F5D98A;background:#FFF9E6}
+
+/* chips / status tags */
+.sd .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap;height:20px}
+.sd .tag.rev,.sd .tag.acc{background:#FFF1C9;color:#7A4E00}
+.sd .tag.fail,.sd .tag.danger{background:#FDE4E3;color:#B8322F}
+.sd .tag.blk,.sd .tag.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .tag.ok,.sd .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .tag.info{background:#E4F0FA;color:#1F5A8E}
+.sd .tag.solid-danger{background:#DE4B48;color:#FFF}
+.sd .tag.solid-warn{background:#E08A1E;color:#2B1D0E}
+.sd .tag.solid-ok{background:#2BA66B;color:#FFF}
+.sd .tag.solid-acc{background:#F5B82E;color:#2B2208}
+
+/* 7-state fleet pill (large) */
+.sd .fleetpill{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 10px;border-radius:999px;font-weight:800;font-size:13px;border:1px solid #EFE7D6;background:#FFF}
+.sd .fleetpill.offline{background:#F3EDE0;color:#4B5563}
+.sd .fleetpill.notset{background:#FDE4E3;color:#B8322F}
+.sd .fleetpill.cap{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.stopped{background:#F3EDE0;color:#27303F}
+.sd .fleetpill.degraded{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.sailing{background:#E6F6EC;color:#1F7F50}
+.sd .fleetpill.idle{background:#FFF;color:#6B7280}
+
+/* buttons (reuse .btn .pill from base) */
+.sd .btn.sm{height:32px;padding:0 12px;font-size:13px}
+.sd .btn.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .btn.ok{background:#2BA66B;border-color:#2BA66B;color:#FFF}
+.sd .btn.ghost{background:transparent;border-color:transparent;color:#4B5563}
+.sd .btn.dis,.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8;cursor:not-allowed}
+.sd .pill.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .pill.ok{background:#E6F6EC;border-color:#BFE6CE;color:#1F7F50}
+.sd .iconbtn{width:32px;height:32px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;display:inline-flex;align-items:center;justify-content:center;color:#4B5563}
+.sd .kbd{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:7px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:11px;font-weight:800;color:#6B7280}
+
+/* inputs & form controls */
+.sd .input{height:36px;padding:0 12px;border-radius:10px;border:1px solid #E3DAC6;background:#FFF;font:inherit;font-size:13px;font-weight:600;color:#27303F;width:100%}
+.sd .input::placeholder{color:#9CA3AF}
+.sd .input.err{border-color:#DE4B48}
+.sd .input[disabled]{background:#FFFDF8;color:#9CA3AF;border-style:dashed}
+.sd .field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:#6B7280}
+.sd .field .help{font-size:11px;font-weight:600;color:#9CA3AF}
+.sd .field .err{color:#B8322F;font-weight:700}
+.sd .toggle{width:34px;height:20px;border-radius:999px;background:#E3DAC6;position:relative;flex:none;display:inline-block}
+.sd .toggle::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#FFF}
+.sd .toggle.on{background:#F5B82E}.sd .toggle.on::after{left:auto;right:2px}
+.sd .seg{display:inline-flex;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;padding:3px;gap:2px}
+.sd .seg span{height:26px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12px;font-weight:800;color:#6B7280}
+.sd .seg span.on{background:#F5B82E;color:#2B2208}
+.sd .stepper{display:inline-flex;align-items:center;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;height:32px;overflow:hidden}
+.sd .stepper span{min-width:56px;text-align:center;font-weight:800;font-size:13px}
+.sd .stepper b{width:30px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#4B5563;font-size:16px}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .diffdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#F5B82E;margin-left:6px;vertical-align:middle}
+
+/* tabs */
+.sd .tabs{display:flex;gap:4px;border-bottom:1px solid #EFE7D6;padding:0 4px}
+.sd .tab{height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:#6B7280;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sd .tab.on{color:#27303F;border-bottom-color:#F5B82E}
+.sd .tab.dis{color:#9CA3AF}
+.sd .tab .cnt{font-size:11px;background:#F3EDE0;border-radius:999px;padding:1px 6px;color:#4B5563}
+
+/* lists & tables */
+.sd .list{display:flex;flex-direction:column}
+.sd .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #EFE7D6;font-size:13px;font-weight:600}
+.sd .row:last-child{border-bottom:0}
+.sd .row .ttl{font-weight:800;color:#27303F}
+.sd .row .num{color:#6B7280;font-weight:700}
+.sd .row .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .row.sel{background:#FFF9E6}
+.sd table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.sd table.tbl th{text-align:left;font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid #EFE7D6}
+.sd table.tbl td{padding:10px 12px;border-bottom:1px solid #F3EDE0;font-weight:600;vertical-align:middle}
+.sd table.tbl tr:last-child td{border-bottom:0}
+.sd table.tbl td.n,.sd table.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* KPI tiles & bars (reuse .stat .bar) */
+.sd .kpi{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.sd .kpi .n{font-size:26px;font-weight:800;line-height:1}
+.sd .kpi .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .kpi .t{font-size:12px;color:#6B7280;font-weight:700}
+.sd .kpi .d{font-size:12px;font-weight:700}
+.sd .bar.lg{height:12px}
+.sd .bar.sm{height:6px}
+.sd .bar i.acc{background:#F5B82E}.sd .bar i.info{background:#3B82C4}.sd .bar i.muted{background:#C9C2B3}
+
+/* gates */
+.sd .gates{display:inline-flex;gap:4px;align-items:center}
+.sd .gate{width:18px;height:18px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:#F3EDE0;color:#6B7280}
+.sd .gate.pass{background:#E6F6EC;color:#1F7F50}.sd .gate.fail{background:#FDE4E3;color:#B8322F}.sd .gate.run{background:#FFF1C9;color:#7A4E00}
+
+/* log lines */
+.sd .log{background:#FFFDF8;border:1px solid #EFE7D6;border-radius:12px;padding:8px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5}
+.sd .log .ln{display:grid;grid-template-columns:64px 64px 1fr;gap:10px;padding:3px 14px;color:#4B5563}
+.sd .log .ln .ts{color:#9CA3AF}
+.sd .log .ln .k{font-weight:800;color:#6B7280}
+.sd .log .ln.plan .k{color:#1F5A8E}.sd .log .ln.tool .k{color:#4B5563}.sd .log .ln.gate .k{color:#1F7F50}
+.sd .log .ln.error{background:#FDE4E3;color:#B8322F}.sd .log .ln.error .k{color:#B8322F}
+.sd .log .ln.cloud .k{color:#7A4E00}
+
+/* side panel (task detail) & overlays */
+.sd .scrim{position:absolute;inset:0;background:rgba(39,48,63,.28);border-radius:18px}
+.sd .sheet{position:absolute;top:0;right:0;bottom:0;width:680px;background:#FFFBF2;border-left:1px solid #EFE7D6;border-radius:0 18px 18px 0;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(39,48,63,.08)}
+.sd .pop{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;box-shadow:0 10px 30px rgba(39,48,63,.12)}
+.sd .toast{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 10px 0 16px;border-radius:999px;background:#27303F;color:#FFF;font-weight:700;font-size:13px}
+.sd .toast .pill{background:transparent;border-color:#4B5563;color:#F5B82E}
+.sd .banner{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700}
+.sd .banner.warn{background:#FDEFDD;color:#9A5B0B}.sd .banner.danger{background:#FDE4E3;color:#B8322F}.sd .banner.info{background:#E4F0FA;color:#1F5A8E}.sd .banner.ok{background:#E6F6EC;color:#1F7F50}
+.sd .skel{background:linear-gradient(90deg,#F3EDE0,#FAF4E4,#F3EDE0);border-radius:8px;height:12px}
+.sd .emptybox{border:1px dashed #E3DAC6;border-radius:14px;padding:28px;text-align:center;color:#6B7280;font-weight:700;font-size:13px;background:#FFFDF8}
+.sd .emptybox b{display:block;color:#27303F;font-size:15px;margin-bottom:4px}
+
+/* spark & charts (pure CSS) */
+.sd .bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.sd .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.sd .bars .b i{display:block;border-radius:4px 4px 0 0;background:#F5B82E}
+.sd .bars .b i.cloud{background:#3B82C4;border-radius:0}
+.sd .bars .b i.local{background:#F5B82E}
+.sd .legend{display:flex;gap:14px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+/* settings nav */
+.sd .subnav{display:flex;flex-direction:column;gap:2px;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:6px}
+.sd .subnav a{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:10px;font-size:13px;font-weight:800;color:#4B5563;text-decoration:none}
+.sd .subnav a.on{background:#FFF1C9;color:#7A4E00}
+.sd .subnav a .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .srow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #F3EDE0}
+.sd .srow:last-child{border-bottom:0}
+.sd .srow .k{font-weight:800;font-size:14px}
+.sd .srow .d{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.sd .srow .d code{font-family:ui-monospace,monospace;font-size:11px;background:#F3EDE0;border-radius:5px;padding:0 5px}
+
+/* agent card */
+.sd .agent{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sd .agent.fault{border-color:#F6D2D1}
+.sd .agent .hd{display:flex;align-items:center;gap:10px}
+.sd .agent .av{width:36px;height:36px;border-radius:12px;background:#FFF6DD;color:#7A4E00;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sd .agent.fault .av{background:#FDE4E3;color:#B8322F}
+.sd .agent .nm{font-weight:800;font-size:15px}
+.sd .agent .role{font-size:12px;color:#6B7280;font-weight:700}
+.sd .ladder{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#4B5563}
+.sd .ladder .arrow{color:#C9C2B3}
+.sd .ladder .m{border:1px solid #EFE7D6;border-radius:999px;padding:2px 9px;background:#FFFBF2}
+.sd .ladder .m.cur{background:#FFF1C9;border-color:#F5D98A;color:#7A4E00}
+
+/* top bar fit */
+.sd .top .search{width:220px}
+.sd .top .jobs{white-space:nowrap;flex:none}
+.sd .top .crew{margin-left:auto}
+
+</style>
+</helmet>
+<div class="sd" style="width: 1440px; min-height: 1000px;">
+<div class="frame plain" style="min-height:1000px;position:relative"><style>
+.sd .su-wrap{flex:1;min-width:0;display:flex;flex-direction:column}
+.sd .su-strip{display:flex;align-items:center;gap:14px;height:64px;padding:0 28px;border-bottom:1px solid #EFE7D6;background:#FFFBF2}
+.sd .su-strip .brand{padding:0}
+.sd .su-strip .crumb{font-size:14px;font-weight:700;color:#4B5563;border-left:1px solid #EFE7D6;padding-left:14px;height:24px;display:flex;align-items:center;gap:6px}
+.sd .su-strip .crumb span{color:#9CA3AF;font-weight:600}
+.sd .su-body{flex:1;display:flex;justify-content:center;padding:44px 20px 36px}
+.sd .su-col{width:900px;display:flex;flex-direction:column;gap:28px}
+.sd .su-hello{text-align:center;display:flex;flex-direction:column;gap:6px}
+.sd .su-hello h1{margin:0;font-size:26px;font-weight:800;line-height:1.2}
+.sd .su-hello p{margin:0;font-size:14px;color:#6B7280;font-weight:600}
+/* steps */
+.sd .su-steps{list-style:none;margin:0;padding:0 10px;display:flex;align-items:center}
+.sd .su-step{display:flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 8px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-weight:800;font-size:13px;color:#6B7280;white-space:nowrap;flex:none}
+.sd .su-step .n{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;border:1.5px solid #E3DAC6;color:#9CA3AF;background:#FFFDF8;flex:none}
+.sd .su-step .s{font-size:11px;font-weight:600;color:#9CA3AF;display:block;line-height:1.1;margin-top:1px}
+.sd .su-step.done{border-color:#BFE6CE;color:#1F7F50;background:#F3FBF6}
+.sd .su-step.done .n{background:#2BA66B;border-color:#2BA66B;color:#FFF}
+.sd .su-step.done .s{color:#1F7F50}
+.sd .su-step.cur{border-color:#F5B82E;background:#FFF9E6;color:#27303F;box-shadow:0 0 0 3px #FFF1C9}
+.sd .su-step.cur .n{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .su-step.cur .s{color:#7A4E00}
+.sd .su-line{flex:1;height:2px;background:#E3DAC6;min-width:18px;border-radius:2px}
+.sd .su-line.done{background:#2BA66B}
+/* card */
+.sd .su-card{display:grid;grid-template-columns:1fr 280px;gap:0;background:#FFF;border:1px solid #EFE7D6;border-radius:16px;overflow:hidden}
+.sd .su-main{padding:30px 32px 24px;display:flex;flex-direction:column;gap:22px}
+.sd .su-main h2{margin:0;font-size:22px;font-weight:800;line-height:1.2}
+.sd .su-main .intro{margin:6px 0 0;font-size:14px;color:#6B7280;font-weight:600;line-height:1.5}
+.sd .su-ollama{display:flex;align-items:center;gap:14px;padding:16px 18px}
+.sd .su-ollama .ic{width:40px;height:40px;border-radius:12px;background:#E6F6EC;color:#1F7F50;display:flex;align-items:center;justify-content:center;flex:none}
+.sd .su-ollama .tt{font-weight:800;font-size:14px;color:#27303F;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sd .su-ollama .tt .code{background:#FFF;border:1px solid #EFE7D6;border-radius:6px;padding:1px 6px;color:#4B5563}
+.sd .su-ollama .sub{font-size:12px;color:#1F7F50;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:6px}
+.sd .su-ollama .sub .m{color:#6B7280;font-weight:600}
+.sd .su-ollama .btn{margin-left:auto}
+.sd .su-ollama>div{flex:1;min-width:0}
+.sd .su-keys{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sd .su-keys .field .k{display:flex;align-items:center;gap:6px;color:#27303F;font-size:13px}
+.sd .su-keys .field .k .tag{height:18px;font-size:10.5px}
+.sd .su-keys .in{display:flex;gap:8px;align-items:center}
+.sd .su-note{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#6B7280;font-weight:600;line-height:1.5;background:#FAF4E4;border-radius:12px;padding:10px 14px}
+.sd .su-note svg{flex:none;margin-top:2px;color:#9A5B0B}
+.sd .su-note .code{background:#FFF;border-radius:5px;padding:0 5px;font-size:11px}
+.sd .su-foot{display:flex;align-items:center;gap:10px;border-top:1px solid #EFE7D6;padding-top:18px;margin-top:2px}
+.sd .su-foot .sp{flex:1}
+.sd .su-aside{background:#FAF4E4;padding:30px 24px;display:flex;flex-direction:column;gap:22px;border-left:1px solid #EFE7D6}
+.sd .su-aside p{margin:6px 0 0;font-size:13px;color:#4B5563;font-weight:600;line-height:1.55}
+.sd .su-aside p b{color:#27303F}
+.sd .su-aside ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.sd .su-aside li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:#4B5563;font-weight:600;line-height:1.4}
+.sd .su-aside li .ck{width:20px;height:20px;border-radius:50%;background:#FFF1C9;color:#7A4E00;display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:-1px}
+.sd .su-split{display:flex;align-items:center;gap:8px;margin-top:10px}
+.sd .su-split .bar{flex:1}
+.sd .su-split .t{font-size:11px;font-weight:800;color:#6B7280;white-space:nowrap}
+.sd .su-fine{text-align:center;font-size:12px;color:#9CA3AF;font-weight:600;line-height:1.6}
+.sd .su-fine .code{background:#F3EDE0;border-radius:5px;padding:0 5px;font-size:11px;color:#6B7280}
+</style>
+<div class="su-wrap">
+  <header class="su-strip">
+    <a class="brand" href="Main.dc.html" aria-label="Logpose home" style="text-decoration:none;color:inherit">
+      <div class="mark" aria-label="Logpose compass mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2208" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 5.2-5.2 2.2 2.2-5.2z" fill="#2B2208" stroke="none"/></svg></div>
+      <div><b>Logpose</b><span>agent workbench</span></div>
+    </a>
+    <div class="crumb">Setup <span>· chart a course</span></div>
+    <div style="flex:1"></div>
+    <span class="fleetpill notset" title="Setup is incomplete. Click to jump to the first unfinished step."><span class="dot danger"></span>Not set up · 3 of 5 steps left</span>
+    <a class="btn ghost" href="Main.dc.html" style="text-decoration:none">Skip to board →</a>
+  </header>
+
+  <main class="su-body">
+    <div class="su-col">
+      <div class="su-hello">
+        <h1>Welcome aboard. Let's get the crew running.</h1>
+        <p>Five short steps. You can skip any of them and come back from Settings later.</p>
+      </div>
+
+      <ol class="su-steps" aria-label="Setup steps">
+        <li class="su-step done"><span class="n" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span>GitHub<span class="s">@eespunes · done</span></span></li>
+        <span class="su-line done" aria-hidden="true"></span>
+        <li class="su-step cur" aria-current="step"><span class="n">2</span><span>Providers<span class="s">Ollama detected</span></span></li>
+        <span class="su-line" aria-hidden="true"></span>
+        <li class="su-step"><span class="n">3</span><span>Repository<span class="s">none yet</span></span></li>
+        <span class="su-line" aria-hidden="true"></span>
+        <li class="su-step"><span class="n">4</span><span>First agent<span class="s">addCrew</span></span></li>
+        <span class="su-line" aria-hidden="true"></span>
+        <li class="su-step"><span class="n">5</span><span>Start the loop<span class="s">runner/start</span></span></li>
+      </ol>
+
+      <section class="su-card" aria-labelledby="su-title">
+        <div class="su-main">
+          <div>
+            <div class="lbl">Step 2 of 5</div>
+            <h2 id="su-title" style="margin-top:6px">Connect model providers</h2>
+            <p class="intro">Agents need somewhere to run. Ollama is local and free; cloud keys are optional and can be added later in Settings → Connections.</p>
+          </div>
+
+          <div class="box ok su-ollama">
+            <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+            <div>
+              <div class="tt">Ollama found at <span class="code">http://localhost:11434</span></div>
+              <div class="sub"><span class="dot ok"></span>3 models installed</div>
+              <div class="sub" style="color:#6B7280;margin-top:2px">qwen3:14b · qwen2.5-coder:7b · deepseek-coder-v2:16b</div>
+            </div>
+            <button class="btn ok">Use Ollama</button>
+          </div>
+
+          <div class="su-keys">
+            <label class="field">
+              <span class="k">Claude <span class="tag">optional</span></span>
+              <div class="in"><input class="input" type="password" placeholder="sk-ant-… (optional)" aria-label="Claude API key"><button class="btn sm">Add</button></div>
+              <span class="help">API key or Claude Code login</span>
+            </label>
+            <label class="field">
+              <span class="k">OpenAI <span class="tag">optional</span></span>
+              <div class="in"><input class="input" type="password" placeholder="sk-…" aria-label="OpenAI API key"><button class="btn sm">Add</button></div>
+              <span class="help">Used for gpt-mini testers and fallbacks</span>
+            </label>
+          </div>
+
+          <div class="su-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+            <span>Keys are validated with <span class="code">POST /api/providers</span> and stored in your OS keychain — never in the repo. You can name a credential (alias) and set its plan once it's added.</span>
+          </div>
+
+          <div class="su-foot">
+            <button class="btn ghost">← GitHub</button>
+            <span class="sp"></span>
+            <button class="btn ghost">Skip for now</button>
+            <button class="btn pri">Continue to repository →</button>
+          </div>
+        </div>
+
+        <aside class="su-aside" aria-label="About this step">
+          <div>
+            <div class="lbl">Why providers first</div>
+            <p>Dispatch is <b>local-first</b>: trivial and standard tasks go to Ollama, only complex ones reach a cloud model. With Ollama alone the factory already works — for free.</p>
+            <div class="su-split" aria-label="Typical split: 78 percent local"><span class="t">local</span><span class="bar"><i class="ok" style="width:78%"></i></span><span class="t">cloud</span></div>
+            <div class="hint" style="margin-top:6px;font-size:11px;color:#9CA3AF">Typical crew runs about 78% on local models.</div>
+          </div>
+          <div>
+            <div class="lbl">What you'll get</div>
+            <ul>
+              <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Health and quota per credential</li>
+              <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Automatic fallback ladders per agent</li>
+              <li><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>Spend split, local vs cloud</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <p class="su-fine">The first <span class="code">POST /api/github</span> or <span class="code">/api/providers</span> creates the workspace — nothing to run in a terminal.<br>The "Not set up" status pill brings you back to the first incomplete step whenever you need it.</p>
+    </div>
+  </main>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

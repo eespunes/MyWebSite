@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Logpose — status popover, jobs, command palette, system states</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+.sd{font-family:"Nunito",ui-rounded,system-ui,sans-serif;color:#27303F;background:#F4EEDF;box-sizing:border-box;padding:0;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+.sd *{box-sizing:border-box}
+.sd svg{display:block}
+.sd button{font:inherit;color:inherit;cursor:default}
+
+/* ---------- frame ---------- */
+.sd .frame{width:1440px;height:1000px;background:#FFFBF2;display:flex;overflow:hidden;border-radius:18px;box-shadow:0 1px 0 #EFE7D6}
+.sd .side{width:240px;flex:none;background:#FFFBF2;border-right:1px solid #EFE7D6;padding:20px 16px;display:flex;flex-direction:column}
+.sd .main{flex:1;min-width:0;padding:20px 28px 20px 28px;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- brand ---------- */
+.sd .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 0 8px}
+.sd .mark{width:36px;height:36px;border-radius:12px;background:#F5B82E;display:flex;align-items:center;justify-content:center}
+.sd .brand b{font-size:18px;font-weight:800;display:block;line-height:1.1}
+.sd .brand span{font-size:12px;color:#6B7280;font-weight:600}
+
+/* ---------- nav ---------- */
+.sd .nav{margin-top:22px;display:flex;flex-direction:column;gap:4px}
+.sd .nav a{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border-radius:12px;font-weight:700;color:#27303F;text-decoration:none;font-size:14px}
+.sd .nav a svg{width:18px;height:18px;color:#6B7280}
+.sd .nav a.on{background:#F5B82E;color:#2B2208}
+.sd .nav a.on svg{color:#2B2208}
+.sd .nav .badge{margin-left:auto;background:#FFF;border:1px solid #EFE7D6;color:#27303F;border-radius:999px;font-size:12px;font-weight:800;min-width:24px;height:22px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px}
+
+/* ---------- fleet card ---------- */
+.sd .fleet{margin-top:auto;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 14px;text-align:left;width:100%}
+.sd .fleet .row{display:flex;align-items:center;gap:8px}
+.sd .fleet .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd .fleet .st{font-weight:800;font-size:14px;color:#9A5B0B;display:flex;align-items:center;gap:7px}
+.sd .fleet .sub{color:#6B7280;font-size:12px;font-weight:600;margin-top:2px}
+.sd .fleet .chev{margin-left:auto;color:#6B7280}
+.sd .fleet .test{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#9CA3AF;border:1px dashed #E3DAC6;border-radius:999px;padding:3px 10px;background:#FFFDF8}
+
+/* ---------- dots ---------- */
+.sd .dot{width:8px;height:8px;border-radius:50%;background:#6B7280;flex:none}
+.sd .dot.ok{background:#2BA66B}.sd .dot.warn{background:#E08A1E}.sd .dot.danger{background:#DE4B48}.sd .dot.acc{background:#F5B82E}.sd .dot.idle{background:#C9C2B3}
+
+/* ---------- top bar ---------- */
+.sd .top{display:flex;align-items:center;gap:12px;height:44px}
+.sd .top h1{font-size:22px;font-weight:800;margin:0;line-height:1}
+.sd .top .sub{font-size:12px;color:#6B7280;font-weight:600;margin-left:-4px;padding-top:3px;white-space:nowrap}
+.sd .search svg{flex:none}.sd .search{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;color:#6B7280;font-weight:600;width:176px;flex:none;white-space:nowrap;font-size:13px}
+.sd .search .k{margin-left:auto;font-size:11px;font-weight:800;border:1px solid #EFE7D6;border-radius:7px;padding:1px 6px;color:#6B7280;background:#FFFBF2}
+.sd .crew{display:flex;gap:6px;margin-left:auto}
+.sd .chip{display:flex;align-items:center;gap:6px;height:34px;padding:0 10px 0 9px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700;white-space:nowrap}
+.sd .chip .id{font-weight:800;color:#27303F}
+.sd .chip .m{color:#6B7280;font-weight:600}
+.sd .chip.fault{border-color:#F6D2D1;background:#FFF6F5}
+.sd .chip.fault .m{color:#B8322F}
+.sd .btn{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;font-weight:800;font-size:14px;color:#27303F}
+.sd .btn.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+/* ---------- stats ---------- */
+.sd .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sd .stat{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;min-height:60px}
+.sd .stat .n{font-size:22px;font-weight:800;line-height:1}
+.sd .stat .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .stat .t{font-size:12px;color:#6B7280;font-weight:700;margin-top:4px}
+.sd .stat .ic{width:36px;height:36px;border-radius:12px;background:#FFF6DD;display:flex;align-items:center;justify-content:center;color:#9A5B0B;flex:none}
+.sd .stat .ic.ok{background:#E6F6EC;color:#1F7F50}
+.sd .stat .ic.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .stat .right{margin-left:auto;text-align:right}
+.sd .spark{width:72px;height:26px;border-radius:8px;border:1px dashed #E3DAC6;background:#FFFDF8;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#9CA3AF}
+.sd .bar{height:8px;border-radius:999px;background:#F3EDE0;overflow:hidden}
+.sd .bar i{display:block;height:100%;border-radius:999px;background:#F5B82E}
+.sd .bar i.ok{background:#2BA66B}.sd .bar i.warn{background:#E08A1E}.sd .bar i.danger{background:#DE4B48}
+
+/* ---------- toolbar ---------- */
+.sd .tools{display:flex;align-items:center;gap:8px}
+.sd .tools .title{font-weight:800;font-size:15px;margin-right:6px}
+.sd .sel{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700;color:#27303F}
+.sd .sel .c{color:#6B7280}
+.sd .tog{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px 0 8px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:13px;font-weight:700}
+.sd .tog .sw{width:30px;height:18px;border-radius:999px;background:#F5B82E;position:relative}
+.sd .tog .sw::after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#FFF}
+.sd .jobs{margin-left:auto;display:flex;align-items:center;gap:10px;height:32px;padding:0 12px;border-radius:999px;background:#FFF;border:1px solid #EFE7D6;font-size:12px;font-weight:700}
+.sd .jobs .m{color:#6B7280;font-weight:600}
+.sd .jobs .bar{width:70px}
+
+/* ---------- board ---------- */
+.sd .board{display:flex;gap:16px;flex:1;min-height:0}
+.sd .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.sd .col h2{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;padding:0 6px}
+.sd .col h2 .cnt{color:#6B7280;font-weight:800}
+.sd .col h2 .hint{margin-left:auto;font-size:12px;color:#6B7280;font-weight:600}
+.sd .cards{display:flex;flex-direction:column;gap:8px;background:#FAF4E4;border-radius:16px;padding:8px;flex:1}
+.sd .card{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:11px 13px 10px 13px;display:flex;flex-direction:column;gap:4px}
+.sd .card .l1{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.sd .card .l1 .num{color:#6B7280;font-weight:700}
+.sd .card .l1 .tag{margin-left:auto;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap}
+.sd .card .l1 .tag.rev{background:#FFF1C9;color:#7A4E00}
+.sd .card .l1 .tag.fail{background:#FDE4E3;color:#B8322F}
+.sd .card .l1 .tag.blk{background:#FDEFDD;color:#9A5B0B}
+.sd .card .l1 .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .card .l2{font-size:12px;color:#6B7280;font-weight:600;display:flex;align-items:center;gap:6px}
+.sd .card .l2 .sep{color:#C9C2B3}
+.sd .card .l3{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .card .l3 .bar{flex:1}
+.sd .card .l3 .st{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sd .card .l3 .st.warn{color:#9A5B0B}.sd .card .l3 .st.danger{color:#B8322F}.sd .card .l3 .st.ok{color:#1F7F50}
+.sd .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding-top:8px;border-top:1px dashed #EFE7D6}
+.sd .pill{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:999px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:12px;font-weight:800;color:#27303F;white-space:nowrap}
+.sd .pill.pri{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8}
+.sd .ghost{border-style:dashed;background:transparent;color:#6B7280}
+.sd .ghost .l1{color:#6B7280}
+.sd .empty{flex:1;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;font-weight:700;text-align:center;padding:12px}
+
+/* collapsed blocked column */
+.sd .colx{width:56px;flex:none;background:#FAF4E4;border-radius:16px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px}
+.sd .colx .vt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:800;color:#27303F;display:flex;align-items:center;gap:8px}
+.sd .colx .pip{width:30px;height:30px;border-radius:10px;background:#FFF;border:1px solid #EFE7D6;display:flex;align-items:center;justify-content:center;color:#6B7280}
+.sd .colx .cnt{width:26px;height:26px;border-radius:999px;background:#FDEFDD;color:#9A5B0B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ---------- shelf ---------- */
+.sd .shelf{display:grid;grid-template-columns:1fr 1.45fr;gap:16px}
+.sd .shelfc{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.sd .shelfc h3{margin:0;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd .shelfc h3 .cnt{color:#6B7280}
+.sd .shelfc h3 .r{margin-left:auto;display:flex;gap:6px}
+.sd .landed{display:flex;gap:8px;flex-wrap:wrap}
+.sd .landed .lp{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#E6F6EC;color:#1F7F50;font-weight:800;font-size:12px}
+.sd .landed .lp .r{color:#4B5563;font-weight:600}
+.sd .bl{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.sd .bl label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;height:24px}
+.sd .bl label .num{color:#6B7280;font-weight:700}
+.sd .bl label .r{color:#6B7280;font-weight:600;font-size:12px;margin-left:auto}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+
+
+/* =====================================================================
+   Sunny Deck — additional components (shared by every screen)
+   Tokens: page #FFFBF2 · panel #FAF4E4 · surface #FFF · line #EFE7D6 · line-2 #E3DAC6
+   text #27303F · text-2 #4B5563 · muted #6B7280 · faint #9CA3AF
+   accent #F5B82E (ink #2B2208) · accent-soft #FFF6DD / #FFF1C9 (text #7A4E00)
+   ok #2BA66B (text #1F7F50, soft #E6F6EC) · warn #E08A1E (text #9A5B0B, soft #FDEFDD)
+   danger #DE4B48 (text #B8322F, soft #FDE4E3) · info #3B82C4 (text #1F5A8E, soft #E4F0FA)
+   radius: 14 cards · 16 panels · 999 pills/buttons · 10 inputs
+   ===================================================================== */
+.sd .frame{height:auto;min-height:1000px}
+.sd .main{gap:16px}
+.sd .frame.plain .main{padding:24px 28px}
+
+/* text helpers */
+.sd .muted{color:#6B7280}.sd .faint{color:#9CA3AF}.sd .t2{color:#4B5563}
+.sd .ok-t{color:#1F7F50}.sd .warn-t{color:#9A5B0B}.sd .danger-t{color:#B8322F}.sd .info-t{color:#1F5A8E}
+.sd .mono{font-variant-numeric:tabular-nums;font-family:"Nunito",ui-monospace,monospace}
+.sd .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.sd .lbl{font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase}
+.sd h2.sec{margin:0;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sd h2.sec .cnt{color:#6B7280}
+.sd h2.sec .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .hint{font-size:12px;color:#6B7280;font-weight:600}
+
+/* surfaces */
+.sd .panel{background:#FAF4E4;border-radius:16px;padding:8px}
+.sd .box{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:14px 16px}
+.sd .box.soft{background:#FFFDF8}
+.sd .box.warn{border-color:#F7D9B0;background:#FFF9F0}
+.sd .box.danger{border-color:#F6D2D1;background:#FFF6F5}
+.sd .box.ok{border-color:#BFE6CE;background:#F3FBF6}
+.sd .box.info{border-color:#C6DDF2;background:#F3F8FD}
+.sd .box.accent{border-color:#F5D98A;background:#FFF9E6}
+
+/* chips / status tags */
+.sd .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;background:#F3EDE0;color:#4B5563;white-space:nowrap;height:20px}
+.sd .tag.rev,.sd .tag.acc{background:#FFF1C9;color:#7A4E00}
+.sd .tag.fail,.sd .tag.danger{background:#FDE4E3;color:#B8322F}
+.sd .tag.blk,.sd .tag.warn{background:#FDEFDD;color:#9A5B0B}
+.sd .tag.ok,.sd .tag.p1{background:#E6F6EC;color:#1F7F50}
+.sd .tag.info{background:#E4F0FA;color:#1F5A8E}
+.sd .tag.solid-danger{background:#DE4B48;color:#FFF}
+.sd .tag.solid-warn{background:#E08A1E;color:#2B1D0E}
+.sd .tag.solid-ok{background:#2BA66B;color:#FFF}
+.sd .tag.solid-acc{background:#F5B82E;color:#2B2208}
+
+/* 7-state fleet pill (large) */
+.sd .fleetpill{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 10px;border-radius:999px;font-weight:800;font-size:13px;border:1px solid #EFE7D6;background:#FFF}
+.sd .fleetpill.offline{background:#F3EDE0;color:#4B5563}
+.sd .fleetpill.notset{background:#FDE4E3;color:#B8322F}
+.sd .fleetpill.cap{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.stopped{background:#F3EDE0;color:#27303F}
+.sd .fleetpill.degraded{background:#FDEFDD;color:#9A5B0B}
+.sd .fleetpill.sailing{background:#E6F6EC;color:#1F7F50}
+.sd .fleetpill.idle{background:#FFF;color:#6B7280}
+
+/* buttons (reuse .btn .pill from base) */
+.sd .btn.sm{height:32px;padding:0 12px;font-size:13px}
+.sd .btn.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .btn.ok{background:#2BA66B;border-color:#2BA66B;color:#FFF}
+.sd .btn.ghost{background:transparent;border-color:transparent;color:#4B5563}
+.sd .btn.dis,.sd .pill.dis{color:#9CA3AF;border-style:dashed;background:#FFFDF8;cursor:not-allowed}
+.sd .pill.danger{background:#FDE4E3;border-color:#F6D2D1;color:#B8322F}
+.sd .pill.ok{background:#E6F6EC;border-color:#BFE6CE;color:#1F7F50}
+.sd .iconbtn{width:32px;height:32px;border-radius:999px;border:1px solid #EFE7D6;background:#FFF;display:inline-flex;align-items:center;justify-content:center;color:#4B5563}
+.sd .kbd{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:7px;border:1px solid #EFE7D6;background:#FFFBF2;font-size:11px;font-weight:800;color:#6B7280}
+
+/* inputs & form controls */
+.sd .input{height:36px;padding:0 12px;border-radius:10px;border:1px solid #E3DAC6;background:#FFF;font:inherit;font-size:13px;font-weight:600;color:#27303F;width:100%}
+.sd .input::placeholder{color:#9CA3AF}
+.sd .input.err{border-color:#DE4B48}
+.sd .input[disabled]{background:#FFFDF8;color:#9CA3AF;border-style:dashed}
+.sd .field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:700;color:#6B7280}
+.sd .field .help{font-size:11px;font-weight:600;color:#9CA3AF}
+.sd .field .err{color:#B8322F;font-weight:700}
+.sd .toggle{width:34px;height:20px;border-radius:999px;background:#E3DAC6;position:relative;flex:none;display:inline-block}
+.sd .toggle::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#FFF}
+.sd .toggle.on{background:#F5B82E}.sd .toggle.on::after{left:auto;right:2px}
+.sd .seg{display:inline-flex;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;padding:3px;gap:2px}
+.sd .seg span{height:26px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12px;font-weight:800;color:#6B7280}
+.sd .seg span.on{background:#F5B82E;color:#2B2208}
+.sd .stepper{display:inline-flex;align-items:center;border:1px solid #EFE7D6;border-radius:999px;background:#FFF;height:32px;overflow:hidden}
+.sd .stepper span{min-width:56px;text-align:center;font-weight:800;font-size:13px}
+.sd .stepper b{width:30px;height:100%;display:inline-flex;align-items:center;justify-content:center;color:#4B5563;font-size:16px}
+.sd .cb{width:16px;height:16px;border-radius:5px;border:1.5px solid #C9C2B3;background:#FFF;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.sd .cb.on{background:#F5B82E;border-color:#F5B82E;color:#2B2208}
+.sd .diffdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#F5B82E;margin-left:6px;vertical-align:middle}
+
+/* tabs */
+.sd .tabs{display:flex;gap:4px;border-bottom:1px solid #EFE7D6;padding:0 4px}
+.sd .tab{height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:#6B7280;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sd .tab.on{color:#27303F;border-bottom-color:#F5B82E}
+.sd .tab.dis{color:#9CA3AF}
+.sd .tab .cnt{font-size:11px;background:#F3EDE0;border-radius:999px;padding:1px 6px;color:#4B5563}
+
+/* lists & tables */
+.sd .list{display:flex;flex-direction:column}
+.sd .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #EFE7D6;font-size:13px;font-weight:600}
+.sd .row:last-child{border-bottom:0}
+.sd .row .ttl{font-weight:800;color:#27303F}
+.sd .row .num{color:#6B7280;font-weight:700}
+.sd .row .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .row.sel{background:#FFF9E6}
+.sd table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.sd table.tbl th{text-align:left;font-size:11px;font-weight:800;color:#6B7280;letter-spacing:.04em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid #EFE7D6}
+.sd table.tbl td{padding:10px 12px;border-bottom:1px solid #F3EDE0;font-weight:600;vertical-align:middle}
+.sd table.tbl tr:last-child td{border-bottom:0}
+.sd table.tbl td.n,.sd table.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* KPI tiles & bars (reuse .stat .bar) */
+.sd .kpi{background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.sd .kpi .n{font-size:26px;font-weight:800;line-height:1}
+.sd .kpi .n small{font-size:14px;color:#6B7280;font-weight:700;margin-left:3px}
+.sd .kpi .t{font-size:12px;color:#6B7280;font-weight:700}
+.sd .kpi .d{font-size:12px;font-weight:700}
+.sd .bar.lg{height:12px}
+.sd .bar.sm{height:6px}
+.sd .bar i.acc{background:#F5B82E}.sd .bar i.info{background:#3B82C4}.sd .bar i.muted{background:#C9C2B3}
+
+/* gates */
+.sd .gates{display:inline-flex;gap:4px;align-items:center}
+.sd .gate{width:18px;height:18px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;background:#F3EDE0;color:#6B7280}
+.sd .gate.pass{background:#E6F6EC;color:#1F7F50}.sd .gate.fail{background:#FDE4E3;color:#B8322F}.sd .gate.run{background:#FFF1C9;color:#7A4E00}
+
+/* log lines */
+.sd .log{background:#FFFDF8;border:1px solid #EFE7D6;border-radius:12px;padding:8px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5}
+.sd .log .ln{display:grid;grid-template-columns:64px 64px 1fr;gap:10px;padding:3px 14px;color:#4B5563}
+.sd .log .ln .ts{color:#9CA3AF}
+.sd .log .ln .k{font-weight:800;color:#6B7280}
+.sd .log .ln.plan .k{color:#1F5A8E}.sd .log .ln.tool .k{color:#4B5563}.sd .log .ln.gate .k{color:#1F7F50}
+.sd .log .ln.error{background:#FDE4E3;color:#B8322F}.sd .log .ln.error .k{color:#B8322F}
+.sd .log .ln.cloud .k{color:#7A4E00}
+
+/* side panel (task detail) & overlays */
+.sd .scrim{position:absolute;inset:0;background:rgba(39,48,63,.28);border-radius:18px}
+.sd .sheet{position:absolute;top:0;right:0;bottom:0;width:680px;background:#FFFBF2;border-left:1px solid #EFE7D6;border-radius:0 18px 18px 0;display:flex;flex-direction:column;box-shadow:-8px 0 24px rgba(39,48,63,.08)}
+.sd .pop{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;box-shadow:0 10px 30px rgba(39,48,63,.12)}
+.sd .toast{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 10px 0 16px;border-radius:999px;background:#27303F;color:#FFF;font-weight:700;font-size:13px}
+.sd .toast .pill{background:transparent;border-color:#4B5563;color:#F5B82E}
+.sd .banner{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700}
+.sd .banner.warn{background:#FDEFDD;color:#9A5B0B}.sd .banner.danger{background:#FDE4E3;color:#B8322F}.sd .banner.info{background:#E4F0FA;color:#1F5A8E}.sd .banner.ok{background:#E6F6EC;color:#1F7F50}
+.sd .skel{background:linear-gradient(90deg,#F3EDE0,#FAF4E4,#F3EDE0);border-radius:8px;height:12px}
+.sd .emptybox{border:1px dashed #E3DAC6;border-radius:14px;padding:28px;text-align:center;color:#6B7280;font-weight:700;font-size:13px;background:#FFFDF8}
+.sd .emptybox b{display:block;color:#27303F;font-size:15px;margin-bottom:4px}
+
+/* spark & charts (pure CSS) */
+.sd .bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.sd .bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.sd .bars .b i{display:block;border-radius:4px 4px 0 0;background:#F5B82E}
+.sd .bars .b i.cloud{background:#3B82C4;border-radius:0}
+.sd .bars .b i.local{background:#F5B82E}
+.sd .legend{display:flex;gap:14px;font-size:12px;font-weight:700;color:#4B5563}
+.sd .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+/* settings nav */
+.sd .subnav{display:flex;flex-direction:column;gap:2px;background:#FFF;border:1px solid #EFE7D6;border-radius:14px;padding:6px}
+.sd .subnav a{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:10px;font-size:13px;font-weight:800;color:#4B5563;text-decoration:none}
+.sd .subnav a.on{background:#FFF1C9;color:#7A4E00}
+.sd .subnav a .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.sd .srow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #F3EDE0}
+.sd .srow:last-child{border-bottom:0}
+.sd .srow .k{font-weight:800;font-size:14px}
+.sd .srow .d{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.sd .srow .d code{font-family:ui-monospace,monospace;font-size:11px;background:#F3EDE0;border-radius:5px;padding:0 5px}
+
+/* agent card */
+.sd .agent{background:#FFF;border:1px solid #EFE7D6;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sd .agent.fault{border-color:#F6D2D1}
+.sd .agent .hd{display:flex;align-items:center;gap:10px}
+.sd .agent .av{width:36px;height:36px;border-radius:12px;background:#FFF6DD;color:#7A4E00;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+.sd .agent.fault .av{background:#FDE4E3;color:#B8322F}
+.sd .agent .nm{font-weight:800;font-size:15px}
+.sd .agent .role{font-size:12px;color:#6B7280;font-weight:700}
+.sd .ladder{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#4B5563}
+.sd .ladder .arrow{color:#C9C2B3}
+.sd .ladder .m{border:1px solid #EFE7D6;border-radius:999px;padding:2px 9px;background:#FFFBF2}
+.sd .ladder .m.cur{background:#FFF1C9;border-color:#F5D98A;color:#7A4E00}
+
+/* top bar fit */
+.sd .top .search{width:220px}
+.sd .top .jobs{white-space:nowrap;flex:none}
+.sd .top .crew{margin-left:auto}
+
+</style>
+</helmet>
+<div class="sd" style="width: 1440px; min-height: 1340px;">
+<div class="frame plain" style="min-height:1300px;position:relative"><style>
+/* Overlays specimen sheet — scoped */
+.sd .ov-page{padding:24px;display:flex;flex-direction:column;gap:16px;width:1440px}
+.sd .ov-title{display:flex;align-items:baseline;gap:12px;height:32px}
+.sd .ov-title h1{margin:0;font-size:22px;font-weight:800;line-height:1}
+.sd .ov-title .sub{font-size:12px;color:#6B7280;font-weight:600}
+.sd .ov-grid{display:grid;grid-template-columns:360px 560px 1fr;gap:16px;align-items:start}
+.sd .ov-spec{display:flex;flex-direction:column;gap:8px}
+.sd .ov-spec .lbl{padding-left:4px;display:flex;gap:8px;align-items:center;white-space:nowrap}
+.sd .ov-spec .lbl .n{color:#9CA3AF;font-weight:800}
+.sd .ov-col{display:flex;flex-direction:column;gap:16px}
+
+/* popover */
+.sd .ov-pop{width:360px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.sd .ov-pop .hd{display:flex;align-items:center;gap:8px}
+.sd .ov-pop .hd .lbl{padding:0}
+.sd .ov-states{display:flex;flex-wrap:wrap;gap:6px}
+.sd .ov-states .fleetpill{height:26px;font-size:12px;padding:0 10px 0 8px;gap:6px}
+.sd .ov-states .fleetpill.cur{box-shadow:0 0 0 2px #FFF,0 0 0 4px #F5D98A}
+.sd .ov-loop{background:#FAF4E4;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.sd .ov-loop .k{font-weight:800;font-size:13px;display:flex;align-items:center;gap:7px}
+.sd .ov-loop .d{font-size:12px;color:#6B7280;font-weight:600;margin-top:2px}
+.sd .ov-tail{padding:6px 0;font-size:11px}
+.sd .ov-tail .ln{grid-template-columns:50px 1fr;gap:8px;padding:2px 12px;white-space:nowrap}
+.sd .ov-prov{display:flex;flex-direction:column}
+.sd .ov-prov .row{padding:7px 2px;gap:8px;font-size:13px}
+.sd .ov-prov .row .r{font-weight:600;color:#6B7280;font-size:12px}
+.sd .ov-caps{display:grid;grid-template-columns:auto 1fr auto auto 1fr auto;gap:8px;align-items:center;font-size:12px;font-weight:700;color:#6B7280}
+.sd .ov-caps b{color:#27303F;font-weight:800;font-variant-numeric:tabular-nums}
+.sd .ov-acts{display:flex;gap:6px;padding-top:10px;border-top:1px dashed #EFE7D6}
+
+/* palette */
+.sd .ov-pal{width:560px;padding:10px 10px 8px 10px;display:flex;flex-direction:column;gap:6px}
+.sd .ov-pal .in{display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;border-radius:10px;border:1px solid #E3DAC6;background:#FFF;font-size:14px;font-weight:700;color:#27303F}
+.sd .ov-pal .in .caret{width:2px;height:18px;background:#F5B82E;border-radius:1px}
+.sd .ov-pal .in .kbd{margin-left:auto}
+.sd .ov-pal .grp{font-size:11px;font-weight:800;color:#9CA3AF;letter-spacing:.04em;text-transform:uppercase;padding:8px 10px 2px}
+.sd .ov-pal .row{border:0;border-radius:10px;padding:8px 10px;gap:10px;font-size:13px}
+.sd .ov-pal .row .sub{color:#6B7280;font-weight:600}
+.sd .ov-pal .row.sel{background:#FFF9E6;box-shadow:inset 0 0 0 1px #F5D98A}
+.sd .ov-pal .ft{display:flex;gap:14px;padding:8px 10px 2px;border-top:1px dashed #EFE7D6;font-size:11px;font-weight:700;color:#9CA3AF;margin-top:2px}
+.sd .ov-pal .ft span{display:inline-flex;align-items:center;gap:5px}
+.sd .ov-pal .ic{width:28px;height:28px;border-radius:9px;background:#FAF4E4;color:#6B7280;display:inline-flex;align-items:center;justify-content:center;flex:none}
+
+/* jobs */
+.sd .ov-jobs{width:400px;padding:0;overflow:hidden}
+.sd .ov-jobs .hd{display:flex;align-items:center;gap:8px;padding:12px 12px 12px 16px;border-bottom:1px solid #EFE7D6}
+.sd .ov-jobs .hd b{font-size:15px;font-weight:800}
+.sd .ov-jobs .hd .hint{margin-right:auto}
+.sd .ov-job{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:11px 16px;border-bottom:1px solid #F3EDE0}
+.sd .ov-job:last-child{border-bottom:0}
+.sd .ov-job .k{grid-column:1;display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;min-width:0}
+.sd .ov-job .k .m{color:#6B7280;font-weight:600}
+.sd .ov-job .d{font-size:12px;color:#6B7280;font-weight:600;grid-column:1}
+.sd .ov-job .d.danger-t{color:#B8322F}
+.sd .ov-job .bar{grid-column:1;margin-top:3px}
+.sd .ov-job .a{grid-column:2;grid-row:1 / span 3;align-self:center}
+.sd .ov-job.queued .k{color:#6B7280}
+.sd .ov-job .spin{width:14px;height:14px;border-radius:50%;border:2.5px solid #F5B82E;border-right-color:#FFF1C9;flex:none}
+.sd .ov-job .ck{width:16px;height:16px;border-radius:50%;background:#E6F6EC;color:#1F7F50;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.sd .ov-job .ck.fail{background:#FDE4E3;color:#B8322F}
+.sd .ov-job .ck.wait{background:#F3EDE0;color:#6B7280}
+
+/* toasts */
+.sd .ov-toasts{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.sd .ov-toasts .toast svg{flex:none}
+
+/* states */
+.sd .ov-states-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sd .ov-st{min-height:150px;display:flex;flex-direction:column;gap:8px;padding:14px 16px}
+.sd .ov-st .hd{display:flex;align-items:center;gap:8px;min-height:26px}
+.sd .ov-st .hd .lbl{margin-left:auto;padding:0;color:#9CA3AF}
+.sd .ov-st .fleetpill{height:26px;font-size:12px;padding:0 10px 0 8px;gap:6px}
+.sd .ov-st .ttl{font-weight:800;font-size:14px}
+.sd .ov-st .d{font-size:12px;color:#6B7280;font-weight:600;line-height:1.45}
+.sd .ov-st .ft{margin-top:auto;display:flex;gap:6px;align-items:center}
+.sd .ov-st .ft .hint{margin-left:auto;font-size:11px}
+.sd .ov-st .skel.w1{width:60%}.sd .ov-st .skel.w2{width:85%}.sd .ov-st .skel.w3{width:40%}
+.sd .ov-st .skel.pill{height:26px;width:96px;border-radius:999px}
+.sd .ov-st .veil{position:relative}
+.sd .ov-st .veil::after{content:"";position:absolute;inset:-4px;background:rgba(255,251,242,.55);border-radius:8px}
+.sd .ov-st .banner{padding:8px 12px;font-size:12px}
+
+/* responsive note */
+.sd .ov-resp{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:24px;align-items:center;padding:14px 16px}
+.sd .ov-resp .lead{display:flex;flex-direction:column;gap:2px;width:160px}
+.sd .ov-resp .lead b{font-size:14px;font-weight:800}
+.sd .ov-resp .lead span{font-size:12px;color:#6B7280;font-weight:600}
+.sd .ov-mini{display:flex;gap:14px;align-items:center}
+.sd .ov-mini .fr{background:#FAF4E4;border:1px solid #EFE7D6;border-radius:8px;display:flex;overflow:hidden;flex:none}
+.sd .ov-mini .fr .sb{background:#FFF;border-right:1px solid #EFE7D6;display:flex;flex-direction:column;gap:4px;padding:6px}
+.sd .ov-mini .fr .sb i{display:block;height:6px;border-radius:3px;background:#F3EDE0}
+.sd .ov-mini .fr .sb i.on{background:#F5B82E}
+.sd .ov-mini .fr .bd{flex:1;display:flex;gap:4px;padding:6px;min-width:0}
+.sd .ov-mini .fr .bd i{display:block;flex:1;border-radius:4px;background:#FFF;border:1px solid #EFE7D6}
+.sd .ov-mini .fr .bd i.rail{flex:none;width:8px}
+.sd .ov-mini .fr .tb{height:14px;background:#FFF;border-top:1px solid #EFE7D6;display:flex;justify-content:space-around;align-items:center;padding:0 8px}
+.sd .ov-mini .fr .tb i{width:8px;height:4px;border-radius:2px;background:#F3EDE0}
+.sd .ov-mini .fr .tb i.on{background:#F5B82E}
+.sd .ov-mini .cap b{display:block;font-size:13px;font-weight:800}
+.sd .ov-mini .cap span{font-size:12px;color:#6B7280;font-weight:600;display:block;line-height:1.4}
+</style>
+
+<div class="ov-page">
+  <div class="ov-title"><h1>Overlays &amp; system states</h1><span class="sub">status popover · jobs · ⌘K palette · toasts · every state the deck can be in</span></div>
+
+  <div class="ov-grid">
+
+    <!-- 1 · Fleet status popover -->
+    <div class="ov-spec">
+      <div class="lbl"><span class="n">01</span>Fleet status popover <span class="faint">· 360 px</span></div>
+      <div class="pop ov-pop" role="dialog" aria-label="Fleet status">
+        <div class="hd"><span class="lbl">Fleet</span><span class="hint">polling · 2 s</span><span class="iconbtn" style="margin-left:auto" aria-label="Close" title="Close"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+
+        <div class="ov-states" aria-label="Seven fleet states, current: Degraded">
+          <span class="fleetpill offline"><span class="dot"></span>Offline</span>
+          <span class="fleetpill notset"><span class="dot danger"></span>Not configured</span>
+          <span class="fleetpill cap"><span class="dot warn"></span>Cap hit</span>
+          <span class="fleetpill stopped"><span class="dot"></span>Stopped</span>
+          <span class="fleetpill degraded cur" aria-current="true"><span class="dot warn"></span>Degraded</span>
+          <span class="fleetpill sailing"><span class="dot ok"></span>Sailing</span>
+          <span class="fleetpill idle"><span class="dot idle"></span>Idle</span>
+        </div>
+        <div class="hint" style="margin-top:-4px">a3 fault · openai rate-limited · 2 working</div>
+
+        <div class="ov-loop">
+          <div style="flex:1;min-width:0">
+            <div class="k"><span class="dot ok"></span>Run loop running</div>
+            <div class="d">pid 48213 · last pass 14:31:58 · next in 2 s · 3 slots</div>
+          </div>
+          <span class="pill">Stop after pass</span>
+        </div>
+
+        <div class="log ov-tail" aria-label="Run loop output, last 3 lines">
+          <div class="ln"><span class="ts">14:31:58</span><span>pass · 2 running · 3 queued · 1 slot</span></div>
+          <div class="ln"><span class="ts">14:31:58</span><span>#182 waits on #178 (blockedBy)</span></div>
+          <div class="ln error"><span class="ts">14:31:59</span><span>openai 429 rate_limited · until 15:10</span></div>
+          <div class="ln"><span class="ts"></span><span class="faint">196 more lines · <u>expand</u></span></div>
+        </div>
+
+        <div class="ov-prov list" aria-label="Providers">
+          <div class="row"><span class="dot ok"></span><span class="ttl">ollama</span><span class="r">healthy · 3 models</span></div>
+          <div class="row"><span class="dot ok"></span><span class="ttl">claude</span><span class="r">work 62% · personal ok</span></div>
+          <div class="row"><span class="dot warn"></span><span class="ttl">openai</span><span class="r warn-t">rate-limited · until 15:10</span></div>
+          <div class="row"><span class="dot ok"></span><span class="ttl">GitHub</span><span class="r">@eespunes · 3 repos · sync ok</span></div>
+        </div>
+
+        <div class="ov-caps" aria-label="Caps">
+          <span>Daily</span><span class="bar" aria-label="Daily cap 82%"><i class="warn" style="width:82%"></i></span><b>82%</b>
+          <span>Weekly</span><span class="bar" aria-label="Weekly cap 63%"><i class="ok" style="width:63%"></i></span><b>63%</b>
+        </div>
+
+        <div class="ov-acts">
+          <span class="pill pri"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>Run once</span>
+          <span class="pill">Open Spend</span>
+          <span class="pill">Inbox · 4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 · Command palette + 4 · Toasts -->
+    <div class="ov-col">
+      <div class="ov-spec">
+        <div class="lbl"><span class="n">02</span>Command palette <span class="faint">· 560 px · ⌘K anywhere</span></div>
+        <div class="pop ov-pal" role="dialog" aria-label="Command palette">
+          <div class="in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4"/></svg>extend budget #158<span class="caret" aria-hidden="true"></span><span class="kbd">⌘K</span></div>
+
+          <div class="grp">Tasks</div>
+          <div class="row sel" aria-selected="true"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="ttl">Extend budget +32k</span><span class="sub">acme/billing-api #158 · 60k → 92k</span><span class="r"><span class="kbd">↵</span></span></div>
+          <div class="row"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M8 8h5"/></svg></span><span class="ttl">Open task #158</span><span class="sub">Index orders by customer · blocked</span><span class="r"><span class="kbd">g</span><span class="kbd">t</span></span></div>
+
+          <div class="grp">Go to</div>
+          <div class="row"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10h3.5a1.5 1.5 0 010 3H10a1.5 1.5 0 000 3h4"/></svg></span><span class="ttl">Spend → Budgets</span><span class="sub">per-task defaults · the ledger</span><span class="r"><span class="kbd">g</span><span class="kbd">s</span></span></div>
+          <div class="row"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/></svg></span><span class="ttl">Agents → a3</span><span class="sub danger-t">fault · context overflow on #158</span><span class="r"><span class="kbd">g</span><span class="kbd">a</span></span></div>
+
+          <div class="grp">Actions</div>
+          <div class="row"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 12h16M12 4v16"/></svg></span><span class="ttl">Set budget to…</span><span class="sub">#158 · opens a stepper</span><span class="r"><span class="kbd">⇥</span></span></div>
+          <div class="row"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg></span><span class="ttl">Run once</span><span class="sub">one pass of the run loop</span><span class="r"><span class="kbd">r</span></span></div>
+
+          <div class="ft"><span><span class="kbd">↑</span><span class="kbd">↓</span> move</span><span><span class="kbd">↵</span> run</span><span><span class="kbd">esc</span> close</span><span style="margin-left:auto">6 results</span></div>
+        </div>
+      </div>
+
+      <div class="ov-spec">
+        <div class="lbl"><span class="n">04</span>Toasts <span class="faint">· one live region, bottom-left, 6 s</span></div>
+        <div class="ov-toasts" aria-live="polite">
+          <div class="toast"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2BA66B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Saved<span class="pill">Undo</span></div>
+          <div class="toast"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F5B82E" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Extended #158 · +32k ₿<span class="pill">View task</span></div>
+          <div class="toast"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DE4B48" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>Run failed · loop already running from terminal<span class="pill">Retry</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 · Jobs panel -->
+    <div class="ov-spec">
+      <div class="lbl"><span class="n">03</span>Jobs panel <span class="faint">· 400 px · slides from the top bar</span></div>
+      <div class="pop ov-jobs" role="dialog" aria-label="Jobs">
+        <div class="hd"><b>Jobs</b><span class="hint">last 12 · 2 running</span><span class="iconbtn" aria-label="Close jobs" title="Close"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+
+        <div class="ov-job">
+          <div class="k"><span class="spin" aria-hidden="true"></span>modelPull <span class="m">qwen3:32b</span></div>
+          <span class="pill danger a">Cancel</span>
+          <div class="d">64% · 5.2 of 8.1 GB · 31 MB/s · 03:12</div>
+          <span class="bar" aria-label="64 percent"><i style="width:64%"></i></span>
+        </div>
+        <div class="ov-job">
+          <div class="k"><span class="spin" aria-hidden="true"></span>triagePropose <span class="m">acme/web-shop</span></div>
+          <span class="pill a">Output</span>
+          <div class="d">running · 00:42 · 5 issues to score</div>
+        </div>
+        <div class="ov-job queued">
+          <div class="k"><span class="ck wait"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span>repoMap <span class="m">acme/billing-api</span></div>
+          <span class="pill a">Skip</span>
+          <div class="d">queued · waits for a free slot</div>
+        </div>
+        <div class="ov-job">
+          <div class="k"><span class="ck"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>dispatch <span class="m">#136 → a1</span></div>
+          <span class="pill a">Output</span>
+          <div class="d">done 11:16 · exit 0</div>
+        </div>
+        <div class="ov-job">
+          <div class="k"><span class="ck fail"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>runOnce</div>
+          <span class="pill pri a">Retry</span>
+          <div class="d danger-t">failed 09:01 · exit 1 · "run loop already running from terminal"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · System states -->
+  <div class="ov-spec">
+    <div class="lbl"><span class="n">05</span>System states <span class="faint">· every one designed · status is always dot + word</span></div>
+    <div class="ov-states-grid">
+
+      <div class="box ov-st" aria-label="Loading state">
+        <div class="hd"><span class="tag">Loading</span><span class="lbl">skeleton board</span></div>
+        <div class="skel w2"></div>
+        <div class="skel w1"></div>
+        <div class="skel w3"></div>
+        <div class="ft"><span class="skel pill"></span><span class="hint">never a blank screen</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="Offline state">
+        <div class="hd"><span class="fleetpill offline"><span class="dot"></span>Offline</span><span class="lbl">14 s silent</span></div>
+        <div class="ttl">Reconnecting…</div>
+        <div class="d veil">Last-known board stays, dimmed. Writes are paused until <span class="code">/api/state</span> answers.</div>
+        <div class="ft"><span class="pill dis" aria-disabled="true">Run once</span><span class="hint">retry in 4 s</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="Not configured state">
+        <div class="hd"><span class="fleetpill notset"><span class="dot danger"></span>Not configured</span><span class="lbl">first launch</span></div>
+        <div class="ttl">No workspace yet</div>
+        <div class="d">Three short steps: workspace folder, a provider, a GitHub token. No terminal needed.</div>
+        <div class="ft"><span class="pill pri">Start setup</span><span class="hint">≈ 2 min</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="No repositories state">
+        <div class="hd"><span class="fleetpill idle"><span class="dot idle"></span>Idle</span><span class="lbl">configured · 0 repos</span></div>
+        <div class="ttl">Connect a repository to start</div>
+        <div class="d">Its issues become the backlog; the crew opens PRs against it.</div>
+        <div class="ft"><span class="pill pri">Add repository</span><span class="hint">@eespunes · 3 available</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="Run loop stopped state">
+        <div class="hd"><span class="fleetpill stopped"><span class="dot"></span>Stopped</span><span class="lbl">run loop</span></div>
+        <div class="ttl">Nothing moves until the loop runs</div>
+        <div class="d">3 queued · #140 stale 25 min · stale tasks listed in Inbox.</div>
+        <div class="ft"><span class="pill pri"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>Start run loop</span><span class="pill">Run once</span></div>
+      </div>
+
+      <div class="box ov-st warn" aria-label="Cap hit state">
+        <div class="hd"><span class="fleetpill cap"><span class="dot warn"></span>Cap hit</span><span class="lbl">daily · resets 00:00</span></div>
+        <div class="ttl">a4 paused by cap · 500k / 500k ₿</div>
+        <span class="bar" aria-label="Daily cap 100%"><i class="danger" style="width:100%"></i></span>
+        <div class="ft"><span class="pill pri">Raise cap</span><span class="pill">Open Spend</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="Provider down state">
+        <div class="hd"><span class="fleetpill degraded"><span class="dot warn"></span>Degraded</span><span class="lbl">provider down</span></div>
+        <div class="ttl">Ollama unreachable</div>
+        <div class="d">a1 and a3 rotate to their fallback rung; local share drops below 78%.</div>
+        <div class="ft"><span class="pill pri">Open Settings</span><span class="hint">retrying · 10 s</span></div>
+      </div>
+
+      <div class="box ov-st" aria-label="Action failed state">
+        <div class="hd"><span class="tag danger">Action failed</span><span class="lbl">inline + toast</span></div>
+        <div class="banner danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>removeCrew refused: a1 is working on #161</div>
+        <div class="d">Server message shown next to the control; the button re-enables.</div>
+        <div class="ft"><span class="pill pri">Retry</span><span class="pill">Dismiss</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6 · Responsive -->
+  <div class="ov-spec">
+    <div class="lbl"><span class="n">06</span>Responsive <span class="faint">· three breakpoints, primary actions kept at every width</span></div>
+    <div class="box ov-resp">
+      <div class="lead"><b>Same deck, narrower</b><span>Nothing is hidden, only folded.</span></div>
+
+      <div class="ov-mini">
+        <div class="fr" style="width:150px;height:92px" aria-hidden="true">
+          <div class="sb" style="width:34px"><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="bd"><i></i><i></i><i></i><i class="rail"></i></div>
+        </div>
+        <div class="cap"><b>≥ 1280</b><span>Full layout: sidebar, 3 columns, blocked rail, shelf.</span></div>
+      </div>
+
+      <div class="ov-mini">
+        <div class="fr" style="width:112px;height:92px" aria-hidden="true">
+          <div class="sb" style="width:16px;padding:6px 4px"><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="bd"><i></i><i></i><i></i></div>
+        </div>
+        <div class="cap"><b>960</b><span>Sidebar collapses to icons; task panel becomes a sheet.</span></div>
+      </div>
+
+      <div class="ov-mini">
+        <div class="fr" style="width:56px;height:92px;flex-direction:column" aria-hidden="true">
+          <div class="bd" style="flex-direction:column"><i></i><i></i></div>
+          <div class="tb"><i class="on"></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="cap"><b>&lt; 720</b><span>Single column with bottom tabs; Inbox first, board read-mostly.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1340}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

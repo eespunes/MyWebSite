@@ -2,7 +2,7 @@
    Project case study — shared by every page under /projects/<slug>/
    Mirrors assets/css/site.css: #121212 ink · #EDEDED paper · #00BF63 accent,
    Poppins for text, JetBrains Mono for labels, 2px radii.
-   Dark is the default (the site is dark); light follows the OS or the toggle.
+   Always dark, like the site.
    ========================================================================== */
 
 :root {
@@ -30,57 +30,6 @@
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: Poppins, system-ui, -apple-system, sans-serif;
   --maxw: 1160px;
-}
-
-/* Light: the site's "paper" sections, applied to the whole page. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    color-scheme: light;
-    --accent: #00994f;
-    --accent-soft: #00bf63;
-    --accent-ink: #ffffff;
-    --bg: #ededed;
-    --bg-deep: #e4e4e4;
-    --surface: #f5f5f5;
-    --surface-hover: #ffffff;
-    --line: #d2d2d2;
-    --line-strong: #b8b8b8;
-    --heading: #121212;
-    --text: #121212;
-    --text-dim: #3d3d3d;
-    --text-mute: #4f4f4f;
-    --text-faint: #5c5c5c;
-    --tag-text: #2a2a2a;
-    --tag-line: #c4c4c4;
-    --topbar: rgba(237, 237, 237, 0.85);
-    --scan: rgba(0, 153, 79, 0.05);
-    --bezel: #1a1a1a;
-    --bezel-edge: #3a3a3a;
-  }
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --accent: #00994f;
-  --accent-soft: #00bf63;
-  --accent-ink: #ffffff;
-  --bg: #ededed;
-  --bg-deep: #e4e4e4;
-  --surface: #f5f5f5;
-  --surface-hover: #ffffff;
-  --line: #d2d2d2;
-  --line-strong: #b8b8b8;
-  --heading: #121212;
-  --text: #121212;
-  --text-dim: #3d3d3d;
-  --text-mute: #4f4f4f;
-  --text-faint: #5c5c5c;
-  --tag-text: #2a2a2a;
-  --tag-line: #c4c4c4;
-  --topbar: rgba(237, 237, 237, 0.85);
-  --scan: rgba(0, 153, 79, 0.05);
-  --bezel: #1a1a1a;
-  --bezel-edge: #3a3a3a;
 }
 
 * {
@@ -198,25 +147,6 @@ a:hover {
   color: var(--accent);
 }
 
-.theme-toggle {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  background: transparent;
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  padding: 7px 11px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.theme-toggle:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
 /* ----------------------------------------------------------------- header */
 
 .cs-header {
@@ -313,6 +243,13 @@ a:hover {
   align-items: start;
 }
 
+/* A desktop demo sits above the at-a-glance panel, full width. */
+
+.hero-grid.is-desktop {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+}
+
 /* The demo window: a toolbar strip above the phone, like a small app window. */
 
 .demo-window {
@@ -405,6 +342,19 @@ a:hover {
   border-radius: calc(46px * var(--scale) + var(--bezel-w));
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.phone.is-desktop {
+  --bezel-w: 6px;
+  border-radius: 10px;
+}
+
+.phone.is-desktop .phone-viewport {
+  border-radius: 6px;
+}
+
+.phone.is-desktop::before {
+  display: none;
 }
 
 .phone::before {

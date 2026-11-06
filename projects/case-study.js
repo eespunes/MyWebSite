@@ -10,8 +10,6 @@
 (function () {
   "use strict";
 
-  var THEME_KEY = "cs-theme";
-
   /* ------------------------------------------------------------- helpers */
 
   function esc(s) {
@@ -50,65 +48,6 @@
         return "<p>" + inline(p) + "</p>";
       })
       .join("");
-  }
-
-  function storageGet(k) {
-    try {
-      return window.localStorage.getItem(k);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function storageSet(k, v) {
-    try {
-      if (v == null) window.localStorage.removeItem(k);
-      else window.localStorage.setItem(k, v);
-    } catch (e) {}
-  }
-
-  /* --------------------------------------------------------------- theme */
-
-  function systemTheme() {
-    return window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-  }
-
-  function applyTheme(t) {
-    if (t) document.documentElement.setAttribute("data-theme", t);
-    else document.documentElement.removeAttribute("data-theme");
-  }
-
-  function currentTheme() {
-    return document.documentElement.getAttribute("data-theme") || systemTheme();
-  }
-
-  applyTheme(storageGet(THEME_KEY));
-
-  function wireThemeToggle(btn) {
-    function label() {
-      // Name the theme you'd switch *to*.
-      btn.textContent = currentTheme() === "dark" ? "◐ Light" : "◑ Dark";
-      btn.setAttribute(
-        "aria-label",
-        "Switch to " + (currentTheme() === "dark" ? "light" : "dark") + " mode"
-      );
-    }
-    btn.addEventListener("click", function () {
-      var next = currentTheme() === "dark" ? "light" : "dark";
-      // Picking the system's own theme clears the override.
-      var value = next === systemTheme() ? null : next;
-      applyTheme(value);
-      storageSet(THEME_KEY, value);
-      label();
-    });
-    if (window.matchMedia) {
-      var mq = window.matchMedia("(prefers-color-scheme: light)");
-      (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(label);
-    }
-    label();
   }
 
   /* ------------------------------------------------------------ sections */
@@ -197,6 +136,9 @@
   function render(d) {
     var site = d.site || {};
     var demo = d.demo || {};
+    // "device": "desktop" frames a wide app in a thin window above the
+    // at-a-glance panel instead of a phone beside it.
+    var desktop = demo.device === "desktop";
     var total = (d.sections || []).length;
 
     document.title = d.title + " · " + (site.name || "Case study");
@@ -226,12 +168,12 @@
       .join("");
 
     var hero =
-      '<section class="cs-hero" aria-label="Live demo"><div class="wrap"><div class="hero-grid">' +
+      '<section class="cs-hero" aria-label="Live demo"><div class="wrap"><div class="hero-grid' + (desktop ? " is-desktop" : "") + '">' +
       '<div class="demo-window" data-state="loading">' +
       '<div class="demo-bar"><span class="demo-status"><span class="demo-status-dot"></span>' +
       '<span class="demo-path" data-status>' + esc(demo.src) + "</span></span>" +
       '<span class="demo-tools"><button class="icon-btn" type="button" data-reload aria-label="Reload demo">↻ Reload</button></span></div>' +
-      '<div class="phone" style="--w:' + (demo.width || 390) + "px;--h:" + (demo.height || 844) + 'px">' +
+      '<div class="phone' + (desktop ? " is-desktop" : "") + '" style="--w:' + (demo.width || 390) + "px;--h:" + (demo.height || 844) + 'px">' +
       '<div class="phone-viewport">' +
       '<div class="phone-screen"><iframe title="' + esc(d.title) + ' live demo" loading="lazy" ' +
       'sandbox="allow-scripts allow-same-origin allow-forms" tabindex="-1"></iframe></div>' +
@@ -270,13 +212,11 @@
       '<div class="scanlines" aria-hidden="true"></div>' +
       '<div class="topbar"><div class="topbar-inner">' +
       '<a class="brand" href="' + esc(site.homeHref) + '">' + esc(site.name) + "</a>" +
-      '<button class="theme-toggle" type="button" data-theme-toggle></button>' +
       "</div></div>" +
       '<main id="main">' + header + hero + sections + "</main>" +
       '<footer class="footer"><div class="footer-inner"><span>© ' + new Date().getFullYear() + " " +
       esc(site.name) + "</span><span>" + esc(d.title) + " · " + esc(d.labels.footer) + "</span></div></footer>";
 
-    wireThemeToggle(root.querySelector("[data-theme-toggle]"));
     wireDemo(root.querySelector(".demo-window"), demo, d.labels);
   }
 
@@ -309,11 +249,12 @@
     // Fit the phone: never wider than the column, never taller than the
     // desktop cap; 1:1 only if there's room for it.
     function fit() {
-      var bezel = 22; // 2 × 10px bezel + 2 × 1px border
+      var desktop = demo.device === "desktop";
+      var bezel = desktop ? 14 : 22; // 2 × bezel + 2 × 1px border
       var avail = win.parentElement.clientWidth || w;
       var maxH = Math.min(demo.maxHeight || 560, window.innerHeight * 0.78);
       var s = Math.min(1, (avail - bezel) / w, (maxH - bezel) / h);
-      phone.style.setProperty("--scale", Math.max(0.4, s).toFixed(4));
+      phone.style.setProperty("--scale", Math.max(desktop ? 0.2 : 0.4, s).toFixed(4));
     }
 
     function load() {
