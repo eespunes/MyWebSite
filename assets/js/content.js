@@ -1,4 +1,4 @@
-// Build v1.157 · 2026-11-06
+// Build v1.159 · 2026-11-06
 /* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
    every string on screen comes from the Markdown. */
 (function () {
@@ -455,30 +455,56 @@
     var wrap = el("div", "wrap split");
     wrap.appendChild(sideHead(section, true));
 
-    var list = el("div", "projects");
-    (section.tables[0] || []).forEach(function (row) {
-      var card = el("article", "project");
+    // One project can be the star (Featured: yes): it spans the full width and
+    // is shown first via CSS order, so the DOM keeps the table's order. The
+    // rest are compact cards in a grid, so adding a project never overflows.
+    var rows = section.tables[0] || [];
+    var starRow = rows.filter(function (r) { return /^yes$/i.test(r.featured || ""); })[0];
+    var list = el("div", "projects" + (starRow ? " has-star" : ""));
+    rows.forEach(function (row) {
+      // A project with its own page becomes one big link: the title is the
+      // anchor, stretched over the card in CSS, and the label below is a cue.
+      var hasPage = !!row.demo;
+      var isStar = row === starRow;
+      var card = el("article", "project" + (hasPage ? " has-page" : "") + (isStar ? " is-featured" : " is-compact"));
       var head = el("div", "project-head");
       var left = el("div");
       left.appendChild(el("div", "project-num mono", inline(row["#"])));
-      left.appendChild(el("h3", null, inline(row.project)));
-      head.appendChild(left);
-      if (row.status) {
-        head.appendChild(el("span", "project-status mono", inline(row.status)));
+      var title = el("h3");
+      if (hasPage) {
+        var demo = el("a", "project-demo", inline(row.project));
+        demo.href = row.demo;
+        title.appendChild(demo);
+      } else {
+        title.innerHTML = inline(row.project);
       }
+      left.appendChild(title);
+      head.appendChild(left);
+      var badges = el("div", "project-badges");
+      if (isStar && section.fields["featured label"]) {
+        badges.appendChild(el("span", "project-star mono", "★ " + inline(section.fields["featured label"])));
+      }
+      if (row.status) {
+        badges.appendChild(el("span", "project-status mono", inline(row.status)));
+      } else if (!hasPage && section.fields["soon label"]) {
+        badges.appendChild(el("span", "project-soon mono", inline(section.fields["soon label"])));
+      }
+      if (badges.children.length) head.appendChild(badges);
       card.appendChild(head);
       card.appendChild(el("p", null, inline(row.description)));
       if (row.stack) card.appendChild(el("div", "project-stack mono", inline(row.stack)));
-      if (row.demo && section.fields["demo label"]) {
-        var demo = el("a", "project-demo mono", inline(section.fields["demo label"]) + " →");
-        demo.href = row.demo;
-        card.appendChild(demo);
+      var foot = el("div", "project-foot");
+      if (hasPage && section.fields["demo label"]) {
+        var cta = el("span", "project-cta mono", inline(section.fields["demo label"]) + ' <span class="project-arrow">→</span>');
+        cta.setAttribute("aria-hidden", "true");
+        foot.appendChild(cta);
       }
       if (row.link && section.fields["link label"]) {
         var a = el("a", "inline-link mono", inline(section.fields["link label"]) + " →");
         externalAttrs(a, row.link);
-        card.appendChild(a);
+        foot.appendChild(a);
       }
+      if (foot.children.length) card.appendChild(foot);
       list.appendChild(card);
     });
 

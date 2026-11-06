@@ -10,5 +10,5 @@
     "privacy:build": "node scripts/build-privacy.js",
     "games:build": "node scripts/build-games.js"
   },
-  "version": "1.157.0"
+  "version": "1.159.0"
 }
