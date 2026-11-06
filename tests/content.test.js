@@ -1,4 +1,4 @@
-// Build v1.156 · 2026-11-06
+// Build v1.157 · 2026-11-06
 /* Schema checks on CONTENT.md — fast, no browser. These guard the contract
    the renderers rely on: if a category or column is renamed here without the
    renderers following, the page silently loses content. */
@@ -21,7 +21,7 @@ const REQUIRED_FIELDS = {
   experience: ["title", "side note", "nav label", "expand label", "collapse label"],
   competencies: ["title", "side note", "nav label"],
   projects: ["title", "side note", "nav label", "link label"],
-  games: ["title", "side note", "link", "hint", "nav label", "featured label"],
+  games: ["title", "side note", "hint", "nav label", "featured label"],
   cv: ["role", "competencies label", "education label", "experience label",
        "projects label", "engagement label", "online label", "languages label",
        "back label", "save label"],
@@ -102,13 +102,24 @@ test("experience entries carry a period, meta and bullets", () => {
 });
 
 test("linked rows point at real targets", () => {
-  const rows = [
-    ...sections.games.tables[0].map((r) => ({ what: `game ${r.game}`, link: r.link })),
-    ...sections.projects.tables[0].map((r) => ({ what: `project ${r.project}`, link: r.link })),
-  ].filter((r) => r.link);
-  assert.ok(rows.length, "no linked rows found");
+  const rows = sections.projects.tables[0]
+    .map((r) => ({ what: `project ${r.project}`, link: r.link }))
+    .filter((r) => r.link);
   for (const row of rows) {
     assert.match(row.link, /^https?:\/\//, `${row.what} has a malformed link`);
+  }
+});
+
+test("game links are their pages on this site", () => {
+  for (const row of sections.games.tables[0]) {
+    assert.match(row.link, /^games\/[a-z0-9-]+\/$/, `game ${row.game} should link to games/<slug>/`);
+    assert.ok(fs.existsSync(path.join(__dirname, "..", row.link, "index.html")), `game ${row.game} page not found`);
+  }
+});
+
+test("game covers exist", () => {
+  for (const row of sections.games.tables[0]) {
+    assert.ok(fs.existsSync(path.join(__dirname, "..", "assets/images", row.image)), `game ${row.game} cover not found: ${row.image}`);
   }
 });
 
