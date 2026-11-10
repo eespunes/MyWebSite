@@ -2,11 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="version" content="v1.165" />
+    <meta name="version" content="v1.166" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="only light" />
     <title>Erik Espuñes Jubero — CV</title>
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <!-- languages: written by scripts/build-languages.js -->
+    <link rel="canonical" href="https://erikespunesjubero.com/cv.html" />
+    <link rel="alternate" hreflang="en" href="https://erikespunesjubero.com/cv.html" />
+    <link rel="alternate" hreflang="es" href="https://erikespunesjubero.com/es/cv.html" />
+    <link rel="alternate" hreflang="ca" href="https://erikespunesjubero.com/ca/cv.html" />
+    <link rel="alternate" hreflang="nl" href="https://erikespunesjubero.com/nl/cv.html" />
+    <link rel="alternate" hreflang="x-default" href="https://erikespunesjubero.com/cv.html" />
+    <!-- /languages -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -17,10 +25,13 @@
     <!-- Both pages are built from CONTENT.md; see assets/js/cv.js. -->
     <div class="cv-toolbar" data-print-hide>
       <a class="cv-back" href="index.html"></a>
-      <button class="cv-save" type="button"></button>
+      <div class="cv-toolbar-end">
+        <button class="cv-save" type="button"></button>
+      </div>
     </div>
     <main id="cv-root"></main>
     <script src="assets/js/parse.js"></script>
+    <script src="assets/js/lang.js"></script>
     <script src="assets/js/cv.js"></script>
   </body>
 </html>

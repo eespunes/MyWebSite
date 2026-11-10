@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* Writes the thin per-game shells, games/<slug>/index.html, one per row of
    the Games table in CONTENT.md. <slug> is the end of the row's Link,
    games/<slug>/.

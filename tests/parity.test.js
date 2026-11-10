@@ -1,10 +1,11 @@
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* The site and the CV are two views of one file. These compare them against
    each other, so a category that drifts on one surface fails here even if
-   both still parse. */
+   both still parse. Each language's site is checked against its own CV. */
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { plain } = require("./helpers/content.js");
+const { plain, doc } = require("./helpers/content.js");
+const CVLang = require("../assets/js/lang.js");
 const { evaluateOn, chromeAvailable, CHROME } = require("./helpers/render.js");
 
 const SITE = `JSON.stringify({
@@ -46,21 +47,32 @@ const CV = `JSON.stringify({
   bodyText: document.body.textContent.replace(/\\s+/g, ' '),
 })`;
 
-let site, cv;
+const languages = CVLang.translations(doc);
+const rendered = {};
 test.before(async () => {
   if (!chromeAvailable()) return;
-  site = JSON.parse((await evaluateOn("index.html", SITE)).value);
-  cv = JSON.parse((await evaluateOn("cv.html", CV)).value);
+  for (const lang of languages) {
+    const dir = lang.path.replace(/^\/+/, "");
+    rendered[lang.code] = {
+      site: JSON.parse((await evaluateOn(`${dir}index.html`, SITE)).value),
+      cv: JSON.parse((await evaluateOn(`${dir}cv.html`, CV)).value),
+    };
+  }
 });
 
+for (const lang of languages) {
+const view = () => rendered[lang.code];
 const browserTest = (name, fn) =>
-  test(name, { skip: chromeAvailable() ? false : `Chrome not found at ${CHROME}` }, fn);
+  test(`${name} (${lang.code})`, { skip: chromeAvailable() ? false : `Chrome not found at ${CHROME}` }, () => {
+    const { site, cv } = view();
+    return fn(site, cv);
+  });
 
-browserTest("education is identical on both surfaces", () => {
+browserTest("education is identical on both surfaces", (site, cv) => {
   assert.deepEqual(cv.education, site.education.map((row) => [row[0], row[1]]));
 });
 
-browserTest("every spoken language and level appears on the CV", () => {
+browserTest("every spoken language and level appears on the CV", (site, cv) => {
   for (const [language, level] of site.languages) {
     assert.ok(
       cv.languagesText.includes(`${language} ${level}`),
@@ -69,25 +81,25 @@ browserTest("every spoken language and level appears on the CV", () => {
   }
 });
 
-browserTest("the about lead is identical on both surfaces", () => {
+browserTest("the about lead is identical on both surfaces", (site, cv) => {
   assert.equal(cv.aboutLead, site.aboutLead);
 });
 
-browserTest("no experience bullet appears on one surface only", () => {
+browserTest("no experience bullet appears on one surface only", (site, cv) => {
   const onlyOnSite = site.bullets.filter((b) => !cv.bullets.includes(b));
   const onlyOnCv = cv.bullets.filter((b) => !site.bullets.includes(b));
   assert.deepEqual(onlyOnSite, [], "bullets on the site but missing from the CV");
   assert.deepEqual(onlyOnCv, [], "bullets in the CV but missing from the site");
 });
 
-browserTest("personal project copy is identical on both surfaces", () => {
+browserTest("personal project copy is identical on both surfaces", (site, cv) => {
   assert.deepEqual(
     cv.projects,
     site.projects.map((p) => ({ title: p.title, description: p.description }))
   );
 });
 
-browserTest("shared contact values appear on both surfaces", () => {
+browserTest("shared contact values appear on both surfaces", (site, cv) => {
   const { sections } = require("./helpers/content.js");
   const cvOnly = sections.contact.tables[0]
     .filter((r) => (r["cv only"] || "").toLowerCase() === "yes")
@@ -110,7 +122,7 @@ browserTest("shared contact values appear on both surfaces", () => {
   }
 });
 
-browserTest("the street address stays off the CV, the city stays on it", () => {
+browserTest("the street address stays off the CV, the city stays on it", (site, cv) => {
   const index = site.contactKeys.findIndex((k) => k.toLowerCase() === "address");
   if (index === -1) return;
   const street = site.contactValues[index].split(",")[0];
@@ -122,3 +134,4 @@ browserTest("the street address stays off the CV, the city stays on it", () => {
     "the CV should show the city-level location"
   );
 });
+}

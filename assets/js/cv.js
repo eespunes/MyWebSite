@@ -1,10 +1,9 @@
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* Builds the printable CV (Spine v3) from CONTENT.md — the same file the site
-   renders from — then offers it to the browser's PDF printer. */
+   renders from, or its translation (see lang.js) — then offers it to the
+   browser's PDF printer. */
 (function () {
   "use strict";
-
-  var parse = CVParse.parse;
 
   function inline(text) {
     return String(text === undefined ? "" : text)
@@ -138,7 +137,7 @@
 
   function footerVersion(cv) {
     var version = el("span", "cv-version");
-    CVParse.loadVersion().then(function (info) {
+    CVParse.loadVersion(CVLang.page.root).then(function (info) {
       version.textContent = CVParse.versionText(info, cv.fields["version label"]);
     });
     return version;
@@ -164,9 +163,18 @@
     var fullName = (by.nav && by.nav.fields.brand) || nameParts.join(" ");
     var role = cv.fields.role || home.fields.eyebrow || "";
     var contactRows = contact.tables[0] || [];
-    var rowByKey = {};
-    contactRows.forEach(function (row) { rowByKey[(row.key || "").toLowerCase()] = row; });
-    var siteUrl = rowByKey.website && rowByKey.website.link;
+    /* Rows are told apart by their link, not their Key, which is translated. */
+    var rowByKind = {};
+    contactRows.forEach(function (row) {
+      var link = row.link || "";
+      var kind = /^mailto:/.test(link) ? "email"
+        : /^tel:/.test(link) ? "phone"
+        : /^yes$/i.test(row["cv only"] || "") && /^https?:/.test(link) ? "website"
+        : !link && row.value === contact.fields.location ? "location"
+        : "";
+      if (kind && !rowByKind[kind]) rowByKind[kind] = row;
+    });
+    var siteUrl = rowByKind.website && rowByKind.website.link;
 
     var root = document.getElementById("cv-root");
     document.title = fullName + " — CV";
@@ -174,6 +182,9 @@
     if (back) back.textContent = cv.fields["back label"] || "";
     var saveButton = document.querySelector(".cv-save");
     if (saveButton) saveButton.textContent = cv.fields["save label"] || "";
+    if (saveButton && saveButton.parentNode) {
+      saveButton.parentNode.insertBefore(CVLang.switcher(doc), saveButton);
+    }
 
     /* ------------------------------------------------------------ page one */
     var page1 = el("section", "cv-page cv-page--1");
@@ -199,7 +210,7 @@
 
     var mastContact = el("div", "cv-contact");
     ["email", "phone"].forEach(function (key) {
-      var row = rowByKey[key];
+      var row = rowByKind[key];
       if (!row) return;
       var item = el("div", "cv-contact-item");
       item.appendChild(el("div", "cv-contact-label mono", inline(row.key)));
@@ -208,7 +219,9 @@
     });
     if (contact.fields.location) {
       var loc = el("div", "cv-contact-item");
-      loc.appendChild(el("div", "cv-contact-label mono", "Location"));
+      loc.appendChild(
+        el("div", "cv-contact-label mono", inline(rowByKind.location ? rowByKind.location.key : "Location"))
+      );
       loc.appendChild(el("span", "cv-contact-value", inline(contact.fields.location)));
       mastContact.appendChild(loc);
     }
@@ -275,12 +288,14 @@
       var eduRows = education.tables[0];
       eduRows.forEach(function (row, i) {
         var item = el("div");
+        /* "2026–27 (expected)": the bracketed word becomes the badge, in
+           whatever language the table is written. */
         var years = String(row.years || "");
-        var expected = /\(expected\)/i.test(years);
-        var when = dateLine(years.replace(/\s*\(expected\)\s*/i, ""));
+        var badge = years.match(/\(([^)]+)\)/);
+        var when = dateLine(years.replace(/\s*\([^)]+\)\s*/, ""));
         item.appendChild(when);
         var title = el("div", "cv-item-title", inline(row.title));
-        if (expected) title.appendChild(el("span", "cv-badge mono", "expected"));
+        if (badge) title.appendChild(el("span", "cv-badge mono", inline(badge[1].trim())));
         item.appendChild(title);
         item.appendChild(el("div", "cv-item-sub", inline(row.institution)));
         spineItem(grid1, item, { first: i === 0, last: i === eduRows.length - 1, hollow: true, tight: true });
@@ -375,7 +390,7 @@
     var footContacts = el("span", "cv-foot-contacts mono");
     contactRows
       .filter(function (row) {
-        return ["email", "phone", "website"].indexOf((row.key || "").toLowerCase()) !== -1;
+        return row === rowByKind.email || row === rowByKind.phone || row === rowByKind.website;
       })
       .forEach(function (row, i) {
         if (i) footContacts.appendChild(document.createTextNode(" · "));
@@ -390,14 +405,10 @@
 
   /* ------------------------------------------------------------------ boot */
 
-  fetch("CONTENT.md", { cache: "no-cache" })
-    .then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.text();
-    })
-    .then(function (md) {
+  CVLang.load()
+    .then(function (doc) {
       try {
-        build(parse(md));
+        build(doc);
       } catch (err) {
         err.while_rendering = true;
         throw err;

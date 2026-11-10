@@ -8,7 +8,8 @@
     "version:write": "node scripts/version.js",
     "hooks:install": "node scripts/install-hooks.js",
     "privacy:build": "node scripts/build-privacy.js",
-    "games:build": "node scripts/build-games.js"
+    "games:build": "node scripts/build-games.js",
+    "languages:build": "node scripts/build-languages.js"
   },
-  "version": "1.165.0"
+  "version": "1.166.0"
 }

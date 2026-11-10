@@ -1,11 +1,13 @@
-// Build v1.165 · 2026-11-10
-/* Reads CONTENT.md and builds the page from it. Nothing here hard-codes copy:
-   every string on screen comes from the Markdown. */
+// Build v1.166 · 2026-11-10
+/* Reads CONTENT.md (or this language's translation of it, see lang.js) and
+   builds the page from it. Nothing here hard-codes copy: every string on
+   screen comes from the Markdown. */
 (function () {
   "use strict";
 
-  /* Structure comes from the shared reader in parse.js. */
-  var parse = CVParse.parse;
+  /* Relative paths in the content point at the site root, which a language
+     folder (/es/) has to step back to. */
+  var url = CVLang.url;
 
   /* Inline markdown → HTML, with everything else escaped. */
   function inline(text) {
@@ -160,7 +162,7 @@
     frame.setAttribute("aria-hidden", "true");
     portrait.appendChild(frame);
     var img = el("img");
-    img.src = section.fields.portrait;
+    img.src = url(section.fields.portrait);
     img.alt = document.title;
     portrait.appendChild(img);
     grid.appendChild(portrait);
@@ -217,7 +219,7 @@
     var education = subByTitle(section, "Education");
     if (education && education.tables[0]) {
       var eduCol = el("div");
-      eduCol.appendChild(el("div", "col-label mono", inline(education.title)));
+      eduCol.appendChild(el("div", "col-label mono", inline(education.fields.label || education.title)));
       var list = el("div", "edu-list");
       education.tables[0].forEach(function (row) {
         var item = el("div", "edu-row");
@@ -236,7 +238,7 @@
     if (languages && languages.tables[0]) {
       var stack = el("div", "about-col-stack");
       var langCol = el("div");
-      langCol.appendChild(el("div", "col-label mono", inline(languages.title)));
+      langCol.appendChild(el("div", "col-label mono", inline(languages.fields.label || languages.title)));
       var pills = el("div", "lang-list");
       languages.tables[0].forEach(function (row) {
         pills.appendChild(
@@ -363,7 +365,7 @@
       var link = linkField(entry.fields.link);
       if (link && link.href) {
         var a = el("a", "inline-link mono", inline(link.label) + " →");
-        externalAttrs(a, link.href);
+        externalAttrs(a, url(link.href));
         content.appendChild(a);
       }
 
@@ -473,7 +475,7 @@
       var title = el("h3");
       if (hasPage) {
         var demo = el("a", "project-demo", inline(row.project));
-        demo.href = row.demo;
+        demo.href = url(row.demo);
         title.appendChild(demo);
       } else {
         title.innerHTML = inline(row.project);
@@ -536,11 +538,11 @@
       /* Each game has its own page, games/<slug>/, the row's Link (see
          scripts/build-games.js). */
       var card = el("a", "game-card");
-      card.href = "games/" + String(row.link || "").replace(/\/+$/, "").split("/").pop() + "/";
+      card.href = url("games/" + String(row.link || "").replace(/\/+$/, "").split("/").pop() + "/");
 
       var cover = el("span", "game-cover");
       var img = el("img");
-      img.src = "assets/images/" + row.image;
+      img.src = url("assets/images/" + row.image);
       img.alt = row.game;
       img.loading = "lazy";
       cover.appendChild(img);
@@ -627,11 +629,11 @@
     footer.appendChild(el("span", "mono", inline(section.fields["footer left"])));
     var version = el("span", "mono footer-version");
     footer.appendChild(version);
-    CVParse.loadVersion().then(function (info) {
+    CVParse.loadVersion(CVLang.page.root).then(function (info) {
       version.textContent = CVParse.versionText(info, section.fields["version label"]);
     });
     footer.appendChild(el("span", "mono", inline(section.fields["footer right"])));
-    var privacy = el("a", "mono", "App privacy & deletion");
+    var privacy = el("a", "mono", inline(section.fields["privacy label"] || "App privacy & deletion"));
     privacy.href = "/privacy/";
     footer.appendChild(privacy);
     node.appendChild(footer);
@@ -663,7 +665,7 @@
     setMeta("theme-color", meta.fields["theme color"]);
     if (meta.fields.favicon) {
       var icon = document.querySelector('link[rel="shortcut icon"]');
-      if (icon) icon.href = meta.fields.favicon;
+      if (icon) icon.href = url(meta.fields.favicon);
     }
 
     var root = document.getElementById("cv-scroll");
@@ -711,24 +713,26 @@
       links.appendChild(a);
     });
     inner.appendChild(links);
+    inner.appendChild(CVLang.switcher(doc));
     bar.appendChild(inner);
     return bar;
   }
 
   function dots(doc) {
     var wrap = el("div", "dots");
-    var keys = ["home"].concat(
+    var home = CVParse.byTitle(doc.sections, "Nav") || { fields: {} };
+    var keys = [["home", home.fields.brand || "home"]].concat(
       navSections(doc).map(function (s) {
-        return s.title.toLowerCase();
+        return [s.title.toLowerCase(), s.fields["nav label"]];
       })
     );
-    keys.forEach(function (key, i) {
-      var id = SECTION_ID[key];
+    keys.forEach(function (pair, i) {
+      var id = SECTION_ID[pair[0]];
       if (!id) return;
       var dot = el("a", "dot" + (i === 0 ? " is-active" : ""));
       dot.href = "#" + id;
       dot.setAttribute("data-dot", id);
-      dot.title = key;
+      dot.title = pair[1];
       wrap.appendChild(dot);
     });
     return wrap;
@@ -742,14 +746,11 @@
       "</p></div>";
   }
 
-  fetch("CONTENT.md", { cache: "no-cache" })
-    .then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.text();
-    })
-    .then(function (md) {
-      build(parse(md));
+  CVLang.load()
+    .then(function (doc) {
+      build(doc);
       if (window.initSite) window.initSite();
+      CVLang.offerHint(doc);
     })
     .catch(function (err) {
       fail(
