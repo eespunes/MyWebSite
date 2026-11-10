@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.164 · 2026-11-10
+// Build v1.165 · 2026-11-10
 /* Installs a pre-commit hook that refreshes version.json and the file stamps
    and stages them, so the version bumps with every commit without anyone
    remembering to do it. */
