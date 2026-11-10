@@ -1,4 +1,4 @@
-<!-- Build v1.163 · 2026-11-06 -->
+<!-- Build v1.164 · 2026-11-10 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -79,7 +79,7 @@ Body: I take end-to-end ownership of technical design, delivery and production o
 | Spanish | native |
 | Catalan | native |
 | English | fluent |
-| Dutch | basic |
+| Dutch | A1 certified · A2 in progress |
 
 ## Experience
 

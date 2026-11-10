@@ -1,4 +1,4 @@
-// Build v1.163 · 2026-11-06
+// Build v1.164 · 2026-11-10
 /* The site and the CV are two views of one file. These compare them against
    each other, so a category that drifts on one surface fails here even if
    both still parse. */
