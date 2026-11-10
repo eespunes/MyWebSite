@@ -1,4 +1,4 @@
-<!-- Build v1.165 · 2026-11-10 -->
+<!-- Build v1.166 · 2026-11-10 -->
 # Site Content: Erik Espuñes Jubero
 
 **This file is the site.** `index.html` is an empty shell: it fetches this file
@@ -12,6 +12,49 @@ Keep the structure below; the parser relies on it:
 - Tables are read by their header row.
 - Blank-line-separated prose becomes paragraphs.
 - `*italic*` renders in accent green; `**bold**` renders emphasised; `[text](url)` becomes a link.
+
+The Spanish, Catalan and Dutch versions are `CONTENT.es.md`, `CONTENT.ca.md` and
+`CONTENT.nl.md`, served from `/es/`, `/ca/` and `/nl/`. They keep this file's
+headings and structure and translate the values; a section a translation leaves
+out is taken from here. When something changes here, change it there too: the
+tests fail when a translation drifts out of step.
+
+## Translations
+
+One row per version of the site, in switcher order. Code is the switcher label
+and the page's `lang`; Path is the folder it is served from; File is its
+content. A visitor reading another version is offered this one, once, when
+they are in one of its Countries (judged from the browser's time zone), or,
+where Browser is yes, when their browser is set to it: Catalan has no country
+of its own besides Andorra. Run `npm run languages:build` after editing.
+
+| Code | Name | Path | File | Browser | Countries |
+| --- | --- | --- | --- | --- | --- |
+| en | English | / | CONTENT.md | | |
+| es | Español | /es/ | CONTENT.es.md | | ES · MX · AR · CO · CL · PE · VE · EC · GT · CU · BO · DO · HN · PY · SV · NI · CR · PA · UY · PR · GQ |
+| ca | Català | /ca/ | CONTENT.ca.md | yes | AD |
+| nl | Nederlands | /nl/ | CONTENT.nl.md | | NL · BE · SR · AW · CW · SX · BQ |
+
+## Language
+
+This version's words for the language switcher and for the hint offering it
+to visitors reading another version. The hint is written entirely in the
+language it offers, so every translation has this section in its own words.
+`{language}` in the Stay label is the name of the version being read, from the
+table below.
+
+- Switcher label: Language
+- Hint: This page is also available in English.
+- Switch label: View in English
+- Stay label: Continue in {language}
+- Close label: Close
+
+| Code | Name |
+| --- | --- |
+| en | English |
+| es | Spanish |
+| ca | Catalan |
+| nl | Dutch |
 
 ## Meta
 
@@ -389,6 +432,7 @@ sections above, only what the web page has no place for lives here.
 - Footer left: © 2026 Erik Espuñes Jubero
 - Footer right: Feanwâlden, NL
 - Version label: Build
+- Privacy label: App privacy & deletion
 
 | Key | Value | Link | CV only |
 | --- | --- | --- | --- |

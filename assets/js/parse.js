@@ -1,4 +1,4 @@
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* The CONTENT.md reader shared by the site (content.js) and the CV (cv.js),
    so both — and the tests — read the file exactly the same way.
 
@@ -132,10 +132,11 @@
 
   /* version.json is written from git history by scripts/version.js. The
      surfaces show nothing if it is absent, so a checkout without it still
-     renders cleanly. */
-  function loadVersion() {
+     renders cleanly. `base` is the way back to the root from a language
+     folder ("../"). */
+  function loadVersion(base) {
     if (typeof fetch !== "function") return Promise.resolve(null);
-    return fetch("version.json", { cache: "no-cache" })
+    return fetch((base || "") + "version.json", { cache: "no-cache" })
       .then(function (res) {
         return res.ok ? res.json() : null;
       })

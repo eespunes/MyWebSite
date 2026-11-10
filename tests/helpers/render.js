@@ -1,4 +1,4 @@
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* Serves the project over HTTP and renders a page in headless Chrome, so the
    tests see exactly what a browser builds from CONTENT.md. */
 const http = require("node:http");
@@ -54,8 +54,9 @@ async function connect(port) {
   throw new Error("Chrome did not expose a debugging target");
 }
 
-/* Renders `page` and returns the value of `expression` evaluated in it. */
-async function evaluateOn(page, expression) {
+/* Renders `page` and returns the value of `expression` evaluated in it.
+   `visitor` pretends to be someone elsewhere: { timeZone, languages }. */
+async function evaluateOn(page, expression, visitor = {}) {
   const { server, port } = await startServer();
   const devtoolsPort = 9500 + Math.floor(Math.random() * 400);
   const profile = fs.mkdtempSync(path.join(require("node:os").tmpdir(), "cv-test-"));
@@ -104,10 +105,20 @@ async function evaluateOn(page, expression) {
 
     await send("Runtime.enable");
     await send("Page.enable");
+    if (visitor.timeZone) {
+      await send("Emulation.setTimezoneOverride", { timezoneId: visitor.timeZone });
+    }
+    if (visitor.languages) {
+      const version = await send("Browser.getVersion");
+      await send("Emulation.setUserAgentOverride", {
+        userAgent: version.result.userAgent,
+        acceptLanguage: visitor.languages.join(","),
+      });
+    }
     await send("Page.navigate", { url: `http://127.0.0.1:${port}/${page}` });
 
     /* Wait for the renderer to finish rather than guessing a delay. */
-    const marker = page.startsWith("cv")
+    const marker = /(^|\/)cv\.html/.test(page)
       ? ".cv-page"
       : page.startsWith("games/")
         ? ".cs-title, .load-error"

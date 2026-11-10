@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build v1.165 · 2026-11-10
+// Build v1.166 · 2026-11-10
 /* Single source of the build number.
 
    Writes version.json and stamps the version into every source file, so the
@@ -54,8 +54,9 @@ const OWNED = [
   "index.html",
   "404.html",
   "cv.html",
-  "CONTENT.md",
+  ...fs.readdirSync(ROOT).filter((f) => /^CONTENT(\.[a-z]{2})?\.md$/.test(f)),
   "assets/js/parse.js",
+  "assets/js/lang.js",
   "assets/js/content.js",
   "assets/js/cv.js",
   "assets/js/site.js",
